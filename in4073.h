@@ -21,8 +21,6 @@
 #include "app_util_platform.h"
 #include <math.h>
 
-#include "t20.h"
-
 #define RED		22
 #define YELLOW		24
 #define GREEN		28

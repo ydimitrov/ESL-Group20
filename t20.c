@@ -23,12 +23,12 @@ void t20_packet_rx(packet* p) {
 			case MODELEN:
 				// TODO: CRC check
 				// Read mode
-				setMode(p->mode);
+				// setMode(p->mode);
 			break;
 
 			case MOVELEN:
 				// TODO: CRC check
-				setRotors(p->roll, p->pitch, p->yaw, p->elevation);
+				// setRotors(p->roll, p->pitch, p->yaw, p->elevation);
 			break;
 
 			case TELELEN:
@@ -50,7 +50,7 @@ void t20_packet_tx(packet* p) {
 	const unsigned char *byteToSend;
 	int numberOfBytes = p->length;
 
-	for(byteToSend=packetPtr; numberOfBytes--, ++byteToSend)	
+	for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
 	{	
 		uart_put(*byteToSend);
 		// Wait for transmission to complete
