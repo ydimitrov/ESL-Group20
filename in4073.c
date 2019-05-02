@@ -52,7 +52,13 @@ void process_key(uint8_t c)
 			if (ae[3] < 0) ae[3] = 0;
 			break;
 		case 'x': // PANIC MODE - ABORT
-			
+			packet* foobar;
+			foobar->startByte = 0xAA;
+			foobar->length = 0x04;
+			foobar->mode = 0xED;
+
+			t20_packet_tx(foobar);
+
 			break;	
 		case 27:
 			demo_done = true;
@@ -83,7 +89,9 @@ int main(void)
 
 	while (!demo_done)
 	{
-		if (rx_queue.count) process_key( dequeue(&rx_queue) );
+		if (rx_queue.count) {
+			process_key( dequeue(&rx_queue) );
+		}
 
 		if (check_timer_flag()) 
 		{
@@ -95,11 +103,12 @@ int main(void)
 			adc_request_sample();
 			read_baro();
 
-			printf("%10ld | ", get_time_us());
-			printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
-			printf("%6d %6d %6d | ", phi, theta, psi);
-			printf("%6d %6d %6d | ", sp, sq, sr);
-			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
+
+			// printf("%10ld | ", get_time_us());
+			// printf("%3d %3d %3d %3d | ", ae[0], ae[1], ae[2], ae[3]);
+			// printf("%6d %6d %6d | ", phi, theta, psi);
+			// printf("%6d %6d %6d | ", sp, sq, sr);
+			// printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
 
 			clear_timer_flag();
 		}
