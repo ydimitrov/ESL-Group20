@@ -12,7 +12,15 @@ typedef struct {
   	uint8_t yaw;
   	uint8_t elevation;
   	int16_t ae[4];
-  	uint8_t roll;
+  	int16_t phi;
+  	int16_t theta;
+  	int16_t psi;
+  	int16_t sp;
+  	int16_t sq;
+  	int16_t sr;
+  	uint64_t temp;
+  	int16_t volt;
+  	int16_t press;
 } packet;
 
 //void init_queue(queue *q);
