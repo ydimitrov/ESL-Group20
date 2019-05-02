@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "in4073.h"
 
 // Define packet structure
 
@@ -21,11 +22,12 @@ typedef struct {
   	uint64_t temp;
   	int16_t volt;
   	int16_t press;
+  	int16_t mode;
 } packet;
 
 //void init_queue(queue *q);
 //void enqueue(queue *q, char x);
 //char dequeue(queue *q);
 
-void t20_packet_rx(packet p);
-void t20_packet_tx(packet p);
+void t20_packet_rx(packet* p);
+void t20_packet_tx(packet* p);
