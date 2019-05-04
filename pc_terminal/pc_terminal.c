@@ -303,11 +303,13 @@ int main(int argc, char **argv)
 		foobar.length = 0x04;
 		foobar.mode = 0xED;
 
-		t20_packet_tx(&foobar);
+		pc_t20_packet_tx(&foobar);
 		
 		if ((c = rs232_getchar_nb()) != -1)
 			printf(" %d",c);
 		// rs232_getchar();
+
+		printf(" %d", rs232_getchar_nb());
 	}
 	
 

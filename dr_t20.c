@@ -1,4 +1,4 @@
-#include "t20.h"
+#include "dr_t20.h"
 
 /* 
  *  Magic number definitions
@@ -14,7 +14,7 @@
  *  mode, etc.
  */
 
-void t20_packet_rx() {
+void dr_t20_packet_rx() {
 
 	printf("Receiving...");
 	while(&rx_queue.count){
@@ -28,14 +28,20 @@ void t20_packet_rx() {
 					// Read mode
 					// setMode(p->mode);
 					//printf("MODE PACKET RECEIVED");
-				    uint8_t foo = 159;
-					uart_put(foo);
+				    // uint8_t foo = 159;
+				    packet test = packet_init(0xAA,0x30,0xAB,0xAC,0xAD,0xAE,0xAF,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
+				    t20_packet_tx(&test);
+					// uart_put(foo);
+
 				break;
 
 				case MOVELEN:
+				;
 					// TODO: CRC check
 					// setRotors(p->roll, p->pitch, p->yaw, p->elevation);
-					printf("MOVELEN PACKET RECEIVED");
+					// printf("MOVELEN PACKET RECEIVED");
+				    uint8_t boo = 2;
+					uart_put(boo);
 
 				break;
 
@@ -53,7 +59,7 @@ void t20_packet_rx() {
 	}
 }
 
-void t20_packet_tx(packet* p) {
+void dr_t20_packet_tx(packet* p) {
 
 	// Transmit packet byte-by-byte
 
@@ -69,3 +75,37 @@ void t20_packet_tx(packet* p) {
 
 }
 
+packet dr_packet_init(uint8_t startByte, uint8_t length, 
+				   uint8_t functionCode, uint8_t roll, 
+				   uint8_t pitch, uint8_t yaw, 
+				   uint8_t elevation, 
+				   // int16_t ae, 
+				   int16_t phi, int16_t theta,
+				   int16_t psi, int16_t sp,
+				   int16_t sq, int16_t sr,
+				   uint64_t temp, int16_t volt,
+				   int16_t press, int16_t mode){
+
+	packet x;
+	x.startByte = startByte;
+	x.length = length;
+	x.functionCode = functionCode;
+	x.roll = roll;
+	x.pitch = pitch;
+	x.yaw = yaw;
+	x.elevation = elevation;
+	// x.ae = ae;
+	x.phi = phi;
+	x.theta = theta;
+	x.psi = psi;
+	x.sp = sp;
+	x.sq = sq;
+	x.sr = sr;
+	x.temp = temp;
+	x.volt = volt;
+	x.press = press;
+	x.mode = mode;
+
+
+	return x;
+}
