@@ -52,15 +52,16 @@ void process_key(uint8_t c)
 			ae[3] -= 10;
 			if (ae[3] < 0) ae[3] = 0;
 			break;
-		case 'x': // PANIC MODE - ABORT
+		case 'l': // PANIC MODE - ABORT
 		;
-			packet foobar;
-			foobar.startByte = 0xAA;
-			foobar.length = 0x04;
-			foobar.mode = 0xED;
+			// packet foobar;
+			// foobar.startByte = 0xAA;
+			// foobar.length = 0x04;
+			// foobar.mode = 0xED;
 
-			t20_packet_tx(&foobar);
-
+			// t20_packet_tx(&foobar);
+			// char buf[5] = {'h', 'e', 'l', 'l', 'o'};
+		printf("received l\n");
 			break;	
 		case 27:
 			demo_done = true;
@@ -104,11 +105,12 @@ int main(void)
 
 			adc_request_sample();
 			read_baro();
-			uint8_t v;
-			v = (char) 7;
-			v++;
-			v--;
-			//uart_put(v);
+			t20_packet_rx();
+			// uint8_t v;
+			// v = (char) 7;
+			// v++;
+			// v--;
+			// uart_put(v);
 
 			// printf("%10ld | ", get_time_us());
 			// printf("%3d %3d %3d %3d | ", ae[0], ae[1], ae[2], ae[3]);

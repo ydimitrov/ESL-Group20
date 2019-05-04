@@ -14,30 +14,38 @@
  *  mode, etc.
  */
 
-void t20_packet_rx(packet* p) {
-	
-	// Check preamble
-	if(p->startByte == 0xAA){
-		// Good, check packet length
-		switch (p->length) {
-			case MODELEN:
-				// TODO: CRC check
-				// Read mode
-				// setMode(p->mode);
-			break;
+void t20_packet_rx() {
 
-			case MOVELEN:
-				// TODO: CRC check
-				// setRotors(p->roll, p->pitch, p->yaw, p->elevation);
-			break;
+	printf("Receiving...");
+	while(&rx_queue.count){
+		// Check preamble
+		if(dequeue(&rx_queue) == 0xAA){
+			uint8_t length = dequeue(&rx_queue);
+			switch (length) {
+				case MODELEN:
+					// TODO: CRC check
+					// Read mode
+					// setMode(p->mode);
+					printf("MODE PACKET RECEIVED");
+				break;
 
-			case TELELEN:
-				// TODO: CRC check
-			break;
+				case MOVELEN:
+					// TODO: CRC check
+					// setRotors(p->roll, p->pitch, p->yaw, p->elevation);
+					printf("MOVELEN PACKET RECEIVED");
 
-			default:
-				// No valid command received. Drop packet.
-			break;
+				break;
+
+				case TELELEN:
+					// TODO: CRC check
+					printf("TELELEN PACKET RECEIVED");
+				break;
+
+				default:
+					// No valid command received. Drop packet.
+					printf("DEFAULT");
+				break;
+			}
 		}
 	}
 }

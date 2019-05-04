@@ -16,7 +16,10 @@ void uart_put(uint8_t byte)
 {
 	NVIC_DisableIRQ(UART0_IRQn);
 
-	if (txd_available) {txd_available = false; NRF_UART0->TXD = byte;}
+	if (txd_available){
+		txd_available = false;
+		NRF_UART0->TXD = byte;
+	}
 	else enqueue(&tx_queue, byte);
 
 	NVIC_EnableIRQ(UART0_IRQn);

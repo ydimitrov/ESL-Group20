@@ -275,6 +275,8 @@ Discarded input sections
  .text          0x0000000000000000        0x0 _build/uart.o
  .data          0x0000000000000000        0x0 _build/uart.o
  .bss           0x0000000000000000        0x0 _build/uart.o
+ .text.uart_put
+                0x0000000000000000       0x44 _build/uart.o
  .text          0x0000000000000000        0x0 _build/queue.o
  .data          0x0000000000000000        0x0 _build/queue.o
  .bss           0x0000000000000000        0x0 _build/queue.o
@@ -623,8 +625,8 @@ Discarded input sections
  .text          0x0000000000000000        0x0 _build/t20.o
  .data          0x0000000000000000        0x0 _build/t20.o
  .bss           0x0000000000000000        0x0 _build/t20.o
- .text.t20_packet_rx
-                0x0000000000000000        0x4 _build/t20.o
+ .text.t20_packet_tx
+                0x0000000000000000       0x1c _build/t20.o
  .data          0x0000000000000000        0x0 _build/gcc_startup_nrf51.o
  .bss           0x0000000000000000        0x0 _build/gcc_startup_nrf51.o
  .ARM.extab     0x0000000000000000        0x0 _build/gcc_startup_nrf51.o
@@ -986,7 +988,7 @@ END GROUP
  *(fs_data)
                 [!provide]                        PROVIDE (__stop_fs_data = .)
 
-.text           0x0000000000018000     0xa998
+.text           0x0000000000018000     0xa8b8
  *(.Vectors)
  .Vectors       0x0000000000018000       0xc0 _build/gcc_startup_nrf51.o
                 0x0000000000018000                __Vectors
@@ -1011,603 +1013,600 @@ END GROUP
                 0x0000000000018294       0x3c _build/nrf_delay.o
                 0x0000000000018294                nrf_delay_ms
  .text.process_key
-                0x00000000000182d0       0xec _build/in4073.o
+                0x00000000000182d0       0xdc _build/in4073.o
                 0x00000000000182d0                process_key
  .text.startup.main
-                0x00000000000183bc       0xfc _build/in4073.o
-                0x00000000000183bc                main
+                0x00000000000183ac      0x100 _build/in4073.o
+                0x00000000000183ac                main
  .text.run_filters_and_control
-                0x00000000000184b8       0x20 _build/control.o
-                0x00000000000184b8                run_filters_and_control
+                0x00000000000184ac       0x20 _build/control.o
+                0x00000000000184ac                run_filters_and_control
  .text.gpio_init
-                0x00000000000184d8       0x8c _build/gpio.o
-                0x00000000000184d8                gpio_init
+                0x00000000000184cc       0x8c _build/gpio.o
+                0x00000000000184cc                gpio_init
  .text.quadrupel_timer_handler
-                0x0000000000018564        0xc _build/timers.o
-                0x0000000000018564                quadrupel_timer_handler
+                0x0000000000018558        0xc _build/timers.o
+                0x0000000000018558                quadrupel_timer_handler
  .text.TIMER2_IRQHandler
-                0x0000000000018570       0x98 _build/timers.o
-                0x0000000000018570                TIMER2_IRQHandler
+                0x0000000000018564       0x98 _build/timers.o
+                0x0000000000018564                TIMER2_IRQHandler
  .text.TIMER1_IRQHandler
-                0x0000000000018608       0x8c _build/timers.o
-                0x0000000000018608                TIMER1_IRQHandler
+                0x00000000000185fc       0x8c _build/timers.o
+                0x00000000000185fc                TIMER1_IRQHandler
  .text.get_time_us
-                0x0000000000018694       0x20 _build/timers.o
-                0x0000000000018694                get_time_us
+                0x0000000000018688       0x20 _build/timers.o
+                0x0000000000018688                get_time_us
  .text.check_timer_flag
-                0x00000000000186b4        0xc _build/timers.o
-                0x00000000000186b4                check_timer_flag
+                0x00000000000186a8        0xc _build/timers.o
+                0x00000000000186a8                check_timer_flag
  .text.clear_timer_flag
-                0x00000000000186c0        0xc _build/timers.o
-                0x00000000000186c0                clear_timer_flag
+                0x00000000000186b4        0xc _build/timers.o
+                0x00000000000186b4                clear_timer_flag
  .text.timers_init
-                0x00000000000186cc      0x1d0 _build/timers.o
-                0x00000000000186cc                timers_init
- .text.uart_put
-                0x000000000001889c       0x44 _build/uart.o
-                0x000000000001889c                uart_put
- .text._write   0x00000000000188e0       0x7c _build/uart.o
-                0x00000000000188e0                _write
+                0x00000000000186c0      0x1d0 _build/timers.o
+                0x00000000000186c0                timers_init
+ .text._write   0x0000000000018890       0x7c _build/uart.o
+                0x0000000000018890                _write
  .text.UART0_IRQHandler
-                0x000000000001895c       0x84 _build/uart.o
-                0x000000000001895c                UART0_IRQHandler
+                0x000000000001890c       0x84 _build/uart.o
+                0x000000000001890c                UART0_IRQHandler
  .text.uart_init
-                0x00000000000189e0       0xa0 _build/uart.o
-                0x00000000000189e0                uart_init
+                0x0000000000018990       0xa0 _build/uart.o
+                0x0000000000018990                uart_init
  .text.init_queue
-                0x0000000000018a80       0x14 _build/queue.o
-                0x0000000000018a80                init_queue
- .text.enqueue  0x0000000000018a94       0x20 _build/queue.o
-                0x0000000000018a94                enqueue
- .text.dequeue  0x0000000000018ab4       0x20 _build/queue.o
-                0x0000000000018ab4                dequeue
+                0x0000000000018a30       0x14 _build/queue.o
+                0x0000000000018a30                init_queue
+ .text.enqueue  0x0000000000018a44       0x20 _build/queue.o
+                0x0000000000018a44                enqueue
+ .text.dequeue  0x0000000000018a64       0x20 _build/queue.o
+                0x0000000000018a64                dequeue
  .text.i2c_read
-                0x0000000000018ad4       0xb4 _build/twi.o
-                0x0000000000018ad4                i2c_read
+                0x0000000000018a84       0xb4 _build/twi.o
+                0x0000000000018a84                i2c_read
  .text.i2c_write
-                0x0000000000018b88       0x64 _build/twi.o
-                0x0000000000018b88                i2c_write
+                0x0000000000018b38       0x64 _build/twi.o
+                0x0000000000018b38                i2c_write
  .text.SPI0_TWI0_IRQHandler
-                0x0000000000018bec       0x74 _build/twi.o
-                0x0000000000018bec                SPI0_TWI0_IRQHandler
+                0x0000000000018b9c       0x74 _build/twi.o
+                0x0000000000018b9c                SPI0_TWI0_IRQHandler
  .text.twi_init
-                0x0000000000018c60       0x84 _build/twi.o
-                0x0000000000018c60                twi_init
+                0x0000000000018c10       0x84 _build/twi.o
+                0x0000000000018c10                twi_init
  .text.adc_request_sample
-                0x0000000000018ce4       0x18 _build/adc.o
-                0x0000000000018ce4                adc_request_sample
+                0x0000000000018c94       0x18 _build/adc.o
+                0x0000000000018c94                adc_request_sample
  .text.ADC_IRQHandler
-                0x0000000000018cfc       0x24 _build/adc.o
-                0x0000000000018cfc                ADC_IRQHandler
+                0x0000000000018cac       0x24 _build/adc.o
+                0x0000000000018cac                ADC_IRQHandler
  .text.adc_init
-                0x0000000000018d20       0x3c _build/adc.o
-                0x0000000000018d20                adc_init
+                0x0000000000018cd0       0x3c _build/adc.o
+                0x0000000000018cd0                adc_init
  .text.read_baro
-                0x0000000000018d5c      0x1b4 _build/baro.o
-                0x0000000000018d5c                read_baro
+                0x0000000000018d0c      0x1b4 _build/baro.o
+                0x0000000000018d0c                read_baro
  .text.baro_init
-                0x0000000000018f10       0x34 _build/baro.o
-                0x0000000000018f10                baro_init
+                0x0000000000018ec0       0x34 _build/baro.o
+                0x0000000000018ec0                baro_init
  .text.sd_ble_gap_disconnect
-                0x0000000000018f44        0x4 _build/ble.o
+                0x0000000000018ef4        0x4 _build/ble.o
  .text.sd_ble_gap_ppcp_set
-                0x0000000000018f48        0x4 _build/ble.o
+                0x0000000000018ef8        0x4 _build/ble.o
  .text.sd_ble_gap_device_name_set
-                0x0000000000018f4c        0x4 _build/ble.o
+                0x0000000000018efc        0x4 _build/ble.o
  .text.sd_ble_gap_sec_params_reply
-                0x0000000000018f50        0x4 _build/ble.o
+                0x0000000000018f00        0x4 _build/ble.o
  .text.sd_ble_gatts_sys_attr_set
-                0x0000000000018f54        0x4 _build/ble.o
+                0x0000000000018f04        0x4 _build/ble.o
  .text.sd_ble_enable
-                0x0000000000018f58        0x4 _build/ble.o
+                0x0000000000018f08        0x4 _build/ble.o
  .text.sd_nvic_EnableIRQ
-                0x0000000000018f5c        0x4 _build/ble.o
+                0x0000000000018f0c        0x4 _build/ble.o
  .text.sd_nvic_ClearPendingIRQ
-                0x0000000000018f60        0x4 _build/ble.o
+                0x0000000000018f10        0x4 _build/ble.o
  .text.sd_nvic_SetPriority
-                0x0000000000018f64        0x4 _build/ble.o
+                0x0000000000018f14        0x4 _build/ble.o
  .text.sd_radio_notification_cfg_set
-                0x0000000000018f68        0x4 _build/ble.o
+                0x0000000000018f18        0x4 _build/ble.o
  .text.conn_params_error_handler
-                0x0000000000018f6c       0x1c _build/ble.o
+                0x0000000000018f1c       0x1c _build/ble.o
  .text.nus_data_handler
-                0x0000000000018f88       0x20 _build/ble.o
+                0x0000000000018f38       0x20 _build/ble.o
  .text.ble_evt_dispatch
-                0x0000000000018fa8       0x94 _build/ble.o
+                0x0000000000018f58       0x94 _build/ble.o
  .text.on_conn_params_evt
-                0x000000000001903c       0x38 _build/ble.o
+                0x0000000000018fec       0x38 _build/ble.o
  .text.SWI1_IRQHandler
-                0x0000000000019074       0x10 _build/ble.o
-                0x0000000000019074                SWI1_IRQHandler
+                0x0000000000019024       0x10 _build/ble.o
+                0x0000000000019024                SWI1_IRQHandler
  .text.ble_init
-                0x0000000000019084      0x200 _build/ble.o
-                0x0000000000019084                ble_init
+                0x0000000000019034      0x200 _build/ble.o
+                0x0000000000019034                ble_init
  .text.spi_flash_init
-                0x0000000000019284      0x220 _build/spi_flash.o
-                0x0000000000019284                spi_flash_init
+                0x0000000000019234      0x220 _build/spi_flash.o
+                0x0000000000019234                spi_flash_init
  .text.set_int_enable
-                0x00000000000194a4       0x84 _build/inv_mpu.o
+                0x0000000000019454       0x84 _build/inv_mpu.o
  .text.mpu_reset_fifo
-                0x0000000000019528      0x158 _build/inv_mpu.o
-                0x0000000000019528                mpu_reset_fifo
+                0x00000000000194d8      0x158 _build/inv_mpu.o
+                0x00000000000194d8                mpu_reset_fifo
  .text.mpu_get_accel_fsr
-                0x0000000000019680       0x64 _build/inv_mpu.o
-                0x0000000000019680                mpu_get_accel_fsr
+                0x0000000000019630       0x64 _build/inv_mpu.o
+                0x0000000000019630                mpu_get_accel_fsr
  .text.mpu_set_lpf
-                0x00000000000196e4       0x88 _build/inv_mpu.o
-                0x00000000000196e4                mpu_set_lpf
+                0x0000000000019694       0x88 _build/inv_mpu.o
+                0x0000000000019694                mpu_set_lpf
  .text.mpu_configure_fifo
-                0x000000000001976c       0xb8 _build/inv_mpu.o
-                0x000000000001976c                mpu_configure_fifo
+                0x000000000001971c       0xb8 _build/inv_mpu.o
+                0x000000000001971c                mpu_configure_fifo
  .text.mpu_lp_accel_mode
-                0x0000000000019824      0x18c _build/inv_mpu.o
-                0x0000000000019824                mpu_lp_accel_mode
+                0x00000000000197d4      0x18c _build/inv_mpu.o
+                0x00000000000197d4                mpu_lp_accel_mode
  .text.mpu_set_sample_rate
-                0x00000000000199b0       0xf0 _build/inv_mpu.o
-                0x00000000000199b0                mpu_set_sample_rate
+                0x0000000000019960       0xf0 _build/inv_mpu.o
+                0x0000000000019960                mpu_set_sample_rate
  .text.mpu_set_sensors
-                0x0000000000019aa0      0x138 _build/inv_mpu.o
-                0x0000000000019aa0                mpu_set_sensors
+                0x0000000000019a50      0x138 _build/inv_mpu.o
+                0x0000000000019a50                mpu_set_sensors
  .text.mpu_init
-                0x0000000000019bd8      0x1e0 _build/inv_mpu.o
-                0x0000000000019bd8                mpu_init
+                0x0000000000019b88      0x1e0 _build/inv_mpu.o
+                0x0000000000019b88                mpu_init
  .text.mpu_read_fifo_stream
-                0x0000000000019db8       0xb0 _build/inv_mpu.o
-                0x0000000000019db8                mpu_read_fifo_stream
+                0x0000000000019d68       0xb0 _build/inv_mpu.o
+                0x0000000000019d68                mpu_read_fifo_stream
  .text.mpu_set_bypass
-                0x0000000000019e68       0xe8 _build/inv_mpu.o
-                0x0000000000019e68                mpu_set_bypass
+                0x0000000000019e18       0xe8 _build/inv_mpu.o
+                0x0000000000019e18                mpu_set_bypass
  .text.mpu_set_int_level
-                0x0000000000019f50       0x10 _build/inv_mpu.o
-                0x0000000000019f50                mpu_set_int_level
+                0x0000000000019f00       0x10 _build/inv_mpu.o
+                0x0000000000019f00                mpu_set_int_level
  .text.mpu_set_int_latched
-                0x0000000000019f60       0x68 _build/inv_mpu.o
-                0x0000000000019f60                mpu_set_int_latched
+                0x0000000000019f10       0x68 _build/inv_mpu.o
+                0x0000000000019f10                mpu_set_int_latched
  .text.mpu_write_mem
-                0x0000000000019fc8       0x54 _build/inv_mpu.o
-                0x0000000000019fc8                mpu_write_mem
+                0x0000000000019f78       0x54 _build/inv_mpu.o
+                0x0000000000019f78                mpu_write_mem
  .text.mpu_load_firmware
-                0x000000000001a01c       0xf4 _build/inv_mpu.o
-                0x000000000001a01c                mpu_load_firmware
+                0x0000000000019fcc       0xf4 _build/inv_mpu.o
+                0x0000000000019fcc                mpu_load_firmware
  .text.mpu_set_dmp_state
-                0x000000000001a110       0x88 _build/inv_mpu.o
-                0x000000000001a110                mpu_set_dmp_state
+                0x000000000001a0c0       0x88 _build/inv_mpu.o
+                0x000000000001a0c0                mpu_set_dmp_state
  .text.dmp_load_motion_driver_firmware
-                0x000000000001a198       0x1c _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a198                dmp_load_motion_driver_firmware
+                0x000000000001a148       0x1c _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a148                dmp_load_motion_driver_firmware
  .text.dmp_set_orientation
-                0x000000000001a1b4      0x128 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a1b4                dmp_set_orientation
+                0x000000000001a164      0x128 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a164                dmp_set_orientation
  .text.dmp_set_fifo_rate
-                0x000000000001a2dc       0x60 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a2dc                dmp_set_fifo_rate
+                0x000000000001a28c       0x60 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a28c                dmp_set_fifo_rate
  .text.dmp_set_tap_thresh
-                0x000000000001a33c      0x170 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a33c                dmp_set_tap_thresh
+                0x000000000001a2ec      0x170 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a2ec                dmp_set_tap_thresh
  .text.dmp_enable_feature
-                0x000000000001a4ac      0x290 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a4ac                dmp_enable_feature
+                0x000000000001a45c      0x290 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a45c                dmp_enable_feature
  .text.dmp_read_fifo
-                0x000000000001a73c      0x220 _build/inv_mpu_dmp_motion_driver.o
-                0x000000000001a73c                dmp_read_fifo
+                0x000000000001a6ec      0x220 _build/inv_mpu_dmp_motion_driver.o
+                0x000000000001a6ec                dmp_read_fifo
  .text.inv_orientation_matrix_to_scalar
-                0x000000000001a95c      0x138 _build/ml.o
-                0x000000000001a95c                inv_orientation_matrix_to_scalar
+                0x000000000001a90c      0x138 _build/ml.o
+                0x000000000001a90c                inv_orientation_matrix_to_scalar
  .text.update_euler_from_quaternions
-                0x000000000001aa94      0x198 _build/mpu_wrapper.o
-                0x000000000001aa94                update_euler_from_quaternions
+                0x000000000001aa44      0x198 _build/mpu_wrapper.o
+                0x000000000001aa44                update_euler_from_quaternions
  .text.get_dmp_data
-                0x000000000001ac2c       0x94 _build/mpu_wrapper.o
-                0x000000000001ac2c                get_dmp_data
+                0x000000000001abdc       0x94 _build/mpu_wrapper.o
+                0x000000000001abdc                get_dmp_data
  .text.check_sensor_int_flag
-                0x000000000001acc0       0x24 _build/mpu_wrapper.o
-                0x000000000001acc0                check_sensor_int_flag
+                0x000000000001ac70       0x24 _build/mpu_wrapper.o
+                0x000000000001ac70                check_sensor_int_flag
  .text.imu_init
-                0x000000000001ace4      0x10c _build/mpu_wrapper.o
-                0x000000000001ace4                imu_init
+                0x000000000001ac94       0xa0 _build/mpu_wrapper.o
+                0x000000000001ac94                imu_init
  .text.app_error_handler
-                0x000000000001adf0       0x40 _build/app_error.o
-                0x000000000001adf0                app_error_handler
+                0x000000000001ad34       0x40 _build/app_error.o
+                0x000000000001ad34                app_error_handler
  .text.rtc1_stop
-                0x000000000001ae30       0x78 _build/app_timer.o
+                0x000000000001ad74       0x78 _build/app_timer.o
  .text.RTC1_IRQHandler
-                0x000000000001aea8       0xe0 _build/app_timer.o
-                0x000000000001aea8                RTC1_IRQHandler
+                0x000000000001adec       0xe0 _build/app_timer.o
+                0x000000000001adec                RTC1_IRQHandler
  .text.SWI0_IRQHandler
-                0x000000000001af88      0x4b8 _build/app_timer.o
-                0x000000000001af88                SWI0_IRQHandler
+                0x000000000001aecc      0x4b8 _build/app_timer.o
+                0x000000000001aecc                SWI0_IRQHandler
  .text.app_timer_init
-                0x000000000001b440       0xe4 _build/app_timer.o
-                0x000000000001b440                app_timer_init
+                0x000000000001b384       0xe4 _build/app_timer.o
+                0x000000000001b384                app_timer_init
  .text.app_timer_create
-                0x000000000001b524       0x2c _build/app_timer.o
-                0x000000000001b524                app_timer_create
+                0x000000000001b468       0x2c _build/app_timer.o
+                0x000000000001b468                app_timer_create
  .text.app_timer_start
-                0x000000000001b550       0xf8 _build/app_timer.o
-                0x000000000001b550                app_timer_start
+                0x000000000001b494       0xf8 _build/app_timer.o
+                0x000000000001b494                app_timer_start
  .text.app_timer_stop
-                0x000000000001b648       0xc8 _build/app_timer.o
-                0x000000000001b648                app_timer_stop
+                0x000000000001b58c       0xc8 _build/app_timer.o
+                0x000000000001b58c                app_timer_stop
  .text.pstorage_access_status_get
-                0x000000000001b710       0x28 _build/pstorage.o
-                0x000000000001b710                pstorage_access_status_get
+                0x000000000001b654       0x28 _build/pstorage.o
+                0x000000000001b654                pstorage_access_status_get
  .text.sd_ble_gap_address_get
-                0x000000000001b738        0x4 _build/ble_advdata.o
+                0x000000000001b67c        0x4 _build/ble_advdata.o
  .text.sd_ble_gap_adv_data_set
-                0x000000000001b73c        0x4 _build/ble_advdata.o
+                0x000000000001b680        0x4 _build/ble_advdata.o
  .text.sd_ble_gap_appearance_get
-                0x000000000001b740        0x4 _build/ble_advdata.o
+                0x000000000001b684        0x4 _build/ble_advdata.o
  .text.sd_ble_gap_device_name_get
-                0x000000000001b744        0x4 _build/ble_advdata.o
+                0x000000000001b688        0x4 _build/ble_advdata.o
  .text.sd_ble_uuid_encode
-                0x000000000001b748        0x4 _build/ble_advdata.o
+                0x000000000001b68c        0x4 _build/ble_advdata.o
  .text.uuid_list_sized_encode.isra.0
-                0x000000000001b74c       0xf0 _build/ble_advdata.o
+                0x000000000001b690       0xf0 _build/ble_advdata.o
  .text.adv_data_encode
-                0x000000000001b83c      0x5cc _build/ble_advdata.o
-                0x000000000001b83c                adv_data_encode
+                0x000000000001b780      0x5cc _build/ble_advdata.o
+                0x000000000001b780                adv_data_encode
  .text.ble_advdata_set
-                0x000000000001be08       0x6c _build/ble_advdata.o
-                0x000000000001be08                ble_advdata_set
+                0x000000000001bd4c       0x6c _build/ble_advdata.o
+                0x000000000001bd4c                ble_advdata_set
  .text.sd_ble_gap_adv_start
-                0x000000000001be74        0x4 _build/ble_advertising.o
+                0x000000000001bdb8        0x4 _build/ble_advertising.o
  .text.ble_advertising_start.part.1
-                0x000000000001be78      0x298 _build/ble_advertising.o
+                0x000000000001bdbc      0x298 _build/ble_advertising.o
  .text.ble_advertising_init
-                0x000000000001c110      0x148 _build/ble_advertising.o
-                0x000000000001c110                ble_advertising_init
+                0x000000000001c054      0x148 _build/ble_advertising.o
+                0x000000000001c054                ble_advertising_init
  .text.ble_advertising_start
-                0x000000000001c258       0x3c _build/ble_advertising.o
-                0x000000000001c258                ble_advertising_start
+                0x000000000001c19c       0x3c _build/ble_advertising.o
+                0x000000000001c19c                ble_advertising_start
  .text.ble_advertising_on_ble_evt
-                0x000000000001c294      0x100 _build/ble_advertising.o
-                0x000000000001c294                ble_advertising_on_ble_evt
+                0x000000000001c1d8      0x100 _build/ble_advertising.o
+                0x000000000001c1d8                ble_advertising_on_ble_evt
  .text.sd_ble_gap_conn_param_update
-                0x000000000001c394        0x4 _build/ble_conn_params.o
+                0x000000000001c2d8        0x4 _build/ble_conn_params.o
  .text.sd_ble_gap_disconnect
-                0x000000000001c398        0x4 _build/ble_conn_params.o
+                0x000000000001c2dc        0x4 _build/ble_conn_params.o
  .text.sd_ble_gap_ppcp_set
-                0x000000000001c39c        0x4 _build/ble_conn_params.o
+                0x000000000001c2e0        0x4 _build/ble_conn_params.o
  .text.sd_ble_gap_ppcp_get
-                0x000000000001c3a0        0x4 _build/ble_conn_params.o
+                0x000000000001c2e4        0x4 _build/ble_conn_params.o
  .text.update_timeout_handler
-                0x000000000001c3a4       0x78 _build/ble_conn_params.o
+                0x000000000001c2e8       0x78 _build/ble_conn_params.o
  .text.conn_params_negotiation
-                0x000000000001c41c       0x88 _build/ble_conn_params.o
+                0x000000000001c360       0x88 _build/ble_conn_params.o
  .text.ble_conn_params_init
-                0x000000000001c4a4       0x78 _build/ble_conn_params.o
-                0x000000000001c4a4                ble_conn_params_init
+                0x000000000001c3e8       0x78 _build/ble_conn_params.o
+                0x000000000001c3e8                ble_conn_params_init
  .text.ble_conn_params_on_ble_evt
-                0x000000000001c51c       0xb4 _build/ble_conn_params.o
-                0x000000000001c51c                ble_conn_params_on_ble_evt
+                0x000000000001c460       0xb4 _build/ble_conn_params.o
+                0x000000000001c460                ble_conn_params_on_ble_evt
  .text.sd_ble_gatts_service_add
-                0x000000000001c5d0        0x4 _build/ble_nus.o
+                0x000000000001c514        0x4 _build/ble_nus.o
  .text.sd_ble_gatts_characteristic_add
-                0x000000000001c5d4        0x4 _build/ble_nus.o
+                0x000000000001c518        0x4 _build/ble_nus.o
  .text.sd_ble_uuid_vs_add
-                0x000000000001c5d8        0x4 _build/ble_nus.o
+                0x000000000001c51c        0x4 _build/ble_nus.o
  .text.ble_nus_on_ble_evt
-                0x000000000001c5dc       0x60 _build/ble_nus.o
-                0x000000000001c5dc                ble_nus_on_ble_evt
+                0x000000000001c520       0x60 _build/ble_nus.o
+                0x000000000001c520                ble_nus_on_ble_evt
  .text.ble_nus_init
-                0x000000000001c63c      0x180 _build/ble_nus.o
-                0x000000000001c63c                ble_nus_init
+                0x000000000001c580      0x180 _build/ble_nus.o
+                0x000000000001c580                ble_nus_init
  .text.sd_nvic_EnableIRQ
-                0x000000000001c7bc        0x4 _build/softdevice_handler.o
+                0x000000000001c700        0x4 _build/softdevice_handler.o
  .text.sd_evt_get
-                0x000000000001c7c0        0x4 _build/softdevice_handler.o
+                0x000000000001c704        0x4 _build/softdevice_handler.o
  .text.sd_softdevice_enable
-                0x000000000001c7c4        0x4 _build/softdevice_handler.o
+                0x000000000001c708        0x4 _build/softdevice_handler.o
  .text.sd_ble_evt_get
-                0x000000000001c7c8        0x4 _build/softdevice_handler.o
+                0x000000000001c70c        0x4 _build/softdevice_handler.o
  .text.softdevice_assertion_handler
-                0x000000000001c7cc        0xc _build/softdevice_handler.o
-                0x000000000001c7cc                softdevice_assertion_handler
+                0x000000000001c710        0xc _build/softdevice_handler.o
+                0x000000000001c710                softdevice_assertion_handler
  .text.intern_softdevice_events_execute.part.0
-                0x000000000001c7d8      0x108 _build/softdevice_handler.o
+                0x000000000001c71c      0x108 _build/softdevice_handler.o
  .text.softdevice_handler_init
-                0x000000000001c8e0       0x48 _build/softdevice_handler.o
-                0x000000000001c8e0                softdevice_handler_init
+                0x000000000001c824       0x48 _build/softdevice_handler.o
+                0x000000000001c824                softdevice_handler_init
  .text.softdevice_ble_evt_handler_set
-                0x000000000001c928       0x14 _build/softdevice_handler.o
-                0x000000000001c928                softdevice_ble_evt_handler_set
+                0x000000000001c86c       0x14 _build/softdevice_handler.o
+                0x000000000001c86c                softdevice_ble_evt_handler_set
  .text.SWI2_IRQHandler
-                0x000000000001c93c       0x34 _build/softdevice_handler.o
-                0x000000000001c93c                SWI2_IRQHandler
- .text.t20_packet_tx
-                0x000000000001c970       0x1c _build/t20.o
-                0x000000000001c970                t20_packet_tx
- .text          0x000000000001c98c       0x54 _build/gcc_startup_nrf51.o
-                0x000000000001c98c                Reset_Handler
-                0x000000000001c9d4                NMI_Handler
-                0x000000000001c9d6                HardFault_Handler
-                0x000000000001c9d8                SVC_Handler
-                0x000000000001c9da                PendSV_Handler
-                0x000000000001c9dc                SysTick_Handler
-                0x000000000001c9de                RTC0_IRQHandler
-                0x000000000001c9de                GPIOTE_IRQHandler
-                0x000000000001c9de                POWER_CLOCK_IRQHandler
-                0x000000000001c9de                RADIO_IRQHandler
-                0x000000000001c9de                LPCOMP_IRQHandler
-                0x000000000001c9de                SWI4_IRQHandler
-                0x000000000001c9de                TEMP_IRQHandler
-                0x000000000001c9de                QDEC_IRQHandler
-                0x000000000001c9de                SWI5_IRQHandler
-                0x000000000001c9de                TIMER0_IRQHandler
-                0x000000000001c9de                ECB_IRQHandler
-                0x000000000001c9de                Default_Handler
-                0x000000000001c9de                SWI3_IRQHandler
-                0x000000000001c9de                CCM_AAR_IRQHandler
-                0x000000000001c9de                WDT_IRQHandler
-                0x000000000001c9de                RNG_IRQHandler
-                0x000000000001c9de                SPI1_TWI1_IRQHandler
- .text.fabs     0x000000000001c9e0        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_fabs.o)
-                0x000000000001c9e0                fabs
- .text.asin     0x000000000001c9e8       0xbc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
-                0x000000000001c9e8                asin
- .text.atan2    0x000000000001caa4        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_atan2.o)
-                0x000000000001caa4                atan2
+                0x000000000001c880       0x34 _build/softdevice_handler.o
+                0x000000000001c880                SWI2_IRQHandler
+ .text.t20_packet_rx
+                0x000000000001c8b4       0x6c _build/t20.o
+                0x000000000001c8b4                t20_packet_rx
+ .text          0x000000000001c920       0x54 _build/gcc_startup_nrf51.o
+                0x000000000001c920                Reset_Handler
+                0x000000000001c968                NMI_Handler
+                0x000000000001c96a                HardFault_Handler
+                0x000000000001c96c                SVC_Handler
+                0x000000000001c96e                PendSV_Handler
+                0x000000000001c970                SysTick_Handler
+                0x000000000001c972                RTC0_IRQHandler
+                0x000000000001c972                GPIOTE_IRQHandler
+                0x000000000001c972                POWER_CLOCK_IRQHandler
+                0x000000000001c972                RADIO_IRQHandler
+                0x000000000001c972                LPCOMP_IRQHandler
+                0x000000000001c972                SWI4_IRQHandler
+                0x000000000001c972                TEMP_IRQHandler
+                0x000000000001c972                QDEC_IRQHandler
+                0x000000000001c972                SWI5_IRQHandler
+                0x000000000001c972                TIMER0_IRQHandler
+                0x000000000001c972                ECB_IRQHandler
+                0x000000000001c972                Default_Handler
+                0x000000000001c972                SWI3_IRQHandler
+                0x000000000001c972                CCM_AAR_IRQHandler
+                0x000000000001c972                WDT_IRQHandler
+                0x000000000001c972                RNG_IRQHandler
+                0x000000000001c972                SPI1_TWI1_IRQHandler
+ .text.fabs     0x000000000001c974        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_fabs.o)
+                0x000000000001c974                fabs
+ .text.asin     0x000000000001c97c       0xbc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
+                0x000000000001c97c                asin
+ .text.atan2    0x000000000001ca38        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_atan2.o)
+                0x000000000001ca38                atan2
  .text.__ieee754_asin
-                0x000000000001caac      0x3d0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_asin.o)
-                0x000000000001caac                __ieee754_asin
+                0x000000000001ca40      0x3d0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_asin.o)
+                0x000000000001ca40                __ieee754_asin
  .text.__ieee754_atan2
-                0x000000000001ce7c      0x17c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
-                0x000000000001ce7c                __ieee754_atan2
+                0x000000000001ce10      0x17c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_atan2.o)
+                0x000000000001ce10                __ieee754_atan2
  .text.__ieee754_sqrt
-                0x000000000001cff8      0x1bc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_sqrt.o)
-                0x000000000001cff8                __ieee754_sqrt
- .text.atan     0x000000000001d1b4      0x324 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
-                0x000000000001d1b4                atan
- .text.matherr  0x000000000001d4d8        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_matherr.o)
-                0x000000000001d4d8                matherr
- .text.nan      0x000000000001d4dc        0xc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_nan.o)
-                0x000000000001d4dc                nan
- .text          0x000000000001d4e8      0x114 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
-                0x000000000001d4e8                __udivsi3
-                0x000000000001d4e8                __aeabi_uidiv
-                0x000000000001d5f4                __aeabi_uidivmod
- .text          0x000000000001d5fc      0x1d4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
-                0x000000000001d5fc                __aeabi_idiv
-                0x000000000001d5fc                __divsi3
-                0x000000000001d7c8                __aeabi_idivmod
- .text          0x000000000001d7d0        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
-                0x000000000001d7d0                __aeabi_ldiv0
-                0x000000000001d7d0                __aeabi_idiv0
- .text          0x000000000001d7d4       0x7c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpdf2.o)
-                0x000000000001d7d4                __aeabi_cdrcmple
-                0x000000000001d7e4                __aeabi_cdcmple
-                0x000000000001d7e4                __aeabi_cdcmpeq
-                0x000000000001d7f4                __aeabi_dcmpeq
-                0x000000000001d800                __aeabi_dcmplt
-                0x000000000001d814                __aeabi_dcmple
-                0x000000000001d828                __aeabi_dcmpgt
-                0x000000000001d83c                __aeabi_dcmpge
- .text          0x000000000001d850       0x74 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
-                0x000000000001d850                __aeabi_cfrcmple
-                0x000000000001d858                __aeabi_cfcmple
-                0x000000000001d858                __aeabi_cfcmpeq
-                0x000000000001d868                __aeabi_fcmpeq
-                0x000000000001d874                __aeabi_fcmplt
-                0x000000000001d888                __aeabi_fcmple
-                0x000000000001d89c                __aeabi_fcmpgt
-                0x000000000001d8b0                __aeabi_fcmpge
- .text          0x000000000001d8c4       0x54 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_muldi3.o)
-                0x000000000001d8c4                __aeabi_lmul
-                0x000000000001d8c4                __muldi3
- .text          0x000000000001d918       0x30 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_fixunssfsi.o)
-                0x000000000001d918                __aeabi_f2uiz
-                0x000000000001d918                __fixunssfsi
- .text          0x000000000001d948      0x2f8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(addsf3.o)
-                0x000000000001d948                __aeabi_fadd
- .text          0x000000000001dc40      0x230 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
-                0x000000000001dc40                __aeabi_fdiv
- .text          0x000000000001de70       0x50 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
-                0x000000000001de70                __nesf2
-                0x000000000001de70                __eqsf2
- .text          0x000000000001dec0       0x9c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(gesf2.o)
-                0x000000000001dec0                __gtsf2
-                0x000000000001dec0                __gesf2
- .text          0x000000000001df5c       0x9c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(lesf2.o)
-                0x000000000001df5c                __lesf2
-                0x000000000001df5c                __ltsf2
- .text          0x000000000001dff8      0x22c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
-                0x000000000001dff8                __aeabi_fmul
- .text          0x000000000001e224      0x34c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(subsf3.o)
-                0x000000000001e224                __aeabi_fsub
- .text          0x000000000001e570       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(fixsfsi.o)
-                0x000000000001e570                __aeabi_f2iz
- .text          0x000000000001e5b0       0x94 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(floatsisf.o)
-                0x000000000001e5b0                __aeabi_i2f
- .text          0x000000000001e644       0x80 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
-                0x000000000001e644                __aeabi_ui2f
- .text          0x000000000001e6c4      0x6ec /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(adddf3.o)
-                0x000000000001e6c4                __aeabi_dadd
- .text          0x000000000001edb0      0x5ec /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
-                0x000000000001edb0                __aeabi_ddiv
- .text          0x000000000001f39c       0x80 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(eqdf2.o)
-                0x000000000001f39c                __eqdf2
-                0x000000000001f39c                __nedf2
- .text          0x000000000001f41c       0xc8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(gedf2.o)
-                0x000000000001f41c                __gtdf2
-                0x000000000001f41c                __gedf2
- .text          0x000000000001f4e4       0xc8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(ledf2.o)
-                0x000000000001f4e4                __ltdf2
-                0x000000000001f4e4                __ledf2
- .text          0x000000000001f5ac      0x510 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
-                0x000000000001f5ac                __aeabi_dmul
- .text          0x000000000001fabc      0x730 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(subdf3.o)
-                0x000000000001fabc                __aeabi_dsub
- .text          0x00000000000201ec       0x38 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(unorddf2.o)
-                0x00000000000201ec                __aeabi_dcmpun
- .text          0x0000000000020224       0x6c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(fixdfsi.o)
-                0x0000000000020224                __aeabi_d2iz
- .text          0x0000000000020290       0xa4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(extendsfdf2.o)
-                0x0000000000020290                __aeabi_f2d
- .text          0x0000000000020334       0x3c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
-                0x0000000000020334                __clzsi2
- .text.__errno  0x0000000000020370        0xc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-errno.o)
-                0x0000000000020370                __errno
- .text.memcmp   0x000000000002037c       0x1c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcmp.o)
-                0x000000000002037c                memcmp
- .text.memcpy   0x0000000000020398       0x12 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcpy-stub.o)
-                0x0000000000020398                memcpy
- *fill*         0x00000000000203aa        0x2 
- .text.printf   0x00000000000203ac       0x34 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-printf.o)
-                0x00000000000203ac                printf
-                0x00000000000203ac                iprintf
- .text.sprintf  0x00000000000203e0       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sprintf.o)
-                0x00000000000203e0                sprintf
-                0x00000000000203e0                siprintf
- .text          0x0000000000020420        0xe /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-strlen.o)
-                0x0000000000020420                strlen
- *fill*         0x000000000002042e        0x2 
- .text.std      0x0000000000020430       0x48 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x000000000001cf8c      0x1bc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-e_sqrt.o)
+                0x000000000001cf8c                __ieee754_sqrt
+ .text.atan     0x000000000001d148      0x324 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
+                0x000000000001d148                atan
+ .text.matherr  0x000000000001d46c        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_matherr.o)
+                0x000000000001d46c                matherr
+ .text.nan      0x000000000001d470        0xc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_nan.o)
+                0x000000000001d470                nan
+ .text          0x000000000001d47c      0x114 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_udivsi3.o)
+                0x000000000001d47c                __udivsi3
+                0x000000000001d47c                __aeabi_uidiv
+                0x000000000001d588                __aeabi_uidivmod
+ .text          0x000000000001d590      0x1d4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_divsi3.o)
+                0x000000000001d590                __aeabi_idiv
+                0x000000000001d590                __divsi3
+                0x000000000001d75c                __aeabi_idivmod
+ .text          0x000000000001d764        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
+                0x000000000001d764                __aeabi_ldiv0
+                0x000000000001d764                __aeabi_idiv0
+ .text          0x000000000001d768       0x7c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpdf2.o)
+                0x000000000001d768                __aeabi_cdrcmple
+                0x000000000001d778                __aeabi_cdcmple
+                0x000000000001d778                __aeabi_cdcmpeq
+                0x000000000001d788                __aeabi_dcmpeq
+                0x000000000001d794                __aeabi_dcmplt
+                0x000000000001d7a8                __aeabi_dcmple
+                0x000000000001d7bc                __aeabi_dcmpgt
+                0x000000000001d7d0                __aeabi_dcmpge
+ .text          0x000000000001d7e4       0x74 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                0x000000000001d7e4                __aeabi_cfrcmple
+                0x000000000001d7ec                __aeabi_cfcmple
+                0x000000000001d7ec                __aeabi_cfcmpeq
+                0x000000000001d7fc                __aeabi_fcmpeq
+                0x000000000001d808                __aeabi_fcmplt
+                0x000000000001d81c                __aeabi_fcmple
+                0x000000000001d830                __aeabi_fcmpgt
+                0x000000000001d844                __aeabi_fcmpge
+ .text          0x000000000001d858       0x54 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_muldi3.o)
+                0x000000000001d858                __aeabi_lmul
+                0x000000000001d858                __muldi3
+ .text          0x000000000001d8ac       0x30 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_fixunssfsi.o)
+                0x000000000001d8ac                __aeabi_f2uiz
+                0x000000000001d8ac                __fixunssfsi
+ .text          0x000000000001d8dc      0x2f8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(addsf3.o)
+                0x000000000001d8dc                __aeabi_fadd
+ .text          0x000000000001dbd4      0x230 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
+                0x000000000001dbd4                __aeabi_fdiv
+ .text          0x000000000001de04       0x50 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(eqsf2.o)
+                0x000000000001de04                __nesf2
+                0x000000000001de04                __eqsf2
+ .text          0x000000000001de54       0x9c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(gesf2.o)
+                0x000000000001de54                __gtsf2
+                0x000000000001de54                __gesf2
+ .text          0x000000000001def0       0x9c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(lesf2.o)
+                0x000000000001def0                __lesf2
+                0x000000000001def0                __ltsf2
+ .text          0x000000000001df8c      0x22c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+                0x000000000001df8c                __aeabi_fmul
+ .text          0x000000000001e1b8      0x34c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(subsf3.o)
+                0x000000000001e1b8                __aeabi_fsub
+ .text          0x000000000001e504       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(fixsfsi.o)
+                0x000000000001e504                __aeabi_f2iz
+ .text          0x000000000001e544       0x94 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(floatsisf.o)
+                0x000000000001e544                __aeabi_i2f
+ .text          0x000000000001e5d8       0x80 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(floatunsisf.o)
+                0x000000000001e5d8                __aeabi_ui2f
+ .text          0x000000000001e658      0x6ec /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(adddf3.o)
+                0x000000000001e658                __aeabi_dadd
+ .text          0x000000000001ed44      0x5ec /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
+                0x000000000001ed44                __aeabi_ddiv
+ .text          0x000000000001f330       0x80 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(eqdf2.o)
+                0x000000000001f330                __eqdf2
+                0x000000000001f330                __nedf2
+ .text          0x000000000001f3b0       0xc8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(gedf2.o)
+                0x000000000001f3b0                __gtdf2
+                0x000000000001f3b0                __gedf2
+ .text          0x000000000001f478       0xc8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(ledf2.o)
+                0x000000000001f478                __ltdf2
+                0x000000000001f478                __ledf2
+ .text          0x000000000001f540      0x510 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
+                0x000000000001f540                __aeabi_dmul
+ .text          0x000000000001fa50      0x730 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(subdf3.o)
+                0x000000000001fa50                __aeabi_dsub
+ .text          0x0000000000020180       0x38 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(unorddf2.o)
+                0x0000000000020180                __aeabi_dcmpun
+ .text          0x00000000000201b8       0x6c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(fixdfsi.o)
+                0x00000000000201b8                __aeabi_d2iz
+ .text          0x0000000000020224       0xa4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(extendsfdf2.o)
+                0x0000000000020224                __aeabi_f2d
+ .text          0x00000000000202c8       0x3c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(_clzsi2.o)
+                0x00000000000202c8                __clzsi2
+ .text.__errno  0x0000000000020304        0xc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-errno.o)
+                0x0000000000020304                __errno
+ .text.memcmp   0x0000000000020310       0x1c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcmp.o)
+                0x0000000000020310                memcmp
+ .text.memcpy   0x000000000002032c       0x12 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memcpy-stub.o)
+                0x000000000002032c                memcpy
+ *fill*         0x000000000002033e        0x2 
+ .text.printf   0x0000000000020340       0x34 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-printf.o)
+                0x0000000000020340                printf
+                0x0000000000020340                iprintf
+ .text.sprintf  0x0000000000020374       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sprintf.o)
+                0x0000000000020374                sprintf
+                0x0000000000020374                siprintf
+ .text          0x00000000000203b4        0xe /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-strlen.o)
+                0x00000000000203b4                strlen
+ *fill*         0x00000000000203c2        0x2 
+ .text.std      0x00000000000203c4       0x48 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
  .text._cleanup_r
-                0x0000000000020478       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000020478                _cleanup_r
+                0x000000000002040c       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x000000000002040c                _cleanup_r
  .text.__sfmoreglue
-                0x0000000000020488       0x2c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000020488                __sfmoreglue
+                0x000000000002041c       0x2c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x000000000002041c                __sfmoreglue
  .text.__sfp_lock_acquire
-                0x00000000000204b4       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000204b4                __sfp_lock_acquire
+                0x0000000000020448       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020448                __sfp_lock_acquire
  .text.__sfp_lock_release
-                0x00000000000204c4       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000204c4                __sfp_lock_release
+                0x0000000000020458       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020458                __sfp_lock_release
  .text.__sinit_lock_acquire
-                0x00000000000204d4       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000204d4                __sinit_lock_acquire
+                0x0000000000020468       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020468                __sinit_lock_acquire
  .text.__sinit_lock_release
-                0x00000000000204e4       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000204e4                __sinit_lock_release
- .text.__sinit  0x00000000000204f4       0x70 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x00000000000204f4                __sinit
- .text.__sfp    0x0000000000020564       0x90 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000020564                __sfp
+                0x0000000000020478       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020478                __sinit_lock_release
+ .text.__sinit  0x0000000000020488       0x70 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000020488                __sinit
+ .text.__sfp    0x00000000000204f8       0x90 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x00000000000204f8                __sfp
  .text._fwalk_reent
-                0x00000000000205f4       0x42 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fwalk.o)
-                0x00000000000205f4                _fwalk_reent
+                0x0000000000020588       0x42 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fwalk.o)
+                0x0000000000020588                _fwalk_reent
  .text.__retarget_lock_init_recursive
-                0x0000000000020636        0x2 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
-                0x0000000000020636                __retarget_lock_init_recursive
+                0x00000000000205ca        0x2 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
+                0x00000000000205ca                __retarget_lock_init_recursive
  .text.__retarget_lock_acquire_recursive
-                0x0000000000020638        0x2 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
-                0x0000000000020638                __retarget_lock_acquire_recursive
+                0x00000000000205cc        0x2 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
+                0x00000000000205cc                __retarget_lock_acquire_recursive
  .text.__retarget_lock_release_recursive
-                0x000000000002063a        0x2 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
-                0x000000000002063a                __retarget_lock_release_recursive
+                0x00000000000205ce        0x2 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lock.o)
+                0x00000000000205ce                __retarget_lock_release_recursive
  .text._malloc_r
-                0x000000000002063c       0xbc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-mallocr.o)
-                0x000000000002063c                _malloc_r
+                0x00000000000205d0       0xbc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-mallocr.o)
+                0x00000000000205d0                _malloc_r
  .text.__ssputs_r
-                0x00000000000206f8       0xc4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
-                0x00000000000206f8                __ssputs_r
+                0x000000000002068c       0xc4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x000000000002068c                __ssputs_r
  .text._svfprintf_r
-                0x00000000000207bc      0x1fc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
-                0x00000000000207bc                _svfprintf_r
-                0x00000000000207bc                _svfiprintf_r
+                0x0000000000020750      0x1fc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000000020750                _svfprintf_r
+                0x0000000000020750                _svfiprintf_r
  .text.__sfputc_r
-                0x00000000000209b8       0x2a /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x000000000002094c       0x2a /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
  .text.__sfputs_r
-                0x00000000000209e2       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
-                0x00000000000209e2                __sfputs_r
- *fill*         0x0000000000020a06        0x2 
+                0x0000000000020976       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x0000000000020976                __sfputs_r
+ *fill*         0x000000000002099a        0x2 
  .text._vfprintf_r
-                0x0000000000020a08      0x26c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
-                0x0000000000020a08                _vfiprintf_r
-                0x0000000000020a08                _vfprintf_r
+                0x000000000002099c      0x26c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x000000000002099c                _vfiprintf_r
+                0x000000000002099c                _vfprintf_r
  .text._printf_common
-                0x0000000000020c74       0xda /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0000000000020c74                _printf_common
- *fill*         0x0000000000020d4e        0x2 
+                0x0000000000020c08       0xda /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000000020c08                _printf_common
+ *fill*         0x0000000000020ce2        0x2 
  .text._printf_i
-                0x0000000000020d50      0x214 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0000000000020d50                _printf_i
- .text._sbrk_r  0x0000000000020f64       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sbrkr.o)
-                0x0000000000020f64                _sbrk_r
- .text.__sread  0x0000000000020f88       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
-                0x0000000000020f88                __sread
+                0x0000000000020ce4      0x214 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000000020ce4                _printf_i
+ .text._sbrk_r  0x0000000000020ef8       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-sbrkr.o)
+                0x0000000000020ef8                _sbrk_r
+ .text.__sread  0x0000000000020f1c       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x0000000000020f1c                __sread
  .text.__swrite
-                0x0000000000020fb0       0x38 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
-                0x0000000000020fb0                __swrite
- .text.__sseek  0x0000000000020fe8       0x2c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
-                0x0000000000020fe8                __sseek
+                0x0000000000020f44       0x38 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x0000000000020f44                __swrite
+ .text.__sseek  0x0000000000020f7c       0x2c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x0000000000020f7c                __sseek
  .text.__sclose
-                0x0000000000021014        0xc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
-                0x0000000000021014                __sclose
+                0x0000000000020fa8        0xc /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-stdio.o)
+                0x0000000000020fa8                __sclose
  .text.__swbuf_r
-                0x0000000000021020       0xac /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wbuf.o)
-                0x0000000000021020                __swbuf_r
+                0x0000000000020fb4       0xac /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wbuf.o)
+                0x0000000000020fb4                __swbuf_r
  .text._write_r
-                0x00000000000210cc       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-writer.o)
-                0x00000000000210cc                _write_r
+                0x0000000000021060       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-writer.o)
+                0x0000000000021060                _write_r
  .text.__swsetup_r
-                0x00000000000210f4       0xec /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wsetup.o)
-                0x00000000000210f4                __swsetup_r
+                0x0000000000021088       0xec /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-wsetup.o)
+                0x0000000000021088                __swsetup_r
  .text._close_r
-                0x00000000000211e0       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-closer.o)
-                0x00000000000211e0                _close_r
+                0x0000000000021174       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-closer.o)
+                0x0000000000021174                _close_r
  .text.__sflush_r
-                0x0000000000021204      0x114 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
-                0x0000000000021204                __sflush_r
+                0x0000000000021198      0x114 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
+                0x0000000000021198                __sflush_r
  .text._fflush_r
-                0x0000000000021318       0x80 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
-                0x0000000000021318                _fflush_r
+                0x00000000000212ac       0x80 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fflush.o)
+                0x00000000000212ac                _fflush_r
  .text._lseek_r
-                0x0000000000021398       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lseekr.o)
-                0x0000000000021398                _lseek_r
+                0x000000000002132c       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-lseekr.o)
+                0x000000000002132c                _lseek_r
  .text.__swhatbuf_r
-                0x00000000000213c0       0x50 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
-                0x00000000000213c0                __swhatbuf_r
+                0x0000000000021354       0x50 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
+                0x0000000000021354                __swhatbuf_r
  .text.__smakebuf_r
-                0x0000000000021410       0x88 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
-                0x0000000000021410                __smakebuf_r
- .text.memchr   0x0000000000021498       0x16 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memchr-stub.o)
-                0x0000000000021498                memchr
- .text.memmove  0x00000000000214ae       0x26 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memmove.o)
-                0x00000000000214ae                memmove
+                0x00000000000213a4       0x88 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-makebuf.o)
+                0x00000000000213a4                __smakebuf_r
+ .text.memchr   0x000000000002142c       0x16 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memchr-stub.o)
+                0x000000000002142c                memchr
+ .text.memmove  0x0000000000021442       0x26 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-memmove.o)
+                0x0000000000021442                memmove
  .text.__malloc_lock
-                0x00000000000214d4       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
-                0x00000000000214d4                __malloc_lock
+                0x0000000000021468       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
+                0x0000000000021468                __malloc_lock
  .text.__malloc_unlock
-                0x00000000000214e4       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
-                0x00000000000214e4                __malloc_unlock
- .text._free_r  0x00000000000214f4       0x94 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-freer.o)
-                0x00000000000214f4                _free_r
+                0x0000000000021478       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-mlock.o)
+                0x0000000000021478                __malloc_unlock
+ .text._free_r  0x0000000000021488       0x94 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-freer.o)
+                0x0000000000021488                _free_r
  .text._realloc_r
-                0x0000000000021588       0x4c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-reallocr.o)
-                0x0000000000021588                _realloc_r
- .text._read_r  0x00000000000215d4       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-readr.o)
-                0x00000000000215d4                _read_r
+                0x000000000002151c       0x4c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-reallocr.o)
+                0x000000000002151c                _realloc_r
+ .text._read_r  0x0000000000021568       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-readr.o)
+                0x0000000000021568                _read_r
  .text._fstat_r
-                0x00000000000215fc       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fstatr.o)
-                0x00000000000215fc                _fstat_r
+                0x0000000000021590       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-fstatr.o)
+                0x0000000000021590                _fstat_r
  .text._isatty_r
-                0x0000000000021620       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-isattyr.o)
-                0x0000000000021620                _isatty_r
+                0x00000000000215b4       0x24 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-isattyr.o)
+                0x00000000000215b4                _isatty_r
  .text._malloc_usable_size_r
-                0x0000000000021644       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-msizer.o)
-                0x0000000000021644                _malloc_usable_size_r
- .text._close   0x0000000000021654       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(close.o)
-                0x0000000000021654                _close
- .text._fstat   0x0000000000021664       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(fstat.o)
-                0x0000000000021664                _fstat
- .text._isatty  0x0000000000021674       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(isatty.o)
-                0x0000000000021674                _isatty
- .text._lseek   0x0000000000021684       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
-                0x0000000000021684                _lseek
- .text._read    0x0000000000021694       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(read.o)
-                0x0000000000021694                _read
- .text._sbrk    0x00000000000216a4       0x1c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(sbrk.o)
-                0x00000000000216a4                _sbrk
+                0x00000000000215d8       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-msizer.o)
+                0x00000000000215d8                _malloc_usable_size_r
+ .text._close   0x00000000000215e8       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(close.o)
+                0x00000000000215e8                _close
+ .text._fstat   0x00000000000215f8       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(fstat.o)
+                0x00000000000215f8                _fstat
+ .text._isatty  0x0000000000021608       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(isatty.o)
+                0x0000000000021608                _isatty
+ .text._lseek   0x0000000000021618       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(lseek.o)
+                0x0000000000021618                _lseek
+ .text._read    0x0000000000021628       0x10 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(read.o)
+                0x0000000000021628                _read
+ .text._sbrk    0x0000000000021638       0x1c /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libnosys.a(sbrk.o)
+                0x0000000000021638                _sbrk
  *(.init)
- .init          0x00000000000216c0        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crti.o
-                0x00000000000216c0                _init
- .init          0x00000000000216c4        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtn.o
+ .init          0x0000000000021654        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crti.o
+                0x0000000000021654                _init
+ .init          0x0000000000021658        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtn.o
  *(.fini)
- .fini          0x00000000000216cc        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crti.o
-                0x00000000000216cc                _fini
- .fini          0x00000000000216d0        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtn.o
+ .fini          0x0000000000021660        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crti.o
+                0x0000000000021660                _fini
+ .fini          0x0000000000021664        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtn.o
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -1620,115 +1619,118 @@ END GROUP
  *(.dtors)
  *(.rodata*)
  .rodata._global_impure_ptr
-                0x00000000000216d8        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-impure.o)
-                0x00000000000216d8                _global_impure_ptr
+                0x000000000002166c        0x4 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-impure.o)
+                0x000000000002166c                _global_impure_ptr
  .rodata.process_key
-                0x00000000000216dc      0x178 _build/in4073.o
+                0x0000000000021670      0x174 _build/in4073.o
  .rodata.main.str1.4
-                0x0000000000021854        0xe _build/in4073.o
- *fill*         0x0000000000021862        0x2 
+                0x00000000000217e4        0xe _build/in4073.o
+ *fill*         0x00000000000217f2        0x2 
+ .rodata.process_key.str1.4
+                0x00000000000217f4        0xc _build/in4073.o
  .rodata.quadrupel_timer.7168
-                0x0000000000021864        0x4 _build/timers.o
+                0x0000000000021800        0x4 _build/timers.o
  .rodata.UART0_IRQHandler.str1.4
-                0x0000000000021868       0x11 _build/uart.o
- *fill*         0x0000000000021879        0x3 
+                0x0000000000021804       0x11 _build/uart.o
+ *fill*         0x0000000000021815        0x3 
  .rodata.SPI0_TWI0_IRQHandler.str1.4
-                0x000000000002187c       0x38 _build/twi.o
+                0x0000000000021818       0x38 _build/twi.o
  .rodata.ble_init.str1.4
-                0x00000000000218b4       0x12 _build/ble.o
- *fill*         0x00000000000218c6        0x2 
- .rodata.hw     0x00000000000218c8        0xc _build/inv_mpu.o
-                0x00000000000218c8                hw
+                0x0000000000021850       0x12 _build/ble.o
+ *fill*         0x0000000000021862        0x2 
+ .rodata.hw     0x0000000000021864        0xc _build/inv_mpu.o
+                0x0000000000021864                hw
  .rodata.mpu_init.str1.4
-                0x00000000000218d4       0x96 _build/inv_mpu.o
- *fill*         0x000000000002196a        0x2 
- .rodata.reg    0x000000000002196c       0x1e _build/inv_mpu.o
-                0x000000000002196c                reg
- *fill*         0x000000000002198a        0x2 
- .rodata.test   0x000000000002198c       0x28 _build/inv_mpu.o
-                0x000000000002198c                test
- .rodata        0x00000000000219b4       0x3b _build/inv_mpu_dmp_motion_driver.o
- *fill*         0x00000000000219ef        0x1 
+                0x0000000000021870       0x96 _build/inv_mpu.o
+ *fill*         0x0000000000021906        0x2 
+ .rodata.reg    0x0000000000021908       0x1e _build/inv_mpu.o
+                0x0000000000021908                reg
+ *fill*         0x0000000000021926        0x2 
+ .rodata.test   0x0000000000021928       0x28 _build/inv_mpu.o
+                0x0000000000021928                test
+ .rodata        0x0000000000021950       0x3b _build/inv_mpu_dmp_motion_driver.o
+ *fill*         0x000000000002198b        0x1 
  .rodata.dmp_memory
-                0x00000000000219f0      0xbf6 _build/inv_mpu_dmp_motion_driver.o
- *fill*         0x00000000000225e6        0x2 
+                0x000000000002198c      0xbf6 _build/inv_mpu_dmp_motion_driver.o
+ *fill*         0x0000000000022582        0x2 
  .rodata.get_dmp_data.str1.4
-                0x00000000000225e8       0x1f _build/mpu_wrapper.o
- *fill*         0x0000000000022607        0x1 
+                0x0000000000022584       0x1f _build/mpu_wrapper.o
+ *fill*         0x00000000000225a3        0x1 
  .rodata.imu_init.str1.4
-                0x0000000000022608      0x106 _build/mpu_wrapper.o
- *fill*         0x000000000002270e        0x2 
+                0x00000000000225a4       0x2e _build/mpu_wrapper.o
+ *fill*         0x00000000000225d2        0x2 
  .rodata.app_error_handler.str1.4
-                0x0000000000022710       0x27 _build/app_error.o
- *fill*         0x0000000000022737        0x1 
+                0x00000000000225d4       0x27 _build/app_error.o
+ *fill*         0x00000000000225fb        0x1 
  .rodata.m_conn_params_timer_id
-                0x0000000000022738        0x4 _build/ble_conn_params.o
- .rodata        0x000000000002273c       0x10 _build/ble_nus.o
+                0x00000000000225fc        0x4 _build/ble_conn_params.o
+ .rodata        0x0000000000022600       0x10 _build/ble_nus.o
+ .rodata.t20_packet_rx.str1.4
+                0x0000000000022610       0x60 _build/t20.o
  .rodata.asin.str1.4
-                0x000000000002274c        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
+                0x0000000000022670        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
                                           0x9 (size before relaxing)
- *fill*         0x0000000000022754        0x4 
  .rodata.atanhi
-                0x0000000000022758       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
+                0x0000000000022678       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
  .rodata.atanlo
-                0x0000000000022778       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
- .rodata        0x0000000000022798       0xac /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
- .rodata        0x0000000000022844       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
- .rodata        0x0000000000022884       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
- .rodata        0x00000000000228c4       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
+                0x0000000000022698       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-s_atan.o)
+ .rodata        0x00000000000226b8       0xac /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(divsf3.o)
+ .rodata        0x0000000000022764       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(mulsf3.o)
+ .rodata        0x00000000000227a4       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(divdf3.o)
+ .rodata        0x00000000000227e4       0x40 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/libgcc.a(muldf3.o)
  .rodata.__sf_fake_stderr
-                0x0000000000022904       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000022904                __sf_fake_stderr
+                0x0000000000022824       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000022824                __sf_fake_stderr
  .rodata.__sf_fake_stdin
-                0x0000000000022924       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000022924                __sf_fake_stdin
+                0x0000000000022844       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000022844                __sf_fake_stdin
  .rodata.__sf_fake_stdout
-                0x0000000000022944       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
-                0x0000000000022944                __sf_fake_stdout
+                0x0000000000022864       0x20 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-findfp.o)
+                0x0000000000022864                __sf_fake_stdout
  .rodata._svfprintf_r.str1.1
-                0x0000000000022964       0x11 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000000022884       0x11 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-svfprintf.o)
  .rodata._vfprintf_r.str1.1
-                0x0000000000022975       0x11 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
+                0x0000000000022895       0x11 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf.o)
  .rodata._printf_i.str1.1
-                0x0000000000022975       0x22 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000000022895       0x22 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-nano-vfprintf_i.o)
  *(.eh_frame*)
- *fill*         0x0000000000022997        0x1 
- .eh_frame      0x0000000000022998        0x0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtbegin.o
-                0x0000000000022998                . = ALIGN (0x4)
+ *fill*         0x00000000000228b7        0x1 
+ .eh_frame      0x00000000000228b8        0x0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtbegin.o
+                0x00000000000228b8                . = ALIGN (0x4)
 
-.glue_7         0x0000000000022998        0x0
- .glue_7        0x0000000000022998        0x0 linker stubs
+.glue_7         0x00000000000228b8        0x0
+ .glue_7        0x00000000000228b8        0x0 linker stubs
 
-.glue_7t        0x0000000000022998        0x0
- .glue_7t       0x0000000000022998        0x0 linker stubs
+.glue_7t        0x00000000000228b8        0x0
+ .glue_7t       0x00000000000228b8        0x0 linker stubs
 
-.vfp11_veneer   0x0000000000022998        0x0
- .vfp11_veneer  0x0000000000022998        0x0 linker stubs
+.vfp11_veneer   0x00000000000228b8        0x0
+ .vfp11_veneer  0x00000000000228b8        0x0 linker stubs
 
-.v4_bx          0x0000000000022998        0x0
- .v4_bx         0x0000000000022998        0x0 linker stubs
+.v4_bx          0x00000000000228b8        0x0
+ .v4_bx         0x00000000000228b8        0x0 linker stubs
 
-.iplt           0x0000000000022998        0x0
- .iplt          0x0000000000022998        0x0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtbegin.o
+.iplt           0x00000000000228b8        0x0
+ .iplt          0x00000000000228b8        0x0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtbegin.o
 
-.ARM.extab      0x0000000000022998        0x0
+.ARM.extab      0x00000000000228b8        0x0
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0000000000022998                . = ALIGN (0x4)
-                0x0000000000022998                __exidx_start = .
+                0x00000000000228b8                . = ALIGN (0x4)
+                0x00000000000228b8                __exidx_start = .
 
-.ARM.exidx      0x0000000000022998        0x8
+.ARM.exidx      0x00000000000228b8        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x0000000000022998        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/crt0.o
- .ARM.exidx     0x00000000000229a0        0x0 _build/gcc_startup_nrf51.o
+ .ARM.exidx     0x00000000000228b8        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/crt0.o
+ .ARM.exidx     0x00000000000228c0        0x0 _build/gcc_startup_nrf51.o
                                           0x8 (size before relaxing)
-                0x00000000000229a0                . = ALIGN (0x4)
-                0x00000000000229a0                __exidx_end = .
-                0x00000000000229a0                __etext = .
+                0x00000000000228c0                . = ALIGN (0x4)
+                0x00000000000228c0                __exidx_end = .
+                0x00000000000228c0                __etext = .
 
-.rel.dyn        0x00000000000229a0        0x0
- .rel.iplt      0x00000000000229a0        0x0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtbegin.o
+.rel.dyn        0x00000000000228c0        0x0
+ .rel.iplt      0x00000000000228c0        0x0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtbegin.o
 
-.data           0x0000000020002000       0xb4 load address 0x00000000000229a0
+.data           0x0000000020002000       0xb4 load address 0x00000000000228c0
                 0x0000000020002000                __data_start__ = .
  *(vtable)
  *(.data*)
@@ -1776,10 +1778,10 @@ END GROUP
                 0x00000000200020b4                . = ALIGN (0x4)
                 0x00000000200020b4                __data_end__ = .
 
-.igot.plt       0x00000000200020b4        0x0 load address 0x0000000000022a54
+.igot.plt       0x00000000200020b4        0x0 load address 0x0000000000022974
  .igot.plt      0x00000000200020b4        0x0 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v6-m/nofp/crtbegin.o
 
-.bss            0x00000000200020b4      0x9b4 load address 0x0000000000022a54
+.bss            0x00000000200020b4      0x9b4 load address 0x0000000000022974
                 0x00000000200020b4                . = ALIGN (0x4)
                 0x00000000200020b4                __bss_start__ = .
  *(.bss*)

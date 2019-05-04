@@ -173,6 +173,18 @@ int 	rs232_putchar(char c)
 	return result;
 }
 
+void send_packets(){
+
+	char byte1 = 0xAA;
+	char byte2 = 0x04;
+	char byte3 = 0xED;
+	for (int i = 0; i < 1000; i++)
+	{
+		rs232_putchar(byte1);
+		rs232_putchar(byte2);
+		rs232_putchar(byte3);
+	}
+}
 
 /*----------------------------------------------------------------
  * main -- execute terminal
@@ -204,7 +216,9 @@ int main(int argc, char **argv)
 		if ((c = rs232_getchar_nb()) != -1)
 			term_putchar(c);
 
+		send_packets();
 	}
+	
 
 	term_exitio();
 	rs232_close();
