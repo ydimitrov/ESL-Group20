@@ -210,8 +210,8 @@ int main(int argc, char **argv)
 	 */
 	for (;;)
 	{
-		if ((c = term_getchar_nb()) != -1)
-			rs232_putchar(c);
+		// if ((c = term_getchar_nb()) != -1)
+		// 	rs232_putchar(c);
 
 		if ((c = rs232_getchar_nb()) != -1)
 			term_putchar(c);

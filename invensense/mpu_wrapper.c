@@ -104,8 +104,6 @@ void imu_init(bool dmp, uint16_t freq)
 
 	if (dmp)
 	{
-
-
 		dmp_load_motion_driver_firmware();
 		dmp_set_orientation(inv_orientation_matrix_to_scalar(gyro_orientation));
 		dmp_enable_feature(dmp_features);
@@ -119,6 +117,7 @@ void imu_init(bool dmp, uint16_t freq)
 		// printf("\rdmp set rate   : %d\n", dmp_set_fifo_rate(100));
 		// printf("\rdmp set state  : %d\n", mpu_set_dmp_state(1));
 		// printf("\rdlpf set freq  : %d\n", mpu_set_lpf(10));
+
 	} else {
 		unsigned char data = 0;
 		printf("\rdisable dlpf   : %d\n", i2c_write(0x68, 0x1A, 1, &data));

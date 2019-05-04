@@ -106,11 +106,6 @@ int main(void)
 			adc_request_sample();
 			read_baro();
 			t20_packet_rx();
-			// uint8_t v;
-			// v = (char) 7;
-			// v++;
-			// v--;
-			// uart_put(v);
 
 			// printf("%10ld | ", get_time_us());
 			// printf("%3d %3d %3d %3d | ", ae[0], ae[1], ae[2], ae[3]);

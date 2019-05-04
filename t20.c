@@ -23,10 +23,13 @@ void t20_packet_rx() {
 			uint8_t length = dequeue(&rx_queue);
 			switch (length) {
 				case MODELEN:
+				;
 					// TODO: CRC check
 					// Read mode
 					// setMode(p->mode);
-					printf("MODE PACKET RECEIVED");
+					//printf("MODE PACKET RECEIVED");
+				    uint8_t foo = 9;
+					uart_put(foo);
 				break;
 
 				case MOVELEN:
