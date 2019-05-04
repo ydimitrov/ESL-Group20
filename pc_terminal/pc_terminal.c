@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
+#include "t20.h"
 
 /*------------------------------------------------------------
  * console I/O
@@ -173,17 +174,20 @@ int 	rs232_putchar(char c)
 	return result;
 }
 
-void send_packets(){
+void t20_packet_tx(packet* p) {
 
-	char byte1 = 0xAA;
-	char byte2 = 0x04;
-	char byte3 = 0xED;
-	for (int i = 0; i < 1000; i++)
-	{
-		rs232_putchar(byte1);
-		rs232_putchar(byte2);
-		rs232_putchar(byte3);
+	// Transmit packet byte-by-byte
+
+	unsigned char *packetPtr = (unsigned char *) p;
+	const unsigned char *byteToSend;
+	int numberOfBytes = p->length;
+
+	for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
+	{	
+		rs232_putchar(*byteToSend);
+		// Wait for transmission to complete
 	}
+
 }
 
 /*----------------------------------------------------------------
@@ -213,10 +217,17 @@ int main(int argc, char **argv)
 		// if ((c = term_getchar_nb()) != -1)
 		// 	rs232_putchar(c);
 
-		if ((c = rs232_getchar_nb()) != -1)
-			term_putchar(c);
+		// if ((c = rs232_getchar_nb()) != -1)
+		// 	term_putchar(c);
 
-		send_packets();
+		packet foobar;
+		foobar.startByte = 0xAA;
+		foobar.length = 0x04;
+		foobar.mode = 0xED;
+
+		t20_packet_tx(&foobar);
+
+		// send_packets();
 	}
 	
 
