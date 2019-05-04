@@ -28,7 +28,7 @@ void t20_packet_rx() {
 					// Read mode
 					// setMode(p->mode);
 					//printf("MODE PACKET RECEIVED");
-				    uint8_t foo = 9;
+				    uint8_t foo = 159;
 					uart_put(foo);
 				break;
 

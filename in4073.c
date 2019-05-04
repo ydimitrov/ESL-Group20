@@ -61,6 +61,7 @@ void process_key(uint8_t c)
 
 			// t20_packet_tx(&foobar);
 			// char buf[5] = {'h', 'e', 'l', 'l', 'o'};
+			break;
 		printf("received l\n");
 			break;	
 		case 27:

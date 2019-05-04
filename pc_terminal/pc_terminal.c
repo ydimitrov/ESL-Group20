@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <inttypes.h>
-#include "t20.h"
+#include "../pc_t20.h"
 
 /*------------------------------------------------------------
  * console I/O
@@ -138,7 +138,6 @@ int	rs232_getchar_nb()
 {
 	int 		result;
 	unsigned char 	c;
-
 	result = read(fd_RS232, &c, 1);
 
 	if (result == 0)
@@ -151,13 +150,92 @@ int	rs232_getchar_nb()
 	}
 }
 
+// int	rs232_getchar_stream()
+// {
+// 	int 		result;
+// 	unsigned char 	c[48];
 
-int 	rs232_getchar()
+// 	result = read(fd_RS232, &c, 48); // !!! WARNING, consider byte number (last argument)
+
+// 	if (result == 0)
+// 		return -1;
+
+// 	else
+// 	{
+// 		assert(result == 48);
+// 		return c;
+// 	}
+// }
+
+
+// void pc_t20_packet_rx() {
+
+// 	printf("Receiving on pc...");
+	
+// 	if (rs232_getchar()){
+
+// 	}
+
+// 	while(&rx_queue.count){
+// 		// Check preamble
+// 		if(dequeue(&rx_queue) == 0xAA){
+// 			uint8_t length = dequeue(&rx_queue);
+// 			switch (length) {
+// 				case MODELEN:
+// 				;
+// 					// TODO: CRC check
+// 					// Read mode
+// 					// setMode(p->mode);
+// 					//printf("MODE PACKET RECEIVED");
+// 				    uint8_t foo = 9;
+// 					uart_put(foo);
+// 				break;
+
+// 				case MOVELEN:
+// 					// TODO: CRC check
+// 					// setRotors(p->roll, p->pitch, p->yaw, p->elevation);
+// 					printf("MOVELEN PACKET RECEIVED");
+
+// 				break;
+
+// 				case TELELEN:
+// 					// TODO: CRC check
+// 					printf("TELELEN PACKET RECEIVED");
+// 				break;
+
+// 				default:
+// 					// No valid command received. Drop packet.
+// 					printf("DEFAULT");
+// 				break;
+// 			}
+// 		}
+// 	}
+// }
+
+
+// uint8_t* 	rs232_getchar()
+// {
+// 	int c, i = 0;
+
+// 	uint8_t buffer[48];
+
+// 	while ((c = rs232_getchar_stream()) == -1){
+// 		buffer[i] = c;
+// 		i++;
+// 		printf("%c",c);
+// 	}
+
+// 	return &buffer;
+// }
+
+uint8_t 	rs232_getchar()
 {
-	int 	c;
+	int c;
+	
+	while ((c = rs232_getchar_nb()) == -1){
+		term_putchar(c);
+	}
 
-	while ((c = rs232_getchar_nb()) == -1)
-		;
 	return c;
 }
 
@@ -226,8 +304,10 @@ int main(int argc, char **argv)
 		foobar.mode = 0xED;
 
 		t20_packet_tx(&foobar);
-
-		// send_packets();
+		
+		if ((c = rs232_getchar_nb()) != -1)
+			printf(" %d",c);
+		// rs232_getchar();
 	}
 	
 
@@ -237,4 +317,3 @@ int main(int argc, char **argv)
 
 	return 0;
 }
-
