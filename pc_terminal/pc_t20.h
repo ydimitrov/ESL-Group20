@@ -28,17 +28,12 @@ typedef struct {
 void pc_t20_packet_rx(void);
 void pc_t20_packet_tx(packet* p);
 
-packet pc_packet_init(uint8_t startByte, uint8_t length, 
-           uint8_t functionCode, uint8_t roll, 
-           uint8_t pitch, uint8_t yaw, 
-           uint8_t elevation,
-            // int16_t ae[4], 
-           int16_t phi, int16_t theta,
-           int16_t psi, int16_t sp,
-           int16_t sq, int16_t sr,
-           uint64_t temp, int16_t volt,
-           int16_t press, int16_t mode);
-
+packet pc_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
+                      uint8_t roll,      uint8_t pitch,   uint8_t yaw,
+                      uint8_t elevation, int16_t ae[4],   int16_t phi,
+                      int16_t theta,     int16_t psi,     int16_t sp,
+                      int16_t sq,        int16_t sr,      uint64_t temp,
+              		  int16_t volt,      int16_t press,   int16_t mode){
 
 // uint8_t startByte = 0xAA
 // uint8_t length = 0x30
@@ -58,8 +53,5 @@ packet pc_packet_init(uint8_t startByte, uint8_t length,
 // int16_t press = 0xCC
 // int16_t mode = 0xCD
 // 0xAA,0x30,0xAB,0xAC,0xAD,0xAE,0xAF ,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD
-
-
-
 
 //SENDING FROM PC TO DRONE
