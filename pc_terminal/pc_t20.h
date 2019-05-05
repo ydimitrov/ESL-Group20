@@ -33,7 +33,7 @@ packet pc_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
                       uint8_t elevation, int16_t ae[4],   int16_t phi,
                       int16_t theta,     int16_t psi,     int16_t sp,
                       int16_t sq,        int16_t sr,      uint64_t temp,
-              		  int16_t volt,      int16_t press,   int16_t mode){
+              		  int16_t volt,      int16_t press,   int16_t mode);
 
 // uint8_t startByte = 0xAA
 // uint8_t length = 0x30
