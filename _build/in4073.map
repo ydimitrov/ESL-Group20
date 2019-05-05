@@ -620,13 +620,13 @@ Discarded input sections
                 0x0000000000000000       0x18 _build/softdevice_handler.o
  .text.softdevice_sys_evt_handler_set
                 0x0000000000000000       0x14 _build/softdevice_handler.o
- .text          0x0000000000000000        0x0 _build/t20.o
- .data          0x0000000000000000        0x0 _build/t20.o
- .bss           0x0000000000000000        0x0 _build/t20.o
- .text.t20_packet_tx
-                0x0000000000000000       0x1c _build/t20.o
- .text.packet_init
-                0x0000000000000000       0xa0 _build/t20.o
+ .text          0x0000000000000000        0x0 _build/dr_t20.o
+ .data          0x0000000000000000        0x0 _build/dr_t20.o
+ .bss           0x0000000000000000        0x0 _build/dr_t20.o
+ .text.dr_t20_packet_tx
+                0x0000000000000000       0x1c _build/dr_t20.o
+ .text.dr_packet_init
+                0x0000000000000000       0xa0 _build/dr_t20.o
  .data          0x0000000000000000        0x0 _build/gcc_startup_nrf51.o
  .bss           0x0000000000000000        0x0 _build/gcc_startup_nrf51.o
  .ARM.extab     0x0000000000000000        0x0 _build/gcc_startup_nrf51.o
@@ -964,7 +964,7 @@ LOAD _build/ble_conn_params.o
 LOAD _build/ble_nus.o
 LOAD _build/ble_srv_common.o
 LOAD _build/softdevice_handler.o
-LOAD _build/t20.o
+LOAD _build/dr_t20.o
 LOAD _build/gcc_startup_nrf51.o
 LOAD /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a
 START GROUP
@@ -1316,9 +1316,9 @@ END GROUP
  .text.SWI2_IRQHandler
                 0x000000000001c8b8       0x34 _build/softdevice_handler.o
                 0x000000000001c8b8                SWI2_IRQHandler
- .text.t20_packet_rx
-                0x000000000001c8ec       0xc0 _build/t20.o
-                0x000000000001c8ec                t20_packet_rx
+ .text.dr_t20_packet_rx
+                0x000000000001c8ec       0xc0 _build/dr_t20.o
+                0x000000000001c8ec                dr_t20_packet_rx
  .text          0x000000000001c9ac       0x54 _build/gcc_startup_nrf51.o
                 0x000000000001c9ac                Reset_Handler
                 0x000000000001c9f4                NMI_Handler
@@ -1666,8 +1666,8 @@ END GROUP
  .rodata.m_conn_params_timer_id
                 0x000000000002267c        0x4 _build/ble_conn_params.o
  .rodata        0x0000000000022680       0x10 _build/ble_nus.o
- .rodata.t20_packet_rx.str1.4
-                0x0000000000022690       0x30 _build/t20.o
+ .rodata.dr_t20_packet_rx.str1.4
+                0x0000000000022690       0x30 _build/dr_t20.o
  .rodata.asin.str1.4
                 0x00000000000226c0        0x8 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-w_asin.o)
                                           0x9 (size before relaxing)
@@ -2056,7 +2056,7 @@ OUTPUT(_build/in4073.out elf32-littlearm)
  .ARM.attributes
                 0x0000000000000561       0x2c _build/softdevice_handler.o
  .ARM.attributes
-                0x000000000000058d       0x2c _build/t20.o
+                0x000000000000058d       0x2c _build/dr_t20.o
  .ARM.attributes
                 0x00000000000005b9       0x1b _build/gcc_startup_nrf51.o
  .ARM.attributes
@@ -2241,7 +2241,7 @@ OUTPUT(_build/in4073.out elf32-littlearm)
  .comment       0x0000000000000075       0x76 _build/ble_conn_params.o
  .comment       0x0000000000000075       0x76 _build/ble_nus.o
  .comment       0x0000000000000075       0x76 _build/softdevice_handler.o
- .comment       0x0000000000000075       0x76 _build/t20.o
+ .comment       0x0000000000000075       0x76 _build/dr_t20.o
 
 .debug_frame    0x0000000000000000     0x10e4
  .debug_frame   0x0000000000000000       0x28 /home/yordan/Music/software_package/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc_nano.a(lib_a-exit.o)

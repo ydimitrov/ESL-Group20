@@ -1,5 +1,6 @@
 #include "pc_t20.h"
-
+#include "consoleIO.h"
+#include "rs232.h"
 /* 
  *  Magic number definitions
  */
@@ -17,46 +18,46 @@
 void pc_t20_packet_rx() {
 
 	printf("Receiving...");
-	while(&rx_queue.count){
-		// Check preamble
-		if(dequeue(&rx_queue) == 0xAA){
-			uint8_t length = dequeue(&rx_queue);
-			switch (length) {
-				case MODELEN:
-				;
-					// TODO: CRC check
-					// Read mode
-					// setMode(p->mode);
-					//printf("MODE PACKET RECEIVED");
-				    // uint8_t foo = 159;
-				    packet test = packet_init(0xAA,0x30,0xAB,0xAC,0xAD,0xAE,0xAF,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
-				    t20_packet_tx(&test);
-					// uart_put(foo);
+// 	while(&rx_queue.count){
+// 		// Check preamble
+// 		if(dequeue(&rx_queue) == 0xAA){
+// 			uint8_t length = dequeue(&rx_queue);
+// 			switch (length) {
+// 				case MODELEN:
+// 				;
+// 					// TODO: CRC check
+// 					// Read mode
+// 					// setMode(p->mode);
+// 					//printf("MODE PACKET RECEIVED");
+// 				    // uint8_t foo = 159;
+// 				    packet test = pc_packet_init(0xAA,0x30,0xAB,0xAC,0xAD,0xAE,0xAF,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
+// 				    pc_t20_packet_tx(&test);
+// 					// uart_put(foo);
 
-				break;
+// 				break;
 
-				case MOVELEN:
-				;
-					// TODO: CRC check
-					// setRotors(p->roll, p->pitch, p->yaw, p->elevation);
-					// printf("MOVELEN PACKET RECEIVED");
-				    uint8_t boo = 2;
-					uart_put(boo);
+// 				case MOVELEN:
+// 				;
+// 					// TODO: CRC check
+// 					// setRotors(p->roll, p->pitch, p->yaw, p->elevation);
+// 					// printf("MOVELEN PACKET RECEIVED");
+// 				    uint8_t boo = 2;
+// 					uart_put(boo);
 
-				break;
+// 				break;
 
-				case TELELEN:
-					// TODO: CRC check
-					printf("TELELEN PACKET RECEIVED");
-				break;
+// 				case TELELEN:
+// 					// TODO: CRC check
+// 					printf("TELELEN PACKET RECEIVED");
+// 				break;
 
-				default:
-					// No valid command received. Drop packet.
-					printf("DEFAULT");
-				break;
-			}
-		}
-	}
+// 				default:
+// 					// No valid command received. Drop packet.
+// 					printf("DEFAULT");
+// 				break;
+// 			}
+// 		}
+// 	}
 }
 
 void pc_t20_packet_tx(packet* p) {
@@ -69,7 +70,7 @@ void pc_t20_packet_tx(packet* p) {
 
 	for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
 	{	
-		uart_put(*byteToSend);
+		rs232_putchar(*byteToSend);
 		// Wait for transmission to complete
 	}
 

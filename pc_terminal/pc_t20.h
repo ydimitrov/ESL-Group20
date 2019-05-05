@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <inttypes.h>
 
 // Define packet structure
 
@@ -24,10 +25,10 @@ typedef struct {
   	int16_t mode;
 } packet;
 
-void t20_packet_rx(void);
-void t20_packet_tx(packet* p);
+void pc_t20_packet_rx(void);
+void pc_t20_packet_tx(packet* p);
 
-packet packet_init(uint8_t startByte, uint8_t length, 
+packet pc_packet_init(uint8_t startByte, uint8_t length, 
            uint8_t functionCode, uint8_t roll, 
            uint8_t pitch, uint8_t yaw, 
            uint8_t elevation,

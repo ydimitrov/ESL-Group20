@@ -25,8 +25,6 @@ typedef struct {
   	int16_t mode;
 } packet;
 
-
-
 void dr_t20_packet_rx(void);
 void dr_t20_packet_tx(packet* p);
 
