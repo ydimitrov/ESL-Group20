@@ -78,10 +78,10 @@ void pc_t20_packet_tx(packet* p) {
 
 packet pc_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
 				   	  uint8_t roll, 	 uint8_t pitch,	  uint8_t yaw,
-  				      uint8_t elevation, int16_t ae[4],   int16_t phi,
-				      int16_t theta,     int16_t psi,     int16_t sp,
-				      int16_t sq,		 int16_t sr,      uint64_t temp,
-				      int16_t volt,      int16_t press,   int16_t mode)
+  				      uint8_t elevation, uint8_t ae[4],   uint8_t phi,
+				      uint8_t theta,     uint8_t psi,     uint8_t sp,
+				      uint8_t sq,		 uint8_t sr,      uint8_t temp,
+				      uint8_t volt,      uint8_t press,   uint8_t mode)
 {
 	packet x;
 	x.startByte = startByte;
@@ -91,7 +91,7 @@ packet pc_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
 	x.pitch = pitch;
 	x.yaw = yaw;
 	x.elevation = elevation;
-	for (int i = 0; i < 4; i++) 
+	for (int i = 0; i < 4; i++)
 		x.ae[i] = ae[i];
 	x.phi = phi;
 	x.theta = theta;

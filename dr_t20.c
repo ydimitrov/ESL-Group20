@@ -29,9 +29,15 @@ void dr_t20_packet_rx() {
 					// setMode(p->mode);
 					//printf("MODE PACKET RECEIVED");
 				    // uint8_t foo = 159;
-				    packet test = dr_packet_init(0xAA,0x30,0xAB,0xAC,0xAD,0xAE,0xAF,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
+					int8_t ae[4] = {0x01, 0x02, 0x03, 0x04};
+				    // packet test = dr_packet_init(0xAA,0x00,0xAB,0xAC,0xAD,0xAE,0xAF,0xB0,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
+				    packet test = dr_packet_init(0xAA,0x00,0xAB,0xAC,0xAD,0xAE,0xAF,ae,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
+				    // packet test = dr_packet_init(99, 98, 97, 96, 95, 94, 93, ae, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7);
+				    test.length = sizeof(test);
+				    // packet test = dr_packet_init(0x48,0x65,0x6c,0x6c,0x6f,0x20,0x6d,ae,0x79,0x20,0x64,0x72,0x6f,0x6e,0x65,0x20,0x62,0x79);
+				    // packet test = dr_packet_init(0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x6d, 0x79, 0x20, 0x64, 0x72, 0x6f, 0x6e, 0x65, 0x20, 0x62, 0x69, 0x74);
+				    // printf("Size of test: %d", sizeof(test));
 				    dr_t20_packet_tx(&test);
-					// uart_put(foo);
 
 				break;
 
@@ -63,24 +69,36 @@ void dr_t20_packet_tx(packet* p) {
 
 	// Transmit packet byte-by-byte
 
-	unsigned char *packetPtr = (unsigned char *) p;
-	const unsigned char *byteToSend;
-	int numberOfBytes = p->length;
+	uint8_t *packetPtr = (uint8_t *) p;
+	uint8_t *byteToSend;
+	uint8_t numberOfBytes = p->length;
 
-	for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
-	{	
-		uart_put(*byteToSend);
-		// Wait for transmission to complete
+	// uint8_t length = 18;
+	if(numberOfBytes){
+
+		for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
+		{	
+			uart_put(*byteToSend);
+			nrf_delay_ms(1);
+			// Wait for transmission to complete
+		}
 	}
+
+	// for(byteToSend=packetPtr; length--; ++byteToSend)	
+	// {	
+	// 	uart_put(*byteToSend);
+	// 	nrf_delay_ms(1);
+	// 	// Wait for transmission to complete
+	// }
 
 }
 
-packet dr_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
-				   	  uint8_t roll, 	 uint8_t pitch,	  uint8_t yaw,
-  				      uint8_t elevation, int16_t ae[4],   int16_t phi,
-				      int16_t theta,     int16_t psi,     int16_t sp,
-				      int16_t sq,		 int16_t sr,      uint64_t temp,
-				      int16_t volt,      int16_t press,   int16_t mode)
+packet pc_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
+                      uint8_t roll,      uint8_t pitch,   uint8_t yaw,
+                      uint8_t elevation, uint8_t ae[4],   uint8_t phi,
+                      uint8_t theta,     uint8_t psi,     uint8_t sp,
+                      uint8_t sq,        uint8_t sr,      uint8_t temp,
+              		  uint8_t volt,      uint8_t press,   uint8_t mode)
 {
 	packet x;
 	x.startByte = startByte;
@@ -92,6 +110,7 @@ packet dr_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
 	x.elevation = elevation;
 	for (int i = 0; i < 4; i++) 
 		x.ae[i] = ae[i];
+	// x.ae = ae;
 	x.phi = phi;
 	x.theta = theta;
 	x.psi = psi;
@@ -102,6 +121,6 @@ packet dr_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
 	x.volt = volt;
 	x.press = press;
 	x.mode = mode;
-	
+
 	return x;
 }
