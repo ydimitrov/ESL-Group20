@@ -135,40 +135,42 @@ unsigned int    mon_time_ms(void)
 void keyboardfunction()
 {
 	int c; //keyboard input
-	
 	if((c = term_getchar_nb()) != -1)
 	{
 		if (input.mode != PANIC_MODE)
 		{
+			printf("C = %d\n",c);
 			switch(c)
 			{
 				// mode change
-				case 0: input.mode = SAFE_MODE;
+				case '0': input.mode = SAFE_MODE;
 					break;
-				case 1: input.mode = PANIC_MODE;
+				case '1': input.mode = PANIC_MODE;
 					break;
-				case 2: input.mode = MANUAL_MODE;
+				case '2': input.mode = MANUAL_MODE;
 					break;
-				case 3: input.mode = CALIBRATION_MODE;
+				case '3': input.mode = CALIBRATION_MODE;
 					break;
-				case 4: input.mode = YAW_MODE;
+				case '4': input.mode = YAW_MODE;
 					break;
-				case 5: input.mode = FULL_MODE;
+				case '5': input.mode = FULL_MODE;
 					break;
-				case 6: input.mode = RAW_MODE;
+				case '6': input.mode = RAW_MODE;
 					break;
-				case 7: input.mode = HEIGHT_MODE;
+				case '7': input.mode = HEIGHT_MODE;
 					break;
-				case 8: input.mode = WIRELESS_MODE;
+				case '8': input.mode = WIRELESS_MODE;
 					break;
 			}
 			if (input.mode != SAFE_MODE)
 			{
+				printf("Inside not safe mode\n");
 				switch(c)
 				{
 					// movement change
 					case 'a': //set lift up
 						 input.lift = min(input.lift + 1,127);
+						 printf("Lift = %d\n",input.lift);
 						 break;
 					case 'z': //set lift down
 						 input.lift = max(input.lift - 1,0);
@@ -221,6 +223,14 @@ void keyboardfunction()
 int main (int argc, char **argv)
 {
 	// initialize
+	input.roll = 0;
+	input.yaw = 0;
+	input.pitch = 0;
+	input.lift = 0;
+	input.mode = 2;
+	input.P = 0;
+	input.P1 = 0;
+	input.P2 = 0;
 	int 		freq = 100; // defines transmission frequency
 	int 		fd;
 	struct js_event js;
@@ -236,13 +246,14 @@ int main (int argc, char **argv)
 	while(1)
 	{
 		// get joystick values
-		printf("Outside if\n");
+		
+		/*
 		if(read(fd, &js, sizeof(struct js_event)) == 
 		       			sizeof(struct js_event))   {
 		
 			//printf("%5d   ",t);
 			/* register data
-			 */
+			 
 			// fprintf(stderr,".");
 			switch(js.type & ~JS_EVENT_INIT) {
 				case JS_EVENT_BUTTON:
@@ -284,22 +295,25 @@ int main (int argc, char **argv)
 					break;
 				default: break;
 			}
-		}
+		}*/
 		
 		// get keyboard values and update mode and setpoint if needed
 		keyboardfunction();
 		// create packet
-		printf("%5d  %5d  ",t ,mon_time_ms());
-			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+	
 		// send packet periodically
+
 		if (t < freq)
 		{
 			unsigned int t_now = mon_time_ms();
 			if (t < t_now && t_now < 64900)
 			{
 				//SEND PACKET
-			printf("%5d  %5d  ",t ,mon_time_ms());
-			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+				printf("%5d  %5d  ",t ,mon_time_ms());
+				printf("Roll: %d\n Pitch: %d\n Yaw: %d\n Lift: %d\n", 				
+				input.roll,input.pitch,input.yaw,input.lift);
+				printf("Mode: %d\n",input.mode);
+			
 				t = (t + freq) % 65000; //set next transmission time
 			} 
 		}
@@ -308,8 +322,10 @@ int main (int argc, char **argv)
 			if (t < mon_time_ms())
 			{
 				//SEND PACKET
-			printf("%5d  %5d ",t,mon_time_ms());
-			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+				printf("%5d  %5d ",t,mon_time_ms());
+				printf("Roll: %d\n Pitch: %d\n Yaw: %d\n Lift: %d\n", 				
+				input.roll,input.pitch,input.yaw,input.lift);
+				printf("Mode: %d\n",input.mode);
 				t = (t + freq) % 65000; //set next transmission time
 			}
 		}
