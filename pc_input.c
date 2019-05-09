@@ -8,11 +8,12 @@
 #include <errno.h>
 #include <string.h>
 #include <time.h>
-#include <math.h>
 #include "dr_t20.h"
 #include "joystick.h"
 
 #define JS_DEV	"/dev/input/js2"
+#define max(x, y) (((x) > (y)) ? (x) : (y))
+#define min(x, y) (((x) < (y)) ? (x) : (y))
 #define SAFE_MODE = 0;
 #define PANIC_MODE = 1;
 #define MANUAL_MODE = 2;
