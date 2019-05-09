@@ -44,7 +44,7 @@ void    mon_delay_ms(unsigned int ms)
 }
 
 
-#define JS_DEV	"/dev/input/js1"
+#define JS_DEV	"/dev/input/js0"
 
 int main (int argc, char **argv)
 {

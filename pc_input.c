@@ -8,26 +8,84 @@
 #include <errno.h>
 #include <string.h>
 #include <time.h>
-#include "dr_t20.h"
+#include <termios.h>
 #include "joystick.h"
+#include "pc_terminal.h"
 
-#define JS_DEV	"/dev/input/js2"
+#define JS_DEV	"/dev/input/js0"
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
-#define SAFE_MODE = 0;
-#define PANIC_MODE = 1;
-#define MANUAL_MODE = 2;
-#define CALIBRATION_MODE = 3;
-#define YAW_MODE = 4;
-#define FULL_MODE = 5;
-#define RAW_MODE = 6;
-#define HEIGHT_MODE = 7;
-#define WIRELESS = 8;
+#define SAFE_MODE 0
+#define PANIC_MODE 1
+#define MANUAL_MODE 2
+#define CALIBRATION_MODE 3
+#define YAW_MODE 4
+#define FULL_MODE 5
+#define RAW_MODE 6
+#define HEIGHT_MODE 7
+#define WIRELESS_MODE 8
+
+
+
+/*------------------------------------------------------------
+ * console I/O
+ *------------------------------------------------------------
+ */
+struct termios 	savetty;
+
+void	term_initio()
+{
+	struct termios tty;
+
+	tcgetattr(0, &savetty);
+	tcgetattr(0, &tty);
+
+	tty.c_lflag &= ~(ECHO|ECHONL|ICANON|IEXTEN);
+	tty.c_cc[VTIME] = 0;
+	tty.c_cc[VMIN] = 0;
+
+	tcsetattr(0, TCSADRAIN, &tty);
+}
+
+void	term_exitio()
+{
+	tcsetattr(0, TCSADRAIN, &savetty);
+}
+
+void	term_puts(char *s)
+{
+	fprintf(stderr,"%s",s);
+}
+
+void	term_putchar(char c)
+{
+	putc(c,stderr);
+}
+
+int	term_getchar_nb()
+{
+        static unsigned char 	line [2];
+
+        if (read(0,line,1)) // note: destructive read
+        		return (int) line[0];
+
+        return -1;
+}
+
+int	term_getchar()
+{
+        int    c;
+
+        while ((c = term_getchar_nb()) == -1)
+                ;
+        return c;
+}
+
 
 /* current axis and button readings
  */
 
-int	axis[6];
+int	axis[6] = {0,0,0,0,0,0};
 /* values stored in axis array, needs to be verified
 0: yaw
 1: roll
@@ -36,7 +94,7 @@ int	axis[6];
 4: X
 5: X
 */
-int	button[12];
+int	button[12]= {0,0,0,0,0,0,0,0,0,0,0,0};
 /*
 0: safe mode
 1: panic mode
@@ -59,9 +117,7 @@ struct input_status
 	int P;
 	int P1;
 	int P2;	
-}    
-
-input_status input;
+}input;
 
 //timer
 unsigned int    mon_time_ms(void)
@@ -168,7 +224,9 @@ int main (int argc, char **argv)
 	int 		freq = 100; // defines transmission frequency
 	int 		fd;
 	struct js_event js;
-	unsigned int	t = 0;
+	unsigned int	t = mon_time_ms();
+
+	term_initio();
 
 	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
 		perror("jstest");
@@ -178,10 +236,11 @@ int main (int argc, char **argv)
 	while(1)
 	{
 		// get joystick values
-		if (read(fd, &js, sizeof(struct js_event)) == 
-		       			sizeof(struct js_event))  {
+		printf("Outside if\n");
+		if(read(fd, &js, sizeof(struct js_event)) == 
+		       			sizeof(struct js_event))   {
 		
-			printf("%5d   ",t);
+			//printf("%5d   ",t);
 			/* register data
 			 */
 			// fprintf(stderr,".");
@@ -208,28 +267,30 @@ int main (int argc, char **argv)
 					axis[js.number] = js.value;
 					if (js.number == 0)
 					{
-						input.yaw = (uint8_t) js.value/256;
+						input.yaw = (int) js.value/256;
 					}
 					else if (js.number == 1)
 					{
-						input.pitch = (uint8_t) js.value/256;
+						input.pitch = (int) js.value/256;
 					}
 					else if (js.number == 2)
 					{	
-						input.roll = (uint8_t) js.value/256;
+						input.roll = (int) js.value/256;
 					}
 					else if (js.number == 3)
 					{
-						input.lift = (uint8_t) js.value/256;
+						input.lift = (int) js.value/256;
 					}
 					break;
+				default: break;
 			}
 		}
-
+		
 		// get keyboard values and update mode and setpoint if needed
 		keyboardfunction();
 		// create packet
-		
+		printf("%5d  %5d  ",t ,mon_time_ms());
+			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
 		// send packet periodically
 		if (t < freq)
 		{
@@ -237,6 +298,8 @@ int main (int argc, char **argv)
 			if (t < t_now && t_now < 64900)
 			{
 				//SEND PACKET
+			printf("%5d  %5d  ",t ,mon_time_ms());
+			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
 				t = (t + freq) % 65000; //set next transmission time
 			} 
 		}
@@ -245,6 +308,8 @@ int main (int argc, char **argv)
 			if (t < mon_time_ms())
 			{
 				//SEND PACKET
+			printf("%5d  %5d ",t,mon_time_ms());
+			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
 				t = (t + freq) % 65000; //set next transmission time
 			}
 		}
