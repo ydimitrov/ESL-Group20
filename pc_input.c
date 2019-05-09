@@ -247,13 +247,13 @@ int main (int argc, char **argv)
 	{
 		// get joystick values
 		
-		/*
+		
 		if(read(fd, &js, sizeof(struct js_event)) == 
 		       			sizeof(struct js_event))   {
 		
 			//printf("%5d   ",t);
 			/* register data
-			 
+			 */
 			// fprintf(stderr,".");
 			switch(js.type & ~JS_EVENT_INIT) {
 				case JS_EVENT_BUTTON:
@@ -278,7 +278,7 @@ int main (int argc, char **argv)
 					axis[js.number] = js.value;
 					if (js.number == 0)
 					{
-						input.yaw = (int) js.value/256;
+						input.roll = (int) js.value/256;
 					}
 					else if (js.number == 1)
 					{
@@ -286,7 +286,7 @@ int main (int argc, char **argv)
 					}
 					else if (js.number == 2)
 					{	
-						input.roll = (int) js.value/256;
+						input.yaw = (int) js.value/256;
 					}
 					else if (js.number == 3)
 					{
@@ -295,7 +295,7 @@ int main (int argc, char **argv)
 					break;
 				default: break;
 			}
-		}*/
+		}
 		
 		// get keyboard values and update mode and setpoint if needed
 		keyboardfunction();
