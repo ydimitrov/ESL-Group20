@@ -82,6 +82,7 @@ void keyboardfunction()
 	if((c = term_getchar_nb()) != -1)
 	{
 		if (input.mode != PANIC_MODE)
+		{
 			switch(c)
 			{
 				// mode change
@@ -105,6 +106,7 @@ void keyboardfunction()
 					break;
 			}
 			if (input.mode != SAFE_MODE)
+			{
 				switch(c)
 				{
 					// movement change
@@ -155,6 +157,7 @@ void keyboardfunction()
 					default: break; //other key was pressed
 				}
 			}
+		}
 	}
 }
 
