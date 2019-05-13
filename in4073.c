@@ -15,6 +15,7 @@
 
 #include "in4073.h"
 #include "dr_t20.h"
+#include "fsmReceive.h"
 
 /*------------------------------------------------------------------
  * process_key -- process command keys
@@ -93,9 +94,9 @@ int main(void)
 
 	while (!demo_done)
 	{
-		if (rx_queue.count) {
-			process_key( dequeue(&rx_queue) );
-		}
+		// if (rx_queue.count) {
+		// 	process_key( dequeue(&rx_queue) );
+		// }
 
 		if (check_timer_flag()) 
 		{
@@ -104,9 +105,10 @@ int main(void)
 					nrf_gpio_pin_toggle(BLUE);
 				}
 
+			fsmReceive();
 			adc_request_sample();
 			read_baro();
-			dr_t20_packet_rx();
+			// dr_t20_packet_rx();
 
 			// printf("%10ld | ", get_time_us());
 			// printf("%3d %3d %3d %3d | ", ae[0], ae[1], ae[2], ae[3]);
@@ -116,6 +118,7 @@ int main(void)
 
 			clear_timer_flag();
 		}
+
 
 		if (check_sensor_int_flag()) 
 		{

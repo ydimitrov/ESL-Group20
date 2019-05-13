@@ -84,14 +84,13 @@ int	rs232_getchar_nb()
 uint8_t 	rs232_getchar()
 {
 	int c;
-	
-	while ((c = rs232_getchar_nb()) == -1){
-		term_putchar(c);
+	while ((c = rs232_getchar_nb()) != -1){
+		// term_putchar(c);
+		printf(" %d", c);
 	}
 
 	return c;
 }
-
 
 int 	rs232_putchar(char c)
 {

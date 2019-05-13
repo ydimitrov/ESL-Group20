@@ -37,8 +37,8 @@ int main(int argc, char **argv)
 
 	/* discard any incoming text
 	 */
-	while ((c = rs232_getchar_nb()) != -1)
-		fputc(c,stderr);
+	// while ((c = rs232_getchar_nb()) != -1)
+	// 	fputc(c,stderr);
 
 	/* send & receive
 	 */
@@ -47,21 +47,19 @@ int main(int argc, char **argv)
 		// if ((c = term_getchar_nb()) != -1)
 		// 	rs232_putchar(c);
 
-		// if ((c = rs232_getchar_nb()) != -1)
-		// 	term_putchar(c);
+		 while ((c = rs232_getchar_nb()) != -1)
+			term_putchar(c);
 
-		packet foobar;
-		foobar.startByte = 0xAA;
-		foobar.length = 0x04;
-		foobar.mode = 0xED;
+		Packet test = pc_packet_init(0xAA, 0x08, 0x08, 0x11, 0x12, 0x13, 0x14);
 
-		pc_t20_packet_tx(&foobar);
+		pc_t20_packet_tx(&test);
 		
-		if ((c = rs232_getchar_nb()) != -1)
+		// if ((c = rs232_getchar_nb()) != -1)
 			// term_putchar(c);
-			printf(" %d",c);
-		// rs232_getchar();
-
+			// printf(" %d",c);
+	//	rs232_getchar();
+		// printf("Before calling stream");
+		// rs232_getchar_stream();
 		// term_putchar(rs232_getchar_nb());
 	}
 	

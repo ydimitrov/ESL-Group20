@@ -6,6 +6,7 @@ void 	rs232_close(void);
 int		rs232_getchar_nb();
 uint8_t rs232_getchar();
 int 	rs232_putchar(char c);
+uint8_t rs232_getchar_stream();
 
 
 #endif

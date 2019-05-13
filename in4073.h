@@ -19,6 +19,7 @@
 #include "inv_mpu_dmp_motion_driver.h"
 #include "ml.h"
 #include "app_util_platform.h"
+#include "fsmReceive.h"
 #include <math.h>
 
 #define RED		22
@@ -106,5 +107,16 @@ queue ble_tx_queue;
 volatile bool radio_active;
 void ble_init(void);
 void ble_send(void);
+
+typedef enum 
+{
+	SAFE,
+	PANIC,
+	MANUAL,
+	CALIBRATION
+}flightMode; 
+
+flightMode flightmode;
+
 
 #endif // IN4073_H__

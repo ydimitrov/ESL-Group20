@@ -23,12 +23,13 @@ typedef struct {
   	uint8_t volt;
   	uint8_t press;
   	uint8_t mode;
+  	uint8_t endByte;
 } packet;
 
 void dr_t20_packet_rx(void);
 void dr_t20_packet_tx(packet* p);
 
-packet pc_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
+packet dr_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
                       uint8_t roll,      uint8_t pitch,   uint8_t yaw,
                       uint8_t elevation, uint8_t ae[4],   uint8_t phi,
                       uint8_t theta,     uint8_t psi,     uint8_t sp,

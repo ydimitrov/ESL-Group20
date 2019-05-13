@@ -17,7 +17,7 @@
 void dr_t20_packet_rx() {
 
 	printf("Receiving...");
-	while(&rx_queue.count){
+	while(rx_queue.count){
 		// Check preamble
 		if(dequeue(&rx_queue) == 0xAA){
 			uint8_t length = dequeue(&rx_queue);
@@ -29,13 +29,9 @@ void dr_t20_packet_rx() {
 					// setMode(p->mode);
 					//printf("MODE PACKET RECEIVED");
 				    // uint8_t foo = 159;
-					int8_t ae[4] = {0x01, 0x02, 0x03, 0x04};
-				    // packet test = dr_packet_init(0xAA,0x00,0xAB,0xAC,0xAD,0xAE,0xAF,0xB0,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
+					uint8_t ae[4] = {0x01, 0x02, 0x03, 0x04};
 				    packet test = dr_packet_init(0xAA,0x00,0xAB,0xAC,0xAD,0xAE,0xAF,ae,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
-				    // packet test = dr_packet_init(99, 98, 97, 96, 95, 94, 93, ae, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7);
 				    test.length = sizeof(test);
-				    // packet test = dr_packet_init(0x48,0x65,0x6c,0x6c,0x6f,0x20,0x6d,ae,0x79,0x20,0x64,0x72,0x6f,0x6e,0x65,0x20,0x62,0x79);
-				    // packet test = dr_packet_init(0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x6d, 0x79, 0x20, 0x64, 0x72, 0x6f, 0x6e, 0x65, 0x20, 0x62, 0x69, 0x74);
 				    // printf("Size of test: %d", sizeof(test));
 				    dr_t20_packet_tx(&test);
 
@@ -73,7 +69,6 @@ void dr_t20_packet_tx(packet* p) {
 	uint8_t *byteToSend;
 	uint8_t numberOfBytes = p->length;
 
-	// uint8_t length = 18;
 	if(numberOfBytes){
 
 		for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
@@ -83,17 +78,9 @@ void dr_t20_packet_tx(packet* p) {
 			// Wait for transmission to complete
 		}
 	}
-
-	// for(byteToSend=packetPtr; length--; ++byteToSend)	
-	// {	
-	// 	uart_put(*byteToSend);
-	// 	nrf_delay_ms(1);
-	// 	// Wait for transmission to complete
-	// }
-
 }
 
-packet pc_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
+packet dr_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
                       uint8_t roll,      uint8_t pitch,   uint8_t yaw,
                       uint8_t elevation, uint8_t ae[4],   uint8_t phi,
                       uint8_t theta,     uint8_t psi,     uint8_t sp,
@@ -121,6 +108,7 @@ packet pc_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
 	x.volt = volt;
 	x.press = press;
 	x.mode = mode;
+	x.endByte = 0x21;
 
 	return x;
 }
