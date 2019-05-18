@@ -19,7 +19,7 @@ uint8_t pitch;
 uint8_t yaw;
 uint8_t lift;
 //consider removing these values if there is delay
-void initialize_flightParameters()
+void initialize_flight_Parameters()
 {
 	roll 	= flightParameters.roll;
 	pitch 	= flightParameters.pitch;
@@ -48,6 +48,7 @@ void reset_motors()
 	ae[1] = 0;
 	ae[2] = 0;
 	ae[3] = 0;
+	update_motors();
 }
 
 void run_filters_and_control()
@@ -72,7 +73,6 @@ void run_filters_and_control()
 
 void panic()
 {
-	int i = 0;
 	uint16_t average = (ae[0] + ae[1] + ae[2] + ae[3])/4;
 	average = average / 2;
 	while(i < 1000)
@@ -92,17 +92,31 @@ void panic()
 		ae[3] = ae[3] - 1;
 		update_motors();
 	}
-	global_state = SAFE_MODE;	
+
+	mode = SAFE_MODE;	
 }
 
 void manual()
 {
-	initialize_flightParameters();
+	int lift_status; 
 
-	ae[0] = (lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + MIN_SPEED;
-	ae[1] = (lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + MIN_SPEED;
-	ae[2] = (lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + MIN_SPEED;
-	ae[3] = (lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + MIN_SPEED;
+	initialize_flight_Parameters();
+
+	//set lift to uint16_t
+
+	if(lift == 0)
+	{
+		lift_status = 0;
+	}
+	else
+	{
+		lift_status = 1;
+	}
+
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
 	
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
 	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
@@ -121,3 +135,59 @@ void safe()
 {
 	reset_motors();
 }
+
+
+void calibration()
+{
+	panic();
+	get_dmp_data();
+	zp = sp;
+	zq = sq;
+	zr = sr;
+	zax = sax;
+	zay = say;
+	zaz = saz;
+}
+
+void yaw_control()
+{
+	int lift_status; 
+	int error;
+
+	initialize_flightParameters();
+
+	//set lift to uint16_t
+
+	if(lift == 0)
+	{
+		lift_status = 0;
+	}
+	else
+	{
+		lift_status = 1;
+	}
+
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION)) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION)) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION)) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION)) * lift_status;
+	
+	error = yaw - (sr - zr);
+
+	ae[0] = ae[0] - (P * error);
+	ae[1] = ae[1] + (P * error);
+	ae[2] = ae[2] - (P * error);
+	ae[3] = ae[3] + (P * error);
+
+	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
+	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
+	if(ae[2] > MAX_SPEED) ae[2] = MAX_SPEED;
+	if(ae[3] > MAX_SPEED) ae[3] = MAX_SPEED;
+
+	if(ae[0] < MIN_SPEED) ae[0] = MIN_SPEED;
+	if(ae[1] < MIN_SPEED) ae[1] = MIN_SPEED;
+	if(ae[2] < MIN_SPEED) ae[2] = MIN_SPEED;
+	if(ae[3] < MIN_SPEED) ae[3] = MIN_SPEED;
+
+	update_motors();
+}	

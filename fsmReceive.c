@@ -54,9 +54,7 @@ void readByte(void){
 	if(rx_queue.count > 0) {	
 		buffer[arrIndex] = dequeue(&rx_queue);
     	statesFunc = packetStatesArr[stateIndex];
-  	} else {
-  		printf("No byte in rx_queue\n");
-  	}
+    }
 }
 
 void preambleByte(void){
@@ -112,8 +110,6 @@ void crcCheck(void){
 		crc ^= buffer[i];
 	}
 
-	// printf("FSMcrc = %d\n", crc);
-
 	if(crc == buffer[packetLen - 1]){
 		printf("Packet OK!\n");
     	stateIndex++;
@@ -127,11 +123,11 @@ void crcCheck(void){
 void storeValues(void){
 	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
 
-	mode		 	  = buffer[2]; 
-	flightParameters.roll  = buffer[3]; 
-	flightParameters.pitch = buffer[4];
-	flightParameters.yaw   = buffer[5];
-	flightParameters.lift  = buffer[6];
+	mode		 	  	   = (int8_t)  	buffer[2]; 
+	flightParameters.roll  = (int8_t)  	buffer[3]; 
+	flightParameters.pitch = (int8_t)	buffer[4];
+	flightParameters.yaw   = (int8_t)	buffer[5];
+	flightParameters.lift  = (int8_t)	buffer[6];
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }

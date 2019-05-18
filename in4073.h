@@ -28,11 +28,10 @@
 #define BLUE		30
 #define INT_PIN		5
 #define MAX_SPEED 	450
-#define MIN_SPEED 	50
+#define MIN_SPEED 	0
 #define MOTOR_RELATION 1
 
 bool demo_done;
-int global_state;
 
 // Control
 int16_t motor[4],ae[4];
@@ -79,6 +78,8 @@ bool i2c_read(uint8_t slave_addr, uint8_t reg_addr, uint8_t length, uint8_t *dat
 int16_t phi, theta, psi;
 int16_t sp, sq, sr;
 int16_t sax, say, saz;
+int16_t zp, zq, zr;
+int16_t zax, zay, zaz;
 uint8_t sensor_fifo_count;
 void imu_init(bool dmp, uint16_t interrupt_frequency); // if dmp is true, the interrupt frequency is 100Hz - otherwise 32Hz-8kHz
 void get_dmp_data(void);
