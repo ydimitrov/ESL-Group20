@@ -192,6 +192,7 @@ int main(int argc, char **argv)
 	int 			fd;
 	struct 			js_event js;
 	unsigned int	t = mon_time_ms();
+	int c;
 
 	// Initialize input values
 
@@ -223,11 +224,11 @@ int main(int argc, char **argv)
 	//term_puts("\nTerminal program - Embedded Real-Time Systems\n");
 
 	//term_puts("Type ^C to exit\n");
-
-	term_puts("blabla");
 	
 	for (;;)
 	{
+
+		while((c = rs232_getchar_nb()) != -1) { term_putchar(c); }
 
 		// get joystick values
 		if(read(fd, &js, sizeof(struct js_event)) == 
@@ -295,14 +296,14 @@ int main(int argc, char **argv)
 			if (t < t_now && t_now < 64900)
 			{
 			
-				printf("Send packet.\n");
-				Packet txPacket = pc_packet_init(0xAA, 0x07, input.mode, input.pitch, input.roll, input.yaw, input.lift);
+				//printf("Send packet.\n");
+				Packet txPacket = pc_packet_init(0xAA, 0x08, input.mode, input.pitch, input.roll, input.yaw, input.lift);
 				
 				pc_t20_packet_tx(&txPacket);
 
-				printf("%5d  %5d  ",t ,mon_time_ms());
+				// printf("%5d  %5d  ",t ,mon_time_ms());
 				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-				printf("Mode is: %d\t", input.mode);
+				// printf("Mode is: %d\t", input.mode);
 				t = (t + period) % 65000; //set next transmission time
 			} 
 		}
@@ -311,15 +312,15 @@ int main(int argc, char **argv)
 			if (t < mon_time_ms())
 			{
 
-				printf("Send packet.\n");
-				Packet txPacket = pc_packet_init(0xAA, 0x07, input.mode, input.pitch, input.roll, input.yaw, input.lift);
+				// printf("Send packet.\n");
+				Packet txPacket = pc_packet_init(0xAA, 0x08, input.mode, input.pitch, input.roll, input.yaw, input.lift);
 
 				// TODO: Check the order of fields and the function code for a move command
 				pc_t20_packet_tx(&txPacket);
 			
-				printf("%5d  %5d ",t,mon_time_ms());
+				// printf("%5d  %5d ",t,mon_time_ms());
 				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-				printf("Mode is: %d\n", input.mode);
+				// printf("Mode is: %d\n", input.mode);
 				t = (t + period) % 65000; //set next transmission time
 			}
 		}

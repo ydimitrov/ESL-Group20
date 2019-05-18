@@ -22,13 +22,17 @@
 #include "fsmReceive.h"
 #include <math.h>
 
-#define RED		22
+#define RED			22
 #define YELLOW		24
 #define GREEN		28
 #define BLUE		30
 #define INT_PIN		5
+#define MAX_SPEED 	450
+#define MIN_SPEED 	50
+#define MOTOR_RELATION 1
 
 bool demo_done;
+int global_state;
 
 // Control
 int16_t motor[4],ae[4];
@@ -108,15 +112,28 @@ volatile bool radio_active;
 void ble_init(void);
 void ble_send(void);
 
-typedef enum 
+typedef struct 
 {
-	SAFE,
-	PANIC,
-	MANUAL,
-	CALIBRATION
-}flightMode; 
+	int8_t roll;
+	int8_t pitch;
+	int8_t yaw;
+	int8_t lift;
+}pilotValues;
 
-flightMode flightmode;
+pilotValues flightParameters;
+
+enum flightmode
+{
+	SAFE_MODE,
+	PANIC_MODE,
+	MANUAL_MODE,
+	CALIBRATION_MODE,
+	YAW_MODE,
+	FULL_MODE,
+	RAW_MODE,
+	HEIGHT_MODE,
+	WIRELESS_MODE
+}mode;
 
 
 #endif // IN4073_H__

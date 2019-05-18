@@ -13,8 +13,17 @@
 #define CRCCHECK 1 
 #define STOREVALUES 2
 
-#define MODELEN 0x05 // Packet length for a MODE command
-#define MOVELEN 0x08 // Packet length for a MOVE command
+#define SAFE 0x00 // Packet length for a MODE command
+#define PANIC 0x01 // Packet length for a MODE command
+#define MANUAL 0x02 // Packet length for a MOVE command
+#define CALIBRATION 0x03 // Packet length for a MOVE command
+#define YAW 0x04 // Packet length for a MOVE command
+#define FULL 0x05 // Packet length for a MOVE command
+#define RAW 0x06 // Packet length for a MOVE command
+#define HEIGHT 0x07 // Packet length for a MOVE command
+#define WIRELESS 0x08 // Packet length for a MOVE command
+
+
 
 #define PACKETLEN 8 // will be changed
 
@@ -55,7 +64,7 @@ void readByte(void){
 		buffer[arrIndex] = dequeue(&rx_queue);
     	statesFunc = packetStatesArr[stateIndex];
   	} else {
-  		printf("No byte in rx_queue\n");
+  		// printf("No byte in rx_queue\n");
   	}
 }
 
@@ -74,7 +83,8 @@ void preambleByte(void){
 
 void lengthByte(void){
 	temp = buffer[arrIndex];
-	if(temp >= MODELEN && temp <= MOVELEN ){
+	// if(temp >= MODELEN && temp <= MOVELEN ){
+	if(temp == PACKETLEN){
 		arrIndex++;
     	stateIndex++;
 		packetLen = temp;
@@ -87,7 +97,7 @@ void lengthByte(void){
 
 void packetTypeByte(void){
 	temp = buffer[arrIndex];
-	if(temp == MODELEN || temp == MOVELEN){
+	if(temp == SAFE || temp == PANIC || temp == MANUAL || temp == CALIBRATION || temp == YAW || temp == FULL || temp == RAW || temp == HEIGHT || temp == WIRELESS){
 		arrIndex++;
     	stateIndex++;
 		statesFunc = packetStatesArr[READBYTE];
@@ -125,12 +135,13 @@ void crcCheck(void){
 }
 
 void storeValues(void){
-	printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
-
-	// pilotValue1 = buffer[3]; 
-	// pilotValue2 = buffer[4];
-	// pilotValue3 = buffer[5];
-	// pilotValue4 = buffer[6];
+	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
+	printf("mode = %d\n", mode);
+	mode		 	  = buffer[2]; 
+	flightParameters.roll  = buffer[3]; 
+	flightParameters.pitch = buffer[4];
+	flightParameters.yaw   = buffer[5];
+	flightParameters.lift  = buffer[6];
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }

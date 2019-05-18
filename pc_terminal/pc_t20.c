@@ -40,8 +40,8 @@ void pc_t20_packet_tx(Packet* p) {
 
 
 Packet pc_packet_init(uint8_t startByte, uint8_t length, uint8_t mode,
-					  uint8_t roll, 	 uint8_t pitch,  uint8_t yaw,
-					  uint8_t elevation)
+					  int8_t roll, 	 int8_t pitch,  int8_t yaw,
+					  int8_t elevation)
 {
 	Packet x;
 	x.startByte = startByte;
