@@ -1,30 +1,16 @@
-/*------------------------------------------------------------
- * Simple pc terminal in C
- *
- * Arjan J.C. van Gemund (+ mods by Ioannis Protonotarios)
- *
- * read more: http://mirror.datenwolf.net/serial/
- *------------------------------------------------------------
- */
-
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <termios.h>
-#include <unistd.h>
-#include <string.h>
-#include <inttypes.h>
-#include <ctype.h>
 #include <fcntl.h>
-#include <assert.h>
-#include <time.h>
+#include <unistd.h>
+#include <stdio.h>
 #include <errno.h>
-#include "pc_t20.h"
-#include "rs232.h"
+#include <string.h>
+#include <time.h>
+#include <termios.h>
 #include "joystick.h"
-#include "termIO.h"
+#include "pc_terminal.h"
 
 #define JS_DEV	"/dev/input/js0"
 #define max(x, y) (((x) > (y)) ? (x) : (y))
@@ -38,6 +24,63 @@
 #define RAW_MODE 6
 #define HEIGHT_MODE 7
 #define WIRELESS_MODE 8
+
+
+
+/*------------------------------------------------------------
+ * console I/O
+ *------------------------------------------------------------
+ */
+struct termios 	savetty;
+
+void	term_initio()
+{
+	struct termios tty;
+
+	tcgetattr(0, &savetty);
+	tcgetattr(0, &tty);
+
+	tty.c_lflag &= ~(ECHO|ECHONL|ICANON|IEXTEN);
+	tty.c_cc[VTIME] = 0;
+	tty.c_cc[VMIN] = 0;
+
+	tcsetattr(0, TCSADRAIN, &tty);
+}
+
+void	term_exitio()
+{
+	tcsetattr(0, TCSADRAIN, &savetty);
+}
+
+void	term_puts(char *s)
+{
+	fprintf(stderr,"%s",s);
+}
+
+void	term_putchar(char c)
+{
+	putc(c,stderr);
+}
+
+int	term_getchar_nb()
+{
+        static unsigned char 	line [2];
+
+        if (read(0,line,1)) // note: destructive read
+        		return (int) line[0];
+
+        return -1;
+}
+
+int	term_getchar()
+{
+        int    c;
+
+        while ((c = term_getchar_nb()) == -1)
+                ;
+        return c;
+}
+
 
 /* current axis and button readings
  */
@@ -66,18 +109,18 @@ int	button[12]= {0,0,0,0,0,0,0,0,0,0,0,0};
 
 struct input_status
 {
-	char yaw;
-	char roll;
-	char pitch;
-	char lift;
-	char mode;
-	char yaw_offset;
-	char roll_offset;
-	char pitch_offset;
-	char lift_offset;
-	char P;
-	char P1;
-	char P2;	
+	int yaw;
+	int roll;
+	int pitch;
+	int lift;
+	int mode;
+	int yaw_offset;
+	int roll_offset;
+	int pitch_offset;
+	int lift_offset;
+	int P;
+	int P1;
+	int P2;	
 }input;
 
 //timer
@@ -104,23 +147,23 @@ void keyboardfunction()
 			switch(c)
 			{
 				// mode change
-				case '0': input.mode = SAFE_MODE;
+				case 0: input.mode = SAFE_MODE;
 					break;
-				case '1': input.mode = PANIC_MODE;
+				case 1: input.mode = PANIC_MODE;
 					break;
-				case '2': input.mode = MANUAL_MODE;
+				case 2: input.mode = MANUAL_MODE;
 					break;
-				case '3': input.mode = CALIBRATION_MODE;
+				case 3: input.mode = CALIBRATION_MODE;
 					break;
-				case '4': input.mode = YAW_MODE;
+				case 4: input.mode = YAW_MODE;
 					break;
-				case '5': input.mode = FULL_MODE;
+				case 5: input.mode = FULL_MODE;
 					break;
-				case '6': input.mode = RAW_MODE;
+				case 6: input.mode = RAW_MODE;
 					break;
-				case '7': input.mode = HEIGHT_MODE;
+				case 7: input.mode = HEIGHT_MODE;
 					break;
-				case '8': input.mode = WIRELESS_MODE;
+				case 8: input.mode = WIRELESS_MODE;
 					break;
 			}
 			if (input.mode != SAFE_MODE)
@@ -179,58 +222,25 @@ void keyboardfunction()
 	}
 }
 
-/*----------------------------------------------------------------
- * main -- execute terminal
- *----------------------------------------------------------------
- */
-int main(int argc, char **argv)
+int main (int argc, char **argv)
 {
-
 	// initialize
-
-	int 			period = 100; // defines transmission frequency
-	int 			fd;
-	struct 			js_event js;
+	int 		freq = 100; // defines transmission frequency
+	int 		fd;
+	struct js_event js;
 	unsigned int	t = mon_time_ms();
-	int c;
 
-	// Initialize input values
-
-	input.roll = 0;
-	input.yaw = 0;
-	input.pitch = 0;
-	input.lift = 0;
-
-	input.roll_offset = 0;
-	input.yaw_offset = 0;
-	input.pitch_offset = 0;
-	input.lift_offset = 0;
-
-	input.mode = 2;
-
-	input.P = 0;
-	input.P1 = 0;
-	input.P2 = 0;
-
+	term_initio();
 
 	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
-		//perror("jstest");
-		printf("Failed to initiate communication with joystick!\n");
+		perror("jstest");
 		exit(1);
 	}
 
-	term_initio();
-	rs232_open();
-	//term_puts("\nTerminal program - Embedded Real-Time Systems\n");
-
-	//term_puts("Type ^C to exit\n");
-	
-	for (;;)
+	while(1)
 	{
-
-		while((c = rs232_getchar_nb()) != -1) { term_putchar(c); }
-
 		// get joystick values
+		printf("Outside if\n");
 		if(read(fd, &js, sizeof(struct js_event)) == 
 		       			sizeof(struct js_event))   {
 		
@@ -261,19 +271,19 @@ int main(int argc, char **argv)
 					axis[js.number] = js.value;
 					if (js.number == 0)
 					{
-						input.yaw = (int) js.value/256 + input.yaw_offset;
+						input.yaw = (int) js.value/256 + yaw_offset;
 					}
 					else if (js.number == 1)
 					{
-						input.pitch = (int) js.value/256 + input.pitch_offset;
+						input.pitch = (int) js.value/256 + pitch_offset;
 					}
 					else if (js.number == 2)
 					{	
-						input.roll = (int) js.value/256 + input.roll_offset;
+						input.roll = (int) js.value/256 + roll_offset;
 					}
 					else if (js.number == 3)
 					{
-						input.lift = (int) js.value/256 + input.lift_offset;
+						input.lift = (int) js.value/256 + lift_offset;
 					}
 					break;
 				default: break;
@@ -282,54 +292,31 @@ int main(int argc, char **argv)
 		
 		// get keyboard values and update mode and setpoint if needed
 		keyboardfunction();
-
-		// printf("%5d  %5d  ",t ,mon_time_ms());
-		// printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-		
-
-		// Communicate periodically
-		
-
-		if (t < period)
+		// create packet
+		printf("%5d  %5d  ",t ,mon_time_ms());
+			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+		// send packet periodically
+		if (t < freq)
 		{
 			unsigned int t_now = mon_time_ms();
 			if (t < t_now && t_now < 64900)
 			{
-			
-				//printf("Send packet.\n");
-				Packet txPacket = pc_packet_init(0xAA, 0x08, input.mode, input.pitch, input.roll, input.yaw, input.lift);
-				
-				pc_t20_packet_tx(&txPacket);
-
-				// printf("%5d  %5d  ",t ,mon_time_ms());
-				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-				// printf("Mode is: %d\t", input.mode);
-				t = (t + period) % 65000; //set next transmission time
+				//SEND PACKET
+			printf("%5d  %5d  ",t ,mon_time_ms());
+			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+				t = (t + freq) % 65000; //set next transmission time
 			} 
 		}
 		else
 		{
 			if (t < mon_time_ms())
 			{
-
-				// printf("Send packet.\n");
-				Packet txPacket = pc_packet_init(0xAA, 0x08, input.mode, input.pitch, input.roll, input.yaw, input.lift);
-
-				// TODO: Check the order of fields and the function code for a move command
-				pc_t20_packet_tx(&txPacket);
-			
-				// printf("%5d  %5d ",t,mon_time_ms());
-				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-				// printf("Mode is: %d\n", input.mode);
-				t = (t + period) % 65000; //set next transmission time
+				//SEND PACKET
+			printf("%5d  %5d ",t,mon_time_ms());
+			printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+				t = (t + freq) % 65000; //set next transmission time
 			}
 		}
 				
-	}		
-
-	term_exitio();
-	rs232_close();
-	term_puts("\n<exit>\n");
-
-	return 0;
+	}
 }

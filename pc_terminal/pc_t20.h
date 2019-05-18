@@ -9,8 +9,8 @@ typedef struct {
 	uint8_t startByte;
 	uint8_t length;
 	uint8_t mode;
-	int8_t roll;	 
-	int8_t pitch; 
+	int8_t roll;
+	int8_t pitch;
 	int8_t yaw;
 	int8_t elevation;
 	uint8_t crc;
