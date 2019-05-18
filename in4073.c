@@ -105,12 +105,10 @@ int main(void)
 					nrf_gpio_pin_toggle(BLUE);
 				}
 
-			fsmReceive();
 			adc_request_sample();
 			read_baro();
-			// dr_t20_packet_rx();
 
-			// printf("%10ld | ", get_time_us());
+			//printf("%10ld | ", get_time_us());
 			// printf("%3d %3d %3d %3d | ", ae[0], ae[1], ae[2], ae[3]);
 			// printf("%6d %6d %6d | ", phi, theta, psi);
 			// printf("%6d %6d %6d | ", sp, sq, sr);
@@ -119,6 +117,7 @@ int main(void)
 			clear_timer_flag();
 		}
 
+		fsmReceive();
 
 		if (check_sensor_int_flag()) 
 		{
