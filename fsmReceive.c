@@ -125,12 +125,13 @@ void crcCheck(void){
 }
 
 void storeValues(void){
-	printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
+	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
 
-	// pilotValue1 = buffer[3]; 
-	// pilotValue2 = buffer[4];
-	// pilotValue3 = buffer[5];
-	// pilotValue4 = buffer[6];
+	mode		 	  = buffer[2]; 
+	flightParameters.roll  = buffer[3]; 
+	flightParameters.pitch = buffer[4];
+	flightParameters.yaw   = buffer[5];
+	flightParameters.lift  = buffer[6];
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }

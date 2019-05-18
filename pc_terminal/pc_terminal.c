@@ -50,6 +50,7 @@ int main(int argc, char **argv)
 		 while ((c = rs232_getchar_nb()) != -1)
 			term_putchar(c);
 
+		// roll, pitch, yaw, lift !!!!
 		Packet test = pc_packet_init(0xAA, 0x08, 0x08, 0x11, 0x12, 0x13, 0x14);
 
 		pc_t20_packet_tx(&test);
