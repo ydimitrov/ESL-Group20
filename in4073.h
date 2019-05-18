@@ -114,7 +114,15 @@ typedef enum
 	PANIC,
 	MANUAL,
 	CALIBRATION
-}flightMode; 
+}flightMode;
+
+typedef struct 
+{
+	int8_t yaw;
+	int8_t pitch;
+	int8_t roll;
+	int8_t lift;
+}PilotValues;
 
 flightMode flightmode;
 
