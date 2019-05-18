@@ -1,5 +1,5 @@
 #include "pc_t20.h"
-#include "consoleIO.h"
+#include "termIO.h"
 #include "rs232.h"
 #include <unistd.h>
 /* 

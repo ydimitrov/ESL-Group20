@@ -5,7 +5,11 @@
 #include <stdio.h>
 #include <assert.h>
 #include <time.h>
+<<<<<<< HEAD
 #include "consoleIO.h"
+=======
+#include "termIO.h"
+>>>>>>> input
 
 /*------------------------------------------------------------
  * console I/O
