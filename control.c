@@ -86,11 +86,11 @@ void panic()
 	}
 	while(ae[0] != 0)
 	{
-		ae[0] = ae[0] - 1;
-		ae[1] = ae[1] - 1;
-		ae[2] = ae[2] - 1;
-		ae[3] = ae[3] - 1;
-		update_motors();
+		ae[0] -= 10;
+		ae[1] -= 10;
+		ae[2] -= 10;
+		ae[3] -= 10;
+		update_motors(); 
 	}
 
 	mode = SAFE_MODE;	
@@ -104,14 +104,7 @@ void manual()
 
 	//set lift to uint16_t
 
-	if(lift == 0)
-	{
-		lift_status = 0;
-	}
-	else
-	{
-		lift_status = 1;
-	}
+	lift == 0 ? lift_status = 0 : lift_status = 1;
 
 	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
 	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
@@ -158,19 +151,13 @@ void yaw_control()
 
 	//set lift to uint16_t
 
-	if(lift == 0)
-	{
-		lift_status = 0;
-	}
-	else
-	{
-		lift_status = 1;
-	}
-
-	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION)) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION)) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION)) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION)) * lift_status;
+	
+	lift == 0 ? lift_status = 0 : lift_status = 1;
+	
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
 	
 	error = yaw - (sr - zr);
 
