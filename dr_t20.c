@@ -28,7 +28,7 @@ void dr_t20_packet_tx(packet* p) {
 		for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
 		{	
 			uart_put(*byteToSend);
-			nrf_delay_ms(1);
+			nrf_delay_ms(1); // derp implement timer interrupt DUDES!!!
 			// Wait for transmission to complete
 		}
 	}

@@ -97,7 +97,10 @@ void lengthByte(void){
 
 void packetTypeByte(void){
 	temp = buffer[arrIndex];
-	if(temp == SAFE || temp == PANIC || temp == MANUAL || temp == CALIBRATION || temp == YAW || temp == FULL || temp == RAW || temp == HEIGHT || temp == WIRELESS){
+	if(temp == SAFE || temp == PANIC 	   || temp == MANUAL
+				    || temp == CALIBRATION || temp == YAW 
+				    || temp == FULL		   || temp == RAW 
+				    || temp == HEIGHT      || temp == WIRELESS){
 		arrIndex++;
     	stateIndex++;
 		statesFunc = packetStatesArr[READBYTE];
