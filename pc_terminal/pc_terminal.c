@@ -38,6 +38,12 @@
 #define RAW_MODE 6
 #define HEIGHT_MODE 7
 #define WIRELESS_MODE 8
+#define P_INCREMENT 9
+#define P_DECREMENT 10
+#define P1_INCREMENT 11
+#define P1_DECREMENT 12
+#define P2_INCREMENT 13
+#define P2_DECREMENT 14
 
 /* current axis and button readings
  */
@@ -66,18 +72,18 @@ int	button[12]= {0,0,0,0,0,0,0,0,0,0,0,0};
 
 struct input_status
 {
-	char yaw;
-	char roll;
-	char pitch;
-	char lift;
-	char mode;
-	char yaw_offset;
-	char roll_offset;
-	char pitch_offset;
-	char lift_offset;
-	char P;
-	char P1;
-	char P2;	
+	int8_t yaw;
+	int8_t roll;
+	int8_t pitch;
+	uint8_t lift;
+	uint8_t mode;
+	int8_t yaw_offset;
+	int8_t roll_offset;
+	int8_t pitch_offset;
+	int8_t lift_offset;
+	uint8_t P;
+	uint8_t P1;
+	uint8_t P2;	
 }input;
 
 //timer
@@ -92,6 +98,23 @@ unsigned int    mon_time_ms(void)
         ms = ms + tv.tv_usec / 1000;
         return ms;
 }
+
+int8_t checkByteOverflow(int8_t value, int8_t offset) {
+	
+	// Make sure overflows won't happen.
+
+	int8_t txValue;
+
+	if((int16_t)(value + offset) > 127) {
+		txValue = 127;
+	} else if ((int16_t)(value + offset) < -128) {
+		txValue = -128;	
+	} else {
+		txValue = value + offset; 
+	}
+				
+	return txValue;
+} 
 
 void keyboardfunction()
 {
@@ -129,48 +152,49 @@ void keyboardfunction()
 				{
 					// movement change
 					case 'a': //set lift up
-						 input.lift_offset = input.lift_offset;
+
+						 input.lift_offset = checkByteOverflow(input.lift_offset, 1);
 						 break;
 					case 'z': //set lift down
-						 input.lift_offset = input.lift_offset;
+						 input.lift_offset = checkByteOverflow(input.lift_offset, -1);
 						 break;
 					case 'w': //yaw rate up
-						 input.yaw_offset = input.yaw_offset;
+						 input.yaw_offset = checkByteOverflow(input.yaw_offset, 1);
 						 break;
 					case 'q': //yaw rate down
-						 input.yaw_offset = input.yaw_offset;
+						 input.yaw_offset = checkByteOverflow(input.yaw_offset, -1);
 					         break;
 					case 'u': //set P of yaw up
-						 input.P = min(input.P + 1,127);
+						 input.P = 2;
 						 break;
 					case 'j': //set P of yaw down
-						 input.P = max(input.P - 1,0);
+						 input.P = 1;
 						 break;
 					case 'i': //set roll/pitch P1 up
-						 input.P1 = min(input.P1 + 1,127);
+						 input.P1 = 2;
 						 break;
 					case 'k': //set roll/pitch P1 down
-						 input.P1 = max(input.P1 - 1,0);
+						 input.P1 = 1;
 						 break;
 					case 'o': //set roll/pitch P2 up
-						 input.P2 = min(input.P2 + 1,127);
+						 input.P2 = 2;
 						 break;
 					case 'l': //set roll/pitch P2 down
-						 input.P2 = max(input.P2 - 1,0);
+						 input.P2 = 1;
 						 break;
 
 					//arrow keys
 					case 65: //pitch down (up arrow)
-						 input.pitch_offset = input.pitch_offset;
+						 input.pitch_offset = checkByteOverflow(input.pitch_offset, 1);
 						 break;
 					case 66: //pitch up (down arrow)
-						 input.pitch_offset = input.pitch_offset;
+						 input.pitch_offset = checkByteOverflow(input.pitch_offset, -1);
 						 break;
 					case 67: //roll up (right arrow)
-						 input.roll_offset = input.roll_offset;
+						 input.roll_offset = checkByteOverflow(input.roll_offset, 1);
 						 break;
 					case 68: //roll down (left arrow)
-						 input.roll_offset = input.roll_offset;
+						 input.roll_offset = checkByteOverflow(input.roll_offset, -1);
 						 break;
 					default: break; //other key was pressed
 				}
@@ -193,6 +217,14 @@ int main(int argc, char **argv)
 	struct 			js_event js;
 	unsigned int	t = mon_time_ms();
 	int c;
+
+	uint8_t oldmode = 2;
+
+	int8_t yawTx;
+	int8_t rollTx;
+	int8_t pitchTx;
+	uint8_t liftTx;
+	uint8_t modeTx;
 
 	// Initialize input values
 
@@ -261,19 +293,19 @@ int main(int argc, char **argv)
 					axis[js.number] = js.value;
 					if (js.number == 0)
 					{
-						input.yaw = (int) js.value/256 + input.yaw_offset;
+						input.yaw = (int) js.value/256;
 					}
 					else if (js.number == 1)
 					{
-						input.pitch = (int) js.value/256 + input.pitch_offset;
+						input.pitch = (int) js.value/256;
 					}
 					else if (js.number == 2)
 					{	
-						input.roll = (int) js.value/256 + input.roll_offset;
+						input.roll = (int) js.value/256;
 					}
 					else if (js.number == 3)
 					{
-						input.lift = (int) js.value/256 + input.lift_offset;
+						input.lift = (int) js.value/256;
 					}
 					break;
 				default: break;
@@ -297,27 +329,101 @@ int main(int argc, char **argv)
 			{
 			
 				//printf("Send packet.\n");
-				Packet txPacket = pc_packet_init(0xAA, 0x08, input.mode, input.pitch, input.roll, input.yaw, input.lift);
+
+				pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
+				rollTx = checkByteOverflow(input.roll, input.roll_offset);
+				yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
+				liftTx = checkByteOverflow(input.lift, input.lift_offset);
+
+				if (oldmode != input.mode) {
+					modeTx = input.mode;
+				} else {
+					if(input.P != 0) {
+						if(input.P == 1) {
+							modeTx = P_DECREMENT;
+						} else {
+							modeTx = P_INCREMENT;
+						}
+					} else if (input.P1 != 0) {
+						if(input.P1 == 1) {
+							modeTx = P1_DECREMENT;
+						} else {
+							modeTx = P1_INCREMENT;
+						}
+					} else if (input.P2 != 0) {
+						if(input.P2 == 1) {
+							modeTx = P2_DECREMENT;
+						} else {
+							modeTx = P2_INCREMENT;
+						}
+					} else {
+						modeTx = input.mode;
+					}
+				}
+
+				Packet txPacket = pc_packet_init(0xAA, 0x08, modeTx, pitchTx, rollTx, yawTx, liftTx);
 				
 				pc_t20_packet_tx(&txPacket);
+
+				oldmode = input.mode;
+
+				//printf("Time: %d\n", t);
 
 				// printf("%5d  %5d  ",t ,mon_time_ms());
 				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
 				// printf("Mode is: %d\t", input.mode);
 				t = (t + period) % 65000; //set next transmission time
 			} 
-		}
-		else
-		{
-			if (t < mon_time_ms())
-			{
+
+		} else {
+
+			if (t < mon_time_ms()) {
 
 				// printf("Send packet.\n");
-				Packet txPacket = pc_packet_init(0xAA, 0x08, input.mode, input.pitch, input.roll, input.yaw, input.lift);
+				pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
+				rollTx = checkByteOverflow(input.roll, input.roll_offset);
+				yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
+				liftTx = checkByteOverflow(input.lift, input.lift_offset);
+
+				if (oldmode != input.mode) {
+					modeTx = input.mode;
+				} else {
+					if(input.P != 0) {
+						if(input.P == 1) {
+							modeTx = P_DECREMENT;
+						} else {
+							modeTx = P_INCREMENT;
+						}
+						input.P = 0; // Reset P
+					} else if (input.P1 != 0) {
+						if(input.P1 == 1) {
+							modeTx = P1_DECREMENT;
+						} else {
+							modeTx = P1_INCREMENT;
+						}
+						input.P1 = 0; // Reset P1
+					} else if (input.P2 != 0) {
+						if(input.P2 == 1) {
+							modeTx = P2_DECREMENT;
+						} else {
+							modeTx = P2_INCREMENT;
+						}
+						input.P2 = 0; // Reset P2
+					} else {
+						modeTx = input.mode;
+					}
+				}
+
+
+				Packet txPacket = pc_packet_init(0xAA, 0x08, modeTx, pitchTx, rollTx, yawTx, liftTx);
 
 				// TODO: Check the order of fields and the function code for a move command
 				pc_t20_packet_tx(&txPacket);
-			
+
+				oldmode = input.mode;
+				
+				// printf("Time: %d\n", t);
+
 				// printf("%5d  %5d ",t,mon_time_ms());
 				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
 				// printf("Mode is: %d\n", input.mode);

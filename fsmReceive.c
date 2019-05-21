@@ -45,13 +45,14 @@ void (* fsmStatesArr[])(void) = {initialState,
 							     storeValues};
 
 
-// void printCurrentState(uint8_t state)
-// {
-// 	printf("S%d\n", state);
-// }
+void printCurrentState(uint8_t state)
+{
+	printf("S%d\n", state);
+}
 
 
 void initialState(){
+	printCurrentState(0);
 	arrIndex = 0;
 	stateIndex = 1;
 	crc = 0;
@@ -60,15 +61,18 @@ void initialState(){
 }
 
 void readByte(void){
-	if(rx_queue.count > 0) {	
+	//printCurrentState(1);
+	if(rx_queue.count > 0) {
+		printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 		buffer[arrIndex] = dequeue(&rx_queue);
     	statesFunc = packetStatesArr[stateIndex];
   	} else {
-  		// printf("No byte in rx_queue\n");
+  		 printf("No byte in rx_queue\n");
   	}
 }
 
 void preambleByte(void){
+	printCurrentState(2);
 	temp = buffer[arrIndex];
 	// printf("temp in preambleByte is = %x\n", temp);
 	if(temp == 0xAA){
@@ -82,6 +86,7 @@ void preambleByte(void){
 }
 
 void lengthByte(void){
+	printCurrentState(3);
 	temp = buffer[arrIndex];
 	// if(temp >= MODELEN && temp <= MOVELEN ){
 	if(temp == PACKETLEN){
@@ -96,6 +101,7 @@ void lengthByte(void){
 }
 
 void packetTypeByte(void){
+	printCurrentState(4);
 	temp = buffer[arrIndex];
 	if(temp == SAFE || temp == PANIC || temp == MANUAL || temp == CALIBRATION || temp == YAW || temp == FULL || temp == RAW || temp == HEIGHT || temp == WIRELESS){
 		arrIndex++;
@@ -107,6 +113,7 @@ void packetTypeByte(void){
 }
 
 void message(void){
+	printCurrentState(5);
 	if(arrIndex == packetLen - 1){
     	stateIndex++;
 		statesFunc = fsmStatesArr[CRCCHECK];
@@ -117,6 +124,7 @@ void message(void){
 }
 
 void crcCheck(void){
+	printCurrentState(6);
 	
 	for (int i = 0; i < packetLen - 1; i++){
 		crc ^= buffer[i];
@@ -135,8 +143,9 @@ void crcCheck(void){
 }
 
 void storeValues(void){
+	printCurrentState(7);
 	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
-	printf("mode = %d\n", mode);
+	// printf("mode = %d\n", mode);
 	mode		 	  = buffer[2]; 
 	flightParameters.roll  = buffer[3]; 
 	flightParameters.pitch = buffer[4];
@@ -155,7 +164,7 @@ void fsmReceive(){
 	// (statesFunc)();
 	// (statesFunc)();
 
-	for (int i = 0; i < 6; i++){
+	for (int i = 0; i < 12; i++){
 		(statesFunc)();
 	}
 }

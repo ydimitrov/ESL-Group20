@@ -117,7 +117,7 @@ int main(void)
 			clear_timer_flag();
 		}
 
-		fsmReceive();
+			fsmReceive();
 
 		if (check_sensor_int_flag()) 
 		{
