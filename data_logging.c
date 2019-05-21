@@ -5,6 +5,9 @@ bool flash_write_bytes(uint32_t address, uint8_t *data, uint32_t count);
 bool flash_read_byte(uint32_t address, uint8_t *buffer);
 bool flash_read_bytes(uint32_t address, uint8_t *buffer, uint32_t count);
 
+static uint32_t address = 0;
+
+
 
 - es system time (control loop time in ms)
 - system mode
@@ -19,7 +22,6 @@ bool flash_read_bytes(uint32_t address, uint8_t *buffer, uint32_t count);
 
 - LITTLE ENDIAN 
 
-You need to count how much has been storred in the flash to avoid overflow
 
 
 - telemtry (done with printf)
@@ -29,30 +31,26 @@ You need to count how much has been storred in the flash to avoid overflow
 
 
 
-eightTo32bit()
+void eightTo32bit(){
+
+}
 
 uint8_t *data;
 
-void write_log(uint8_t* data, uint8_t size)
-{
+uint8_t writeLog(uint8_t* data, uint8_t size){
 
-	static bool isfull = false;
-	static uint32_t address = 0;
-	if (isfull)
+	if (address >= 0x01FFFF)
 		return;
 
-	flash_write_bytes(data, size);
-	address += size;
-	if (address >= 0x01FFFF)
-	{
-		isfull = true;
-	}
+	if (address + size <= 0x01FFFF)
+		flash_write_bytes(address, data, size);
+		address += size;
 }
 
 
 
-void read_log()
-{
-	static uint32_t address = 0;
+void readLog(){
+	
+	
 
 }

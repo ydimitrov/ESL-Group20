@@ -113,6 +113,9 @@ volatile bool radio_active;
 void ble_init(void);
 void ble_send(void);
 
+// P VALUES
+uint8_t P, P1, P2;
+
 typedef struct 
 {
 	int8_t roll;

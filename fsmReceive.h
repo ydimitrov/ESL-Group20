@@ -10,5 +10,6 @@ void message(void);
 void crcCheck(void);
 void storeValues(void);
 void fsmReceive(void);
+uint8_t checkModeByte(uint8_t byte);
 
 #endif
