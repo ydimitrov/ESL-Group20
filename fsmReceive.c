@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <inttypes.h>
+#include <stdlib.h>
 #include "fsmReceive.h"
 #include "in4073.h"
 
@@ -52,27 +53,33 @@ void printCurrentState(uint8_t state)
 
 
 void initialState(){
-	printCurrentState(0);
+	// printCurrentState(0);
 	arrIndex = 0;
 	stateIndex = 1;
 	crc = 0;
 	statesFunc = packetStatesArr[READBYTE];
+	buffer[0] = 0x00;
 	packetLen = 0x08;
 }
 
 void readByte(void){
-	//printCurrentState(1);
+	// printCurrentState(1);
+		// printf("RXQUEUE SIZE1: %d \n", rx_queue.count);	
 	if(rx_queue.count > 0) {
-		printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
+		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 		buffer[arrIndex] = dequeue(&rx_queue);
-    	statesFunc = packetStatesArr[stateIndex];
+		statesFunc = packetStatesArr[stateIndex];
   	} else {
-  		 printf("No byte in rx_queue\n");
+		statesFunc = fsmStatesArr[INITIALSTATE];
+  		return;
+	 	// nrf_delay_ms(1);
+	 	// printf("No byte in rx_queue\n");
   	}
 }
 
 void preambleByte(void){
-	printCurrentState(2);
+	// stateIndex = 1
+	// printCurrentState(2);
 	temp = buffer[arrIndex];
 	// printf("temp in preambleByte is = %x\n", temp);
 	if(temp == 0xAA){
@@ -86,7 +93,8 @@ void preambleByte(void){
 }
 
 void lengthByte(void){
-	printCurrentState(3);
+	// stateIndex = 2
+	// printCurrentState(3);
 	temp = buffer[arrIndex];
 	// if(temp >= MODELEN && temp <= MOVELEN ){
 	if(temp == PACKETLEN){
@@ -97,11 +105,11 @@ void lengthByte(void){
 	} else {
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
-
 }
 
 void packetTypeByte(void){
-	printCurrentState(4);
+	// stateIndex = 3
+	// printCurrentState(4);
 	temp = buffer[arrIndex];
 	if(temp == SAFE || temp == PANIC || temp == MANUAL || temp == CALIBRATION || temp == YAW || temp == FULL || temp == RAW || temp == HEIGHT || temp == WIRELESS){
 		arrIndex++;
@@ -113,7 +121,8 @@ void packetTypeByte(void){
 }
 
 void message(void){
-	printCurrentState(5);
+	// stateIndex = 4
+	// printCurrentState(5);
 	if(arrIndex == packetLen - 1){
     	stateIndex++;
 		statesFunc = fsmStatesArr[CRCCHECK];
@@ -124,7 +133,7 @@ void message(void){
 }
 
 void crcCheck(void){
-	printCurrentState(6);
+	// printCurrentState(6);
 	
 	for (int i = 0; i < packetLen - 1; i++){
 		crc ^= buffer[i];
@@ -143,14 +152,14 @@ void crcCheck(void){
 }
 
 void storeValues(void){
-	printCurrentState(7);
+	// printCurrentState(7);
 	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
-	// printf("mode = %d\n", mode);
 	mode		 	  = buffer[2]; 
 	flightParameters.roll  = buffer[3]; 
 	flightParameters.pitch = buffer[4];
 	flightParameters.yaw   = buffer[5];
 	flightParameters.lift  = buffer[6];
+	// printf("mode = %d\n", mode);
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
@@ -164,7 +173,7 @@ void fsmReceive(){
 	// (statesFunc)();
 	// (statesFunc)();
 
-	for (int i = 0; i < 12; i++){
+	for (int i = 0; i < 1; i++){
 		(statesFunc)();
 	}
 }

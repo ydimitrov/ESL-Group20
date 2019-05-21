@@ -360,7 +360,7 @@ int main(int argc, char **argv)
 						modeTx = input.mode;
 					}
 				}
-
+				printf("modeTx = %d\n", modeTx);
 				Packet txPacket = pc_packet_init(0xAA, 0x08, modeTx, pitchTx, rollTx, yawTx, liftTx);
 				
 				pc_t20_packet_tx(&txPacket);
