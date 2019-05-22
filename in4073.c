@@ -119,6 +119,7 @@ int main(void)
 
 		fsmReceive();
 
+
 		if (check_sensor_int_flag()) 
 		{
 			get_dmp_data();
