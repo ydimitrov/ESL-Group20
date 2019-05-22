@@ -18,6 +18,7 @@ uint8_t roll;
 uint8_t pitch;
 uint8_t yaw;
 uint8_t lift;
+int int_error = 0; //integral of error, needed for yaw control
 
 void initialize_flight_Parameters()
 {
@@ -169,24 +170,19 @@ void yaw_control()
 	int error;
 
 	initialize_flight_Parameters();
-
-	//set lift to uint16_t
-
 	
 	lift_status = (lift == 0 ? 0 : 1);	
-
-	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
 	
-	error = yaw - (sr - zr);
+	error = yaw - (sr - zr); //calculate yaw rate error
+	int_error = int_error + error; //integrate error
 
-	ae[0] = ae[0] - (P * error);
-	ae[1] = ae[1] + (P * error);
-	ae[2] = ae[2] - (P * error);
-	ae[3] = ae[3] + (P * error);
+	//update motors based on pitch,roll,lift and control for yaw
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (P * int_error)) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (P * int_error)) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (P * int_error)) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (P * int_error)) * lift_status;
 
+	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
 	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
 	if(ae[2] > MAX_SPEED) ae[2] = MAX_SPEED;
