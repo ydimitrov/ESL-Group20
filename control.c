@@ -18,13 +18,14 @@ uint8_t roll;
 uint8_t pitch;
 uint8_t yaw;
 uint8_t lift;
-//consider removing these values if there is delay
-void initialize_flightParameters()
+
+void initialize_flight_Parameters()
 {
 	roll 	= flightParameters.roll;
 	pitch 	= flightParameters.pitch;
 	yaw 	= flightParameters.yaw;
 	lift 	= flightParameters.lift;
+	//consider removing these values if there is delay
 }
 
 void update_motors(void)
@@ -48,6 +49,7 @@ void reset_motors()
 	ae[1] = 0;
 	ae[2] = 0;
 	ae[3] = 0;
+	update_motors();
 }
 
 void run_filters_and_control()
@@ -55,13 +57,31 @@ void run_filters_and_control()
 
 	switch(mode)
 	{
-		case PANIC_MODE : 
+		case PANIC_MODE :
 			panic();
 			break;
 		case SAFE_MODE :
 			break;
 		case MANUAL_MODE : 
 			manual();
+			break;
+		case CALIBRATION_MODE:
+			calibration();
+			break;
+		case YAW_MODE:
+			yaw_control();
+			break;
+		case FULL_MODE:
+			full_control();
+			break;
+		case RAW_MODE:
+			raw_control();
+			break;
+		case HEIGHT_MODE:
+			height_control();
+			break;
+		case WIRELESS_MODE:
+			wireless_control();
 			break;
 		default:
 			panic();
@@ -72,9 +92,8 @@ void run_filters_and_control()
 
 void panic()
 {
-	int i = 0;
-	uint16_t average = (ae[0] + ae[1] + ae[2] + ae[3])/4;
-	average = average / 2;
+	uint16_t i, average = (ae[0] + ae[1] + ae[2] + ae[3]);
+	average = average >> 3;
 	while(i < 1000)
 	{
 		ae[0] = average;
@@ -86,23 +105,30 @@ void panic()
 	}
 	while(ae[0] != 0)
 	{
-		ae[0] = ae[0] - 1;
-		ae[1] = ae[1] - 1;
-		ae[2] = ae[2] - 1;
-		ae[3] = ae[3] - 1;
-		update_motors();
+		ae[0] -= 10;
+		ae[1] -= 10;
+		ae[2] -= 10;
+		ae[3] -= 10;
+		update_motors(); 
 	}
-	global_state = SAFE_MODE;	
+
+	mode = SAFE_MODE;	
 }
 
 void manual()
 {
-	initialize_flightParameters();
+	int8_t lift_status; 
 
-	ae[0] = (lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + MIN_SPEED;
-	ae[1] = (lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + MIN_SPEED;
-	ae[2] = (lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + MIN_SPEED;
-	ae[3] = (lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + MIN_SPEED;
+	initialize_flight_Parameters();
+
+	//set lift to uint16_t
+
+	lift_status = (lift == 0 ? 0 : 1);
+
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
 	
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
 	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
@@ -120,4 +146,73 @@ void manual()
 void safe()
 {
 	reset_motors();
+	readLog();
+}
+
+
+void calibration()
+{
+	panic();
+	zp = zq = zr = zax = zay = zaz = 0;
+	get_dmp_data();
+	zp = sp;
+	zq = sq;
+	zr = sr;
+	zax = sax;
+	zay = say;
+	zaz = saz;
+}
+
+void yaw_control()
+{
+	int lift_status; 
+	int error;
+
+	initialize_flight_Parameters();
+
+	//set lift to uint16_t
+
+	
+	lift_status = (lift == 0 ? 0 : 1);	
+
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
+	
+	error = yaw - (sr - zr);
+
+	ae[0] = ae[0] - (P * error);
+	ae[1] = ae[1] + (P * error);
+	ae[2] = ae[2] - (P * error);
+	ae[3] = ae[3] + (P * error);
+
+	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
+	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
+	if(ae[2] > MAX_SPEED) ae[2] = MAX_SPEED;
+	if(ae[3] > MAX_SPEED) ae[3] = MAX_SPEED;
+
+	if(ae[0] < MIN_SPEED) ae[0] = MIN_SPEED;
+	if(ae[1] < MIN_SPEED) ae[1] = MIN_SPEED;
+	if(ae[2] < MIN_SPEED) ae[2] = MIN_SPEED;
+	if(ae[3] < MIN_SPEED) ae[3] = MIN_SPEED;
+
+	update_motors();
+}	
+
+
+void full_control(){
+
+}
+
+void raw_control(){
+
+}
+
+void height_control(){
+
+}
+
+void wireless_control(){
+
 }

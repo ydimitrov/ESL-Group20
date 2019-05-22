@@ -14,52 +14,6 @@
  *  mode, etc.
  */
 
-void dr_t20_packet_rx() {
-
-	printf("Receiving...");
-	while(rx_queue.count){
-		// Check preamble
-		if(dequeue(&rx_queue) == 0xAA){
-			uint8_t length = dequeue(&rx_queue);
-			switch (length) {
-				case MODELEN:
-				;
-					// TODO: CRC check
-					// Read mode
-					// setMode(p->mode);
-					//printf("MODE PACKET RECEIVED");
-				    // uint8_t foo = 159;
-					uint8_t ae[4] = {0x01, 0x02, 0x03, 0x04};
-				    packet test = dr_packet_init(0xAA,0x00,0xAB,0xAC,0xAD,0xAE,0xAF,ae,0xBA,0xBB,0xBC,0xBD,0xBE,0xBF,0xCA,0xCB,0xCC,0xCD);
-				    test.length = sizeof(test);
-				    // printf("Size of test: %d", sizeof(test));
-				    dr_t20_packet_tx(&test);
-
-				break;
-
-				case MOVELEN:
-				;
-					// TODO: CRC check
-					// setRotors(p->roll, p->pitch, p->yaw, p->elevation);
-					// printf("MOVELEN PACKET RECEIVED");
-				    uint8_t boo = 2;
-					uart_put(boo);
-
-				break;
-
-				case TELELEN:
-					// TODO: CRC check
-					printf("TELELEN PACKET RECEIVED");
-				break;
-
-				default:
-					// No valid command received. Drop packet.
-					printf("DEFAULT");
-				break;
-			}
-		}
-	}
-}
 
 void dr_t20_packet_tx(packet* p) {
 
@@ -74,7 +28,7 @@ void dr_t20_packet_tx(packet* p) {
 		for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
 		{	
 			uart_put(*byteToSend);
-			nrf_delay_ms(1);
+			nrf_delay_ms(1); // derp implement timer interrupt DUDES!!!
 			// Wait for transmission to complete
 		}
 	}

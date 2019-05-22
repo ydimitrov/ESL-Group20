@@ -23,7 +23,12 @@
 #define RAW 0x06 // Packet length for a MOVE command
 #define HEIGHT 0x07 // Packet length for a MOVE command
 #define WIRELESS 0x08 // Packet length for a MOVE command
-
+#define P_INC 9
+#define P_DEC 10
+#define P1_INC 11
+#define P1_DEC 12
+#define P2_INC 13
+#define P2_DEC 14
 
 
 #define PACKETLEN 8 // will be changed
@@ -111,7 +116,7 @@ void packetTypeByte(void){
 	// stateIndex = 3
 	// printCurrentState(4);
 	temp = buffer[arrIndex];
-	if(temp == SAFE || temp == PANIC || temp == MANUAL || temp == CALIBRATION || temp == YAW || temp == FULL || temp == RAW || temp == HEIGHT || temp == WIRELESS){
+	if(checkModeByte(temp)){
 		arrIndex++;
     	stateIndex++;
 		statesFunc = packetStatesArr[READBYTE];
@@ -139,8 +144,6 @@ void crcCheck(void){
 		crc ^= buffer[i];
 	}
 
-	// printf("FSMcrc = %d\n", crc);
-
 	if(crc == buffer[packetLen - 1]){
 		printf("Packet OK!\n");
     	stateIndex++;
@@ -154,12 +157,32 @@ void crcCheck(void){
 void storeValues(void){
 	// printCurrentState(7);
 	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
-	mode		 	  = buffer[2]; 
-	flightParameters.roll  = buffer[3]; 
-	flightParameters.pitch = buffer[4];
-	flightParameters.yaw   = buffer[5];
-	flightParameters.lift  = buffer[6];
 	printf("mode = %d\n", mode);
+	
+	if (buffer[2] >= 0 && buffer[2] <= 8){
+		mode = buffer[2];
+	} else if ( mode == 4 && buffer[2] == 9) {
+		P += 1;
+	} else if ( mode == 4 && buffer[2] == 10) {
+		P = (P > 0 ? P - 1 : 0); 
+	} else if ( mode == 5 && buffer[2] == 9) {
+		P += 1;
+	} else if ( mode == 5 && buffer[2] == 10) {
+		P = (P > 0 ? P - 1 : 0);
+	} else if ( mode == 5 && buffer[2] == 11) {
+		P1 += 1;
+	} else if ( mode == 5 && buffer[2] == 12) {
+		P1 = (P1 > 0 ? P1 - 1 : 0);
+	} else if ( mode == 5 && buffer[2] == 13) {
+		P2 += 1;
+	} else if ( mode == 5 && buffer[2] == 14) {
+		P2 = (P2 > 0 ? P2 - 1 : 0);
+	}
+
+	flightParameters.roll  = (int8_t)  	buffer[3]; 
+	flightParameters.pitch = (int8_t)	buffer[4];
+	flightParameters.yaw   = (int8_t)	buffer[5];
+	flightParameters.lift  = (int8_t)	buffer[6];
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
@@ -176,4 +199,28 @@ void fsmReceive(){
 	// for (int i = 0; i < 1; i++){
 	// 	(statesFunc)();
 	// }
+}
+
+uint8_t checkModeByte(uint8_t byte){
+
+	switch(byte){
+		case SAFE:
+		case PANIC:
+		case MANUAL:
+		case CALIBRATION:
+		case YAW:
+		case FULL:
+		case RAW:
+		case HEIGHT:
+		case WIRELESS:
+		case P_INC:
+		case P_DEC:
+		case P1_INC:
+		case P1_DEC:
+		case P2_INC:
+		case P2_DEC:
+			return 1;
+		default:
+			return 0;
+	}		
 }
