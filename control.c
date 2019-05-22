@@ -146,7 +146,7 @@ void manual()
 void safe()
 {
 	reset_motors();
-	readLog();
+	// readLog();
 }
 
 
