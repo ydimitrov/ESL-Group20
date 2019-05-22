@@ -44,6 +44,8 @@
 #define P1_DECREMENT 12
 #define P2_INCREMENT 13
 #define P2_DECREMENT 14
+#define STARTBYTE 0xAA
+#define PACKETLEN 0X08
 
 /* current axis and button readings
  */
@@ -259,61 +261,65 @@ int main(int argc, char **argv)
 	
 	for (;;)
 	{
-
+		// some_time = mon_time_ms();
+		// printf("starTime = %d\n", mon_time_ms());
 		while((c = rs232_getchar_nb()) != -1) { term_putchar(c); }
+		// printf("after read joystick = %d\n", mon_time_ms());
 
 		// get joystick values
-		if(read(fd, &js, sizeof(struct js_event)) == 
-		       			sizeof(struct js_event))   {
+		// if(read(fd, &js, sizeof(struct js_event)) == 
+		//        			sizeof(struct js_event))   {
 		
-			//printf("%5d   ",t);
-			/* register data
-			 */
-			// fprintf(stderr,".");
-			switch(js.type & ~JS_EVENT_INIT) {
-				case JS_EVENT_BUTTON:
-					button[js.number] = js.value;
-					if (js.value == 1)
-					{
-						if (js.number == 0)
-						{
-							input.mode = PANIC_MODE;
-						}
-						else if (js.number == 1)
-						{
-							input.mode = SAFE_MODE;
-						}
-						else
-						{
-							input.mode = js.number;
-						}
-					}
-					break;
-				case JS_EVENT_AXIS:
-					axis[js.number] = js.value;
-					if (js.number == 0)
-					{
-						input.yaw = (int) js.value/256;
-					}
-					else if (js.number == 1)
-					{
-						input.pitch = (int) js.value/256;
-					}
-					else if (js.number == 2)
-					{	
-						input.roll = (int) js.value/256;
-					}
-					else if (js.number == 3)
-					{
-						input.lift = (int) js.value/256;
-					}
-					break;
-				default: break;
-			}
-		}
+		// 	//printf("%5d   ",t);
+		// 	/* register data
+		// 	 */
+		// 	// fprintf(stderr,".");
+		// 	switch(js.type & ~JS_EVENT_INIT) {
+		// 		case JS_EVENT_BUTTON:
+		// 			button[js.number] = js.value;
+		// 			if (js.value == 1)
+		// 			{
+		// 				if (js.number == 0)
+		// 				{
+		// 					input.mode = PANIC_MODE;
+		// 				}
+		// 				else if (js.number == 1)
+		// 				{
+		// 					input.mode = SAFE_MODE;
+		// 				}
+		// 				else
+		// 				{
+		// 					input.mode = js.number;
+		// 				}
+		// 			}
+		// 			break;
+		// 		case JS_EVENT_AXIS:
+		// 			axis[js.number] = js.value;
+		// 			if (js.number == 0)
+		// 			{
+		// 				input.yaw = (int) js.value/256;
+		// 			}
+		// 			else if (js.number == 1)
+		// 			{
+		// 				input.pitch = (int) js.value/256;
+		// 			}
+		// 			else if (js.number == 2)
+		// 			{	
+		// 				input.roll = (int) js.value/256;
+		// 			}
+		// 			else if (js.number == 3)
+		// 			{
+		// 				input.lift = (int) js.value/256;
+		// 			}
+		// 			break;
+		// 		default: break;
+		// 	}
+		// }
+		// printf("after joystick time = %d\n", mon_time_ms());
 		
 		// get keyboard values and update mode and setpoint if needed
 		keyboardfunction();
+		// printf("after keyboardfunction time = %d\n", mon_time_ms());
 
 		// printf("%5d  %5d  ",t ,mon_time_ms());
 		// printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
@@ -328,12 +334,15 @@ int main(int argc, char **argv)
 			if (t < t_now && t_now < 64900)
 			{
 			
-				//printf("Send packet.\n");
+				// printf("In corner case.\n");
 
+				// int overflowTime1 = mon_time_ms();
 				pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
 				rollTx = checkByteOverflow(input.roll, input.roll_offset);
 				yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
 				liftTx = checkByteOverflow(input.lift, input.lift_offset);
+				// printf("overflow check1 = %d\n", (mon_time_ms() - overflowTime1));
+				// printf("overflow check1 = %d\n", mon_time_ms());
 
 				if (oldmode != input.mode) {
 					modeTx = input.mode;
@@ -360,8 +369,8 @@ int main(int argc, char **argv)
 						modeTx = input.mode;
 					}
 				}
-				printf("modeTx = %d\n", modeTx);
-				Packet txPacket = pc_packet_init(0xAA, 0x08, modeTx, pitchTx, rollTx, yawTx, liftTx);
+				// printf("modeTx = %d\n", modeTx);
+				Packet txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
 				
 				pc_t20_packet_tx(&txPacket);
 
@@ -372,65 +381,77 @@ int main(int argc, char **argv)
 				// printf("%5d  %5d  ",t ,mon_time_ms());
 				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
 				// printf("Mode is: %d\t", input.mode);
-				t = (t + period) % 65000; //set next transmission time
+				t = (mon_time_ms() + period) % 65000; //set next transmission time
+				// t = (t + period) % 65000; //set next transmission time
 			} 
 
-		} else {
+		} else if (t < mon_time_ms() || (mon_time_ms() < 1000 && t > 64000)){
 
-			if (t < mon_time_ms()) {
+			// printf("In main statement.\n");
+			// int overflowTime2 = mon_time_ms();
+			pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
+			rollTx = checkByteOverflow(input.roll, input.roll_offset);
+			yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
+			liftTx = checkByteOverflow(input.lift, input.lift_offset);
+			// printf("overflow check2 = %d\n", (mon_time_ms() - overflowTime2));
+			// printf("overflow check2 = %d\n", mon_time_ms());
 
-				// printf("Send packet.\n");
-				pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
-				rollTx = checkByteOverflow(input.roll, input.roll_offset);
-				yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
-				liftTx = checkByteOverflow(input.lift, input.lift_offset);
-
-				if (oldmode != input.mode) {
-					modeTx = input.mode;
-				} else {
-					if(input.P != 0) {
-						if(input.P == 1) {
-							modeTx = P_DECREMENT;
-						} else {
-							modeTx = P_INCREMENT;
-						}
-						input.P = 0; // Reset P
-					} else if (input.P1 != 0) {
-						if(input.P1 == 1) {
-							modeTx = P1_DECREMENT;
-						} else {
-							modeTx = P1_INCREMENT;
-						}
-						input.P1 = 0; // Reset P1
-					} else if (input.P2 != 0) {
-						if(input.P2 == 1) {
-							modeTx = P2_DECREMENT;
-						} else {
-							modeTx = P2_INCREMENT;
-						}
-						input.P2 = 0; // Reset P2
+			if (oldmode != input.mode) {
+				modeTx = input.mode;
+			} else {
+				if(input.P != 0) {
+					if(input.P == 1) {
+						modeTx = P_DECREMENT;
 					} else {
-						modeTx = input.mode;
+						modeTx = P_INCREMENT;
 					}
+					input.P = 0; // Reset P
+				} else if (input.P1 != 0) {
+					if(input.P1 == 1) {
+						modeTx = P1_DECREMENT;
+					} else {
+						modeTx = P1_INCREMENT;
+					}
+					input.P1 = 0; // Reset P1
+				} else if (input.P2 != 0) {
+					if(input.P2 == 1) {
+						modeTx = P2_DECREMENT;
+					} else {
+						modeTx = P2_INCREMENT;
+					}
+					input.P2 = 0; // Reset P2
+				} else {
+					modeTx = input.mode;
 				}
-
-
-				Packet txPacket = pc_packet_init(0xAA, 0x08, modeTx, pitchTx, rollTx, yawTx, liftTx);
-
-				// TODO: Check the order of fields and the function code for a move command
-				pc_t20_packet_tx(&txPacket);
-
-				oldmode = input.mode;
-				
-				// printf("Time: %d\n", t);
-
-				// printf("%5d  %5d ",t,mon_time_ms());
-				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-				// printf("Mode is: %d\n", input.mode);
-				t = (t + period) % 65000; //set next transmission time
 			}
+
+			// int timePacket = mon_time_ms();
+			Packet txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
+			// printf("packet time = %d\n", mon_time_ms());
+
+			// TODO: Check the order of fields and the function code for a move command
+			// printf("Before packet send\n");
+
+			// int sendPacketTime = mon_time_ms();
+			pc_t20_packet_tx(&txPacket);
+			usleep(20);
+			// printf("send packet time = %d\n", mon_time_ms());
+
+			oldmode = input.mode;
+			
+			// printf("Time: %d\n", t);
+			// printf("=============================\n");
+
+			// printf("%5d  %5d ",t,mon_time_ms());
+			//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+			// printf("Mode is: %d\n", input.mode);
+			// t = (t + period) % 65000; //set next transmission time
+			t = (mon_time_ms() + period) % 65000; //set next transmission time
+			printf("t after sending = %d\n", t);
 		}
-				
+		printf("endTime = %d\n", mon_time_ms());
+		// printf("exec_time =  %d\n", mon_time_ms() - some_time);
+		// printf("=============================\n");
 	}		
 
 	term_exitio();

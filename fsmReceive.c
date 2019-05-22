@@ -64,7 +64,7 @@ void initialState(){
 
 void readByte(void){
 	// printCurrentState(1);
-		// printf("RXQUEUE SIZE1: %d \n", rx_queue.count);	
+		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 	if(rx_queue.count > 0) {
 		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 		buffer[arrIndex] = dequeue(&rx_queue);
@@ -159,21 +159,21 @@ void storeValues(void){
 	flightParameters.pitch = buffer[4];
 	flightParameters.yaw   = buffer[5];
 	flightParameters.lift  = buffer[6];
-	// printf("mode = %d\n", mode);
+	printf("mode = %d\n", mode);
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
 
 void fsmReceive(){
 	
-	// (statesFunc)();
+	(statesFunc)();
 	// (statesFunc)();
 	// (statesFunc)();
 	// (statesFunc)();
 	// (statesFunc)();
 	// (statesFunc)();
 
-	for (int i = 0; i < 1; i++){
-		(statesFunc)();
-	}
+	// for (int i = 0; i < 1; i++){
+	// 	(statesFunc)();
+	// }
 }
