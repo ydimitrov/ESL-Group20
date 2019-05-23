@@ -77,7 +77,7 @@ struct input_status
 	int8_t yaw;
 	int8_t roll;
 	int8_t pitch;
-	uint8_t lift;
+	int8_t lift;
 	uint8_t mode;
 	int8_t yaw_offset;
 	int8_t roll_offset;
@@ -266,9 +266,8 @@ int main(int argc, char **argv)
 		while((c = rs232_getchar_nb()) != -1) { printf("%c",c);}//term_putchar(c); }
 		// printf("after read joystick = %d\n", mon_time_ms());
 
-		// get joystick values
-		// if(read(fd, &js, sizeof(struct js_event)) == 
-		//        			sizeof(struct js_event))   {
+		//get joystick values
+		// if(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
 		
 		// 	//printf("%5d   ",t);
 		// 	/* register data
@@ -297,7 +296,7 @@ int main(int argc, char **argv)
 		// 			axis[js.number] = js.value;
 		// 			if (js.number == 0)
 		// 			{
-		// 				input.yaw = (int) js.value/256;
+		// 				input.roll = (int) js.value/256;
 		// 			}
 		// 			else if (js.number == 1)
 		// 			{
@@ -305,25 +304,28 @@ int main(int argc, char **argv)
 		// 			}
 		// 			else if (js.number == 2)
 		// 			{	
-		// 				input.roll = (int) js.value/256;
+		// 				input.yaw = (int) js.value/256;
 		// 			}
 		// 			else if (js.number == 3)
 		// 			{
-		// 				input.lift = (int) js.value/256;
+		// 				input.lift = (int) -js.value/256;
 		// 			}
 		// 			break;
 		// 		default: break;
 		// 	}
 		// }
-		// printf("after joystick time = %d\n", mon_time_ms());
+
+
+
+		//printf("after joystick time = %d\n", mon_time_ms());
 		
 		// get keyboard values and update mode and setpoint if needed
 		keyboardfunction();
 		// printf("after keyboardfunction time = %d\n", mon_time_ms());
 
 		// printf("%5d  %5d  ",t ,mon_time_ms());
-		// printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-		
+		printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+		printf("Lift: %d \t Roll: %d \t Yaw: %d \t Pitch: %d\n", input.lift, input.roll, input.yaw, input.pitch);
 
 		// Communicate periodically
 		
@@ -340,7 +342,12 @@ int main(int argc, char **argv)
 				pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
 				rollTx = checkByteOverflow(input.roll, input.roll_offset);
 				yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
-				liftTx = checkByteOverflow(input.lift, input.lift_offset);
+				liftTx = checkByteOverflow(input.lift, input.lift_offset) + 127;
+
+				printf("LiftTx: %d\n", liftTx);
+				printf("rollTx: %d\n", rollTx);
+				printf("pitchTx: %d\n", pitchTx);
+				printf("yawTx: %d\n", yawTx);
 				// printf("overflow check1 = %d\n", (mon_time_ms() - overflowTime1));
 				// printf("overflow check1 = %d\n", mon_time_ms());
 
@@ -392,7 +399,13 @@ int main(int argc, char **argv)
 			pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
 			rollTx = checkByteOverflow(input.roll, input.roll_offset);
 			yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
-			liftTx = checkByteOverflow(input.lift, input.lift_offset);
+			liftTx = checkByteOverflow(input.lift, input.lift_offset) + 127;
+
+			printf("LiftTx: %d\n", liftTx);
+			printf("rollTx: %d\n", rollTx);
+			printf("pitchTx: %d\n", pitchTx);
+			printf("yawTx: %d\n", yawTx);
+
 			// printf("overflow check2 = %d\n", (mon_time_ms() - overflowTime2));
 			// printf("overflow check2 = %d\n", mon_time_ms());
 
@@ -434,7 +447,7 @@ int main(int argc, char **argv)
 
 			// int sendPacketTime = mon_time_ms();
 			pc_t20_packet_tx(&txPacket);
-			usleep(20);
+			
 			// printf("send packet time = %d\n", mon_time_ms());
 			//term_getchar();
 			oldmode = input.mode;

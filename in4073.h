@@ -121,7 +121,7 @@ typedef struct
 	int8_t roll;
 	int8_t pitch;
 	int8_t yaw;
-	int8_t lift;
+	uint8_t lift;
 }pilotValues;
 
 pilotValues flightParameters;

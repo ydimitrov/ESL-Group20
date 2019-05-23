@@ -14,9 +14,9 @@
 #include "in4073.h"
 #include "control.h"
 
-uint8_t roll;
-uint8_t pitch;
-uint8_t yaw;
+int8_t roll;
+int8_t pitch;
+int8_t yaw;
 uint8_t lift;
 
 void initialize_flight_Parameters()
@@ -125,10 +125,10 @@ void manual()
 
 	lift_status = (lift == 0 ? 0 : 1);
 
-	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
+	ae[0] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION)) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION)) * lift_status;
 	
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
 	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
