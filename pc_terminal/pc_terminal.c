@@ -220,7 +220,7 @@ int main(int argc, char **argv)
 	unsigned int	t = mon_time_ms();
 	int c;
 
-	uint8_t oldmode = 2;
+	uint8_t oldmode = 3;
 
 	int8_t yawTx;
 	int8_t rollTx;
@@ -240,7 +240,7 @@ int main(int argc, char **argv)
 	input.pitch_offset = 0;
 	input.lift_offset = 0;
 
-	input.mode = 2;
+	input.mode = 3;
 
 	input.P = 0;
 	input.P1 = 0;
@@ -263,7 +263,7 @@ int main(int argc, char **argv)
 	{
 		// some_time = mon_time_ms();
 		// printf("starTime = %d\n", mon_time_ms());
-		while((c = rs232_getchar_nb()) != -1) { term_putchar(c); }
+		while((c = rs232_getchar_nb()) != -1) { printf("%c",c);}//term_putchar(c); }
 		// printf("after read joystick = %d\n", mon_time_ms());
 
 		// get joystick values
@@ -436,7 +436,7 @@ int main(int argc, char **argv)
 			pc_t20_packet_tx(&txPacket);
 			usleep(20);
 			// printf("send packet time = %d\n", mon_time_ms());
-
+			//term_getchar();
 			oldmode = input.mode;
 			
 			// printf("Time: %d\n", t);
@@ -447,9 +447,9 @@ int main(int argc, char **argv)
 			// printf("Mode is: %d\n", input.mode);
 			// t = (t + period) % 65000; //set next transmission time
 			t = (mon_time_ms() + period) % 65000; //set next transmission time
-			printf("t after sending = %d\n", t);
+			// printf("t after sending = %d\n", t);
 		}
-		printf("endTime = %d\n", mon_time_ms());
+		// printf("endTime = %d\n", mon_time_ms());
 		// printf("exec_time =  %d\n", mon_time_ms() - some_time);
 		// printf("=============================\n");
 	}		

@@ -71,11 +71,13 @@ void readByte(void){
 	// printCurrentState(1);
 		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 	if(rx_queue.count > 0) {
-		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
+		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);
 		buffer[arrIndex] = dequeue(&rx_queue);
+		// printf("<< buffer[%d] = %d\n", arrIndex, buffer[arrIndex]);
+		// printf("<< packetLen %d\n", packetLen);
 		statesFunc = packetStatesArr[stateIndex];
   	} else {
-		statesFunc = fsmStatesArr[INITIALSTATE];
+		//statesFunc = fsmStatesArr[INITIALSTATE];
   		return;
 	 	// nrf_delay_ms(1);
 	 	// printf("No byte in rx_queue\n");
@@ -92,7 +94,7 @@ void preambleByte(void){
     	stateIndex++;
 		statesFunc = packetStatesArr[READBYTE];
 	} else {
-		// printf("temp is not equal to 0xAA\n");
+		printf("temp is not equal to 0xAA\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}	
 }
@@ -101,6 +103,7 @@ void lengthByte(void){
 	// stateIndex = 2
 	// printCurrentState(3);
 	temp = buffer[arrIndex];
+
 	// if(temp >= MODELEN && temp <= MOVELEN ){
 	if(temp == PACKETLEN){
 		arrIndex++;
@@ -110,6 +113,7 @@ void lengthByte(void){
 	} else {
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
+	// printf("<< packetLen %d in lengthByte\n", packetLen);
 }
 
 void packetTypeByte(void){
@@ -128,6 +132,7 @@ void packetTypeByte(void){
 void message(void){
 	// stateIndex = 4
 	// printCurrentState(5);
+	// printf("<< arrIndex %d in message\n", arrIndex);
 	if(arrIndex == packetLen - 1){
     	stateIndex++;
 		statesFunc = fsmStatesArr[CRCCHECK];

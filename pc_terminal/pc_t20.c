@@ -31,9 +31,13 @@ void pc_t20_packet_tx(Packet* p) {
 	const uint8_t *byteToSend;
 	int numberOfBytes = p->length;
 
+	int i = 0;
 	for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
 	{	
+		// term_getchar();
 		rs232_putchar(*byteToSend);
+		// printf(">>packPtr[%d]=%d\n", i, *byteToSend);
+		i++;
 		// usleep(1);
 		// Wait for transmission to complete
 	}
