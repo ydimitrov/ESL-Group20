@@ -80,7 +80,7 @@ struct input_status
 	int8_t yaw;
 	int8_t roll;
 	int8_t pitch;
-	uint8_t lift;
+	int8_t lift;
 	uint8_t mode;
 	int8_t yaw_offset;
 	int8_t roll_offset;
@@ -280,8 +280,13 @@ int main(int argc, char **argv)
 		printf("time before main loop = %d\n", mon_time_ms());
 		while((c = rs232_getchar_nb()) != -1) { term_putchar(c); }
 
-		// if(read(fd, &js, sizeof(struct js_event)) == 
-		//        			sizeof(struct js_event))   {
+		//get joystick values
+		// if(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
+		
+		// 	//printf("%5d   ",t);
+		// 	/* register data
+		// 	 */
+		// 	// fprintf(stderr,".");
 		// 	switch(js.type & ~JS_EVENT_INIT) {
 		// 		case JS_EVENT_BUTTON:
 		// 			button[js.number] = js.value;
@@ -317,45 +322,53 @@ int main(int argc, char **argv)
 		// 			}
 		// 			else if (js.number == 3)
 		// 			{
-		// 				input.lift = (int) js.value/256;
+		// 				input.lift = (int) -js.value/256;
 		// 			}
 		// 			break;
 		// 		default: break;
 		// 	}
 		// }
+
 		keyboardfunction();
+
+		printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
+		printf("Lift: %d \t Roll: %d \t Yaw: %d \t Pitch: %d\n", input.lift, input.roll, input.yaw, input.pitch);
 
 		pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
 		rollTx = checkByteOverflow(input.roll, input.roll_offset);
 		yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
 		liftTx = checkByteOverflow(input.lift, input.lift_offset) + 127;
 
-		if (oldmode != input.mode) {
-			modeTx = input.mode;
-		} else {
-			if(input.P != 0) {
-				if(input.P == 1) {
-					modeTx = P_DECREMENT;
-				} else {
-					modeTx = P_INCREMENT;
-				}
-			} else if (input.P1 != 0) {
-				if(input.P1 == 1) {
-					modeTx = P1_DECREMENT;
-				} else {
-					modeTx = P1_INCREMENT;
-				}
-			} else if (input.P2 != 0) {
-				if(input.P2 == 1) {
-					modeTx = P2_DECREMENT;
-				} else {
-					modeTx = P2_INCREMENT;
-				}
-			} else {
-				modeTx = input.mode;
-			}
-		}
+		printf("LiftTx: %d\n", liftTx);
+		printf("rollTx: %d\n", rollTx);
+		printf("pitchTx: %d\n", pitchTx);
+		printf("yawTx: %d\n", yawTx);
 
+		if (oldmode != input.mode) {
+					modeTx = input.mode;
+				} else {
+					if(input.P != 0) {
+						if(input.P == 1) {
+							modeTx = P_DECREMENT;
+						} else {
+							modeTx = P_INCREMENT;
+						}
+					} else if (input.P1 != 0) {
+						if(input.P1 == 1) {
+							modeTx = P1_DECREMENT;
+						} else {
+							modeTx = P1_INCREMENT;
+						}
+					} else if (input.P2 != 0) {
+						if(input.P2 == 1) {
+							modeTx = P2_DECREMENT;
+						} else {
+							modeTx = P2_INCREMENT;
+						}
+					} else {
+						modeTx = input.mode;
+					}
+				}		
 		txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
 		printf("Main thread\n");
 		oldmode = input.mode;
