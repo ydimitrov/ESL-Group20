@@ -16,30 +16,20 @@
  *  mode, etc.
  */
 
-void pc_t20_packet_rx() {
-
-	printf("Receiving...");
-
-}
-
 void pc_t20_packet_tx(Packet* p) {
 
 	// Transmit packet byte-by-byte
-	printf("In packet sending\n");
+	// printf("In packet sending\n");
 	
 	uint8_t *packetPtr = (uint8_t *) p;
 	const uint8_t *byteToSend;
 	int numberOfBytes = p->length;
 
-	int i = 0;
 	for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
 	{	
-		// term_getchar();
-		rs232_putchar(*byteToSend);
-		// printf(">>packPtr[%d]=%d\n", i, *byteToSend);
-		i++;
-		// usleep(1);
 		// Wait for transmission to complete
+		rs232_putchar(*byteToSend);
+		// usleep(1);
 	}
 }
 

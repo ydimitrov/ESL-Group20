@@ -162,32 +162,17 @@ void crcCheck(void){
 void storeValues(void){
 	// printCurrentState(7);
 	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
-	printf("mode = %d\n", mode);
 	
-	if (buffer[2] >= 0 && buffer[2] <= 8){
-		mode = buffer[2];
-	} else if ( mode == 4 && buffer[2] == 9) {
-		P += 1;
-	} else if ( mode == 4 && buffer[2] == 10) {
-		P = (P > 0 ? P - 1 : 0); 
-	} else if ( mode == 5 && buffer[2] == 9) {
-		P += 1;
-	} else if ( mode == 5 && buffer[2] == 10) {
-		P = (P > 0 ? P - 1 : 0);
-	} else if ( mode == 5 && buffer[2] == 11) {
-		P1 += 1;
-	} else if ( mode == 5 && buffer[2] == 12) {
-		P1 = (P1 > 0 ? P1 - 1 : 0);
-	} else if ( mode == 5 && buffer[2] == 13) {
-		P2 += 1;
-	} else if ( mode == 5 && buffer[2] == 14) {
-		P2 = (P2 > 0 ? P2 - 1 : 0);
-	}
 
-	flightParameters.roll  = (int8_t)  	buffer[3]; 
+	modeStore(&buffer[2]);
+	flightParameters.roll  = (int8_t)  	buffer[3];
 	flightParameters.pitch = (int8_t)	buffer[4];
 	flightParameters.yaw   = (int8_t)	buffer[5];
-	flightParameters.lift  = (int8_t)	buffer[6];
+	flightParameters.lift  = (uint8_t)	buffer[6];
+	printf("mode = %d\n", mode);
+
+	// printf("flightParameters.lift = %d\n", flightParameters.lift);
+	// flightParameters.lift  = 150;
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
@@ -228,4 +213,28 @@ uint8_t checkModeByte(uint8_t byte){
 		default:
 			return 0;
 	}		
+}
+
+
+void modeStore(uint8_t *p){
+	
+	if (*p >= 0 && *p <= 8){
+		mode = *p;
+	} else if ( mode == 4 && *p == 9) {
+		P += 1;
+	} else if ( mode == 4 && *p == 10) {
+		P = (P > 0 ? P - 1 : 0); 
+	} else if ( mode == 5 && *p == 9) {
+		P += 1;
+	} else if ( mode == 5 && *p == 10) {
+		P = (P > 0 ? P - 1 : 0);
+	} else if ( mode == 5 && *p == 11) {
+		P1 += 1;
+	} else if ( mode == 5 && *p == 12) {
+		P1 = (P1 > 0 ? P1 - 1 : 0);
+	} else if ( mode == 5 && *p == 13) {
+		P2 += 1;
+	} else if ( mode == 5 && *p == 14) {
+		P2 = (P2 > 0 ? P2 - 1 : 0);
+	}	
 }

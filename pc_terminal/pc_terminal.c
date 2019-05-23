@@ -21,12 +21,13 @@
 #include <assert.h>
 #include <time.h>
 #include <errno.h>
+#include <pthread.h>
 #include "pc_t20.h"
 #include "rs232.h"
 #include "joystick.h"
 #include "termIO.h"
 
-#define JS_DEV	"/dev/input/js0"
+#define JS_DEV	"/dev/input/js1"
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 #define SAFE_MODE 0
@@ -46,6 +47,8 @@
 #define P2_DECREMENT 14
 #define STARTBYTE 0xAA
 #define PACKETLEN 0X08
+
+// pthread_mutex_t send_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* current axis and button readings
  */
@@ -121,7 +124,7 @@ int8_t checkByteOverflow(int8_t value, int8_t offset) {
 void keyboardfunction()
 {
 	int c; //keyboard input
-	
+	// printf("IN KEYBOARDFUNCTION\n");
 	if((c = term_getchar_nb()) != -1)
 	{
 		if (input.mode != PANIC_MODE)
@@ -131,9 +134,12 @@ void keyboardfunction()
 				// mode change
 				case '0': input.mode = SAFE_MODE;
 					break;
-				case '1': input.mode = PANIC_MODE;
+				case '1': 
+					input.mode = PANIC_MODE;
 					break;
-				case '2': input.mode = MANUAL_MODE;
+				case '2': 
+					input.mode = MANUAL_MODE;
+					printf("manual mode\n");
 					break;
 				case '3': input.mode = CALIBRATION_MODE;
 					break;
@@ -154,7 +160,6 @@ void keyboardfunction()
 				{
 					// movement change
 					case 'a': //set lift up
-
 						 input.lift_offset = checkByteOverflow(input.lift_offset, 1);
 						 break;
 					case 'z': //set lift down
@@ -205,6 +210,19 @@ void keyboardfunction()
 	}
 }
 
+Packet txPacket;
+
+void *thread_period_send()
+{
+ 	uint64_t period = 100000; 
+ 	for(;;)
+ 	{
+		printf("Second thread\n");
+ 		pc_t20_packet_tx(&txPacket);
+ 		usleep(period);
+ 	}
+}
+
 /*----------------------------------------------------------------
  * main -- execute terminal
  *----------------------------------------------------------------
@@ -217,10 +235,10 @@ int main(int argc, char **argv)
 	int 			period = 100; // defines transmission frequency
 	int 			fd;
 	struct 			js_event js;
-	unsigned int	t = mon_time_ms();
+	// unsigned int	t = mon_time_ms();
 	int c;
 
-	uint8_t oldmode = 3;
+	uint8_t oldmode = 2;
 
 	int8_t yawTx;
 	int8_t rollTx;
@@ -240,40 +258,30 @@ int main(int argc, char **argv)
 	input.pitch_offset = 0;
 	input.lift_offset = 0;
 
-	input.mode = 3;
+	input.mode = 2;
 
 	input.P = 0;
 	input.P1 = 0;
 	input.P2 = 0;
+	pthread_t send_thread;
+	pthread_create(&send_thread, NULL, thread_period_send, NULL);
 
-
-	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
-		//perror("jstest");
-		printf("Failed to initiate communication with joystick!\n");
-		exit(1);
-	}
+	// if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
+	// 	perror("jstest");
+	// 	printf("Failed to initiate communication with joystick!\n");
+	// 	exit(1);
+	// }
 
 	term_initio();
 	rs232_open();
-	//term_puts("\nTerminal program - Embedded Real-Time Systems\n");
-
-	//term_puts("Type ^C to exit\n");
 	
 	for (;;)
 	{
-		// some_time = mon_time_ms();
-		// printf("starTime = %d\n", mon_time_ms());
-		while((c = rs232_getchar_nb()) != -1) { printf("%c",c);}//term_putchar(c); }
-		// printf("after read joystick = %d\n", mon_time_ms());
+		printf("time before main loop = %d\n", mon_time_ms());
+		while((c = rs232_getchar_nb()) != -1) { term_putchar(c); }
 
-		// get joystick values
 		// if(read(fd, &js, sizeof(struct js_event)) == 
 		//        			sizeof(struct js_event))   {
-		
-		// 	//printf("%5d   ",t);
-		// 	/* register data
-		// 	 */
-		// 	// fprintf(stderr,".");
 		// 	switch(js.type & ~JS_EVENT_INIT) {
 		// 		case JS_EVENT_BUTTON:
 		// 			button[js.number] = js.value;
@@ -297,7 +305,7 @@ int main(int argc, char **argv)
 		// 			axis[js.number] = js.value;
 		// 			if (js.number == 0)
 		// 			{
-		// 				input.yaw = (int) js.value/256;
+		// 				input.roll = (int) js.value/256;
 		// 			}
 		// 			else if (js.number == 1)
 		// 			{
@@ -305,7 +313,7 @@ int main(int argc, char **argv)
 		// 			}
 		// 			else if (js.number == 2)
 		// 			{	
-		// 				input.roll = (int) js.value/256;
+		// 				input.yaw = (int) js.value/256;
 		// 			}
 		// 			else if (js.number == 3)
 		// 			{
@@ -315,145 +323,44 @@ int main(int argc, char **argv)
 		// 		default: break;
 		// 	}
 		// }
-		// printf("after joystick time = %d\n", mon_time_ms());
-		
-		// get keyboard values and update mode and setpoint if needed
 		keyboardfunction();
-		// printf("after keyboardfunction time = %d\n", mon_time_ms());
 
-		// printf("%5d  %5d  ",t ,mon_time_ms());
-		// printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-		
+		pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
+		rollTx = checkByteOverflow(input.roll, input.roll_offset);
+		yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
+		liftTx = checkByteOverflow(input.lift, input.lift_offset) + 127;
 
-		// Communicate periodically
-		
-
-		if (t < period)
-		{
-			unsigned int t_now = mon_time_ms();
-			if (t < t_now && t_now < 64900)
-			{
-			
-				// printf("In corner case.\n");
-
-				// int overflowTime1 = mon_time_ms();
-				pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
-				rollTx = checkByteOverflow(input.roll, input.roll_offset);
-				yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
-				liftTx = checkByteOverflow(input.lift, input.lift_offset);
-				// printf("overflow check1 = %d\n", (mon_time_ms() - overflowTime1));
-				// printf("overflow check1 = %d\n", mon_time_ms());
-
-				if (oldmode != input.mode) {
-					modeTx = input.mode;
+		if (oldmode != input.mode) {
+			modeTx = input.mode;
+		} else {
+			if(input.P != 0) {
+				if(input.P == 1) {
+					modeTx = P_DECREMENT;
 				} else {
-					if(input.P != 0) {
-						if(input.P == 1) {
-							modeTx = P_DECREMENT;
-						} else {
-							modeTx = P_INCREMENT;
-						}
-					} else if (input.P1 != 0) {
-						if(input.P1 == 1) {
-							modeTx = P1_DECREMENT;
-						} else {
-							modeTx = P1_INCREMENT;
-						}
-					} else if (input.P2 != 0) {
-						if(input.P2 == 1) {
-							modeTx = P2_DECREMENT;
-						} else {
-							modeTx = P2_INCREMENT;
-						}
-					} else {
-						modeTx = input.mode;
-					}
+					modeTx = P_INCREMENT;
 				}
-				// printf("modeTx = %d\n", modeTx);
-				Packet txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
-				
-				pc_t20_packet_tx(&txPacket);
-
-				oldmode = input.mode;
-
-				//printf("Time: %d\n", t);
-
-				// printf("%5d  %5d  ",t ,mon_time_ms());
-				//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-				// printf("Mode is: %d\t", input.mode);
-				t = (mon_time_ms() + period) % 65000; //set next transmission time
-				// t = (t + period) % 65000; //set next transmission time
-			} 
-
-		} else if (t < mon_time_ms() || (mon_time_ms() < 1000 && t > 64000)){
-
-			// printf("In main statement.\n");
-			// int overflowTime2 = mon_time_ms();
-			pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
-			rollTx = checkByteOverflow(input.roll, input.roll_offset);
-			yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
-			liftTx = checkByteOverflow(input.lift, input.lift_offset);
-			// printf("overflow check2 = %d\n", (mon_time_ms() - overflowTime2));
-			// printf("overflow check2 = %d\n", mon_time_ms());
-
-			if (oldmode != input.mode) {
-				modeTx = input.mode;
+			} else if (input.P1 != 0) {
+				if(input.P1 == 1) {
+					modeTx = P1_DECREMENT;
+				} else {
+					modeTx = P1_INCREMENT;
+				}
+			} else if (input.P2 != 0) {
+				if(input.P2 == 1) {
+					modeTx = P2_DECREMENT;
+				} else {
+					modeTx = P2_INCREMENT;
+				}
 			} else {
-				if(input.P != 0) {
-					if(input.P == 1) {
-						modeTx = P_DECREMENT;
-					} else {
-						modeTx = P_INCREMENT;
-					}
-					input.P = 0; // Reset P
-				} else if (input.P1 != 0) {
-					if(input.P1 == 1) {
-						modeTx = P1_DECREMENT;
-					} else {
-						modeTx = P1_INCREMENT;
-					}
-					input.P1 = 0; // Reset P1
-				} else if (input.P2 != 0) {
-					if(input.P2 == 1) {
-						modeTx = P2_DECREMENT;
-					} else {
-						modeTx = P2_INCREMENT;
-					}
-					input.P2 = 0; // Reset P2
-				} else {
-					modeTx = input.mode;
-				}
+				modeTx = input.mode;
 			}
-
-			// int timePacket = mon_time_ms();
-			Packet txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
-			// printf("packet time = %d\n", mon_time_ms());
-
-			// TODO: Check the order of fields and the function code for a move command
-			// printf("Before packet send\n");
-
-			// int sendPacketTime = mon_time_ms();
-			pc_t20_packet_tx(&txPacket);
-			usleep(20);
-			// printf("send packet time = %d\n", mon_time_ms());
-			//term_getchar();
-			oldmode = input.mode;
-			
-			// printf("Time: %d\n", t);
-			// printf("=============================\n");
-
-			// printf("%5d  %5d ",t,mon_time_ms());
-			//printf("Axis: %d %d %d %d %d %d \n Butons: %d %d %d %d %d %d %d %d %d %d %d %d \n\n", axis[0], axis[1], axis[2], axis[3], axis[4], axis[5], button[0], button[1], button[2], button[3], button[4], button[5], button[6], button[7], button[8], button[9], button[10], button[11]); 
-			// printf("Mode is: %d\n", input.mode);
-			// t = (t + period) % 65000; //set next transmission time
-			t = (mon_time_ms() + period) % 65000; //set next transmission time
-			// printf("t after sending = %d\n", t);
 		}
-		// printf("endTime = %d\n", mon_time_ms());
-		// printf("exec_time =  %d\n", mon_time_ms() - some_time);
-		// printf("=============================\n");
-	}		
 
+		txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
+		printf("Main thread\n");
+		oldmode = input.mode;
+		printf("time after main loop = %d\n", mon_time_ms());
+	}
 	term_exitio();
 	rs232_close();
 	term_puts("\n<exit>\n");
