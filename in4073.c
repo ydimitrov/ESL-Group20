@@ -18,62 +18,6 @@
 #include "fsmReceive.h"
 
 /*------------------------------------------------------------------
- * process_key -- process command keys
- *------------------------------------------------------------------
- */
-void process_key(uint8_t c)
-{
-	switch (c)
-	{
-		case 'q':
-			ae[0] += 10;
-			break;
-		case 'a':
-			ae[0] -= 10;
-			if (ae[0] < 0) ae[0] = 0;
-			break;
-		case 'w':
-			ae[1] += 10;
-			break;
-		case 's':
-			ae[1] -= 10;
-			if (ae[1] < 0) ae[1] = 0;
-			break;
-		case 'e':
-			ae[2] += 10;
-			break;
-		case 'd':
-			ae[2] -= 10;
-			if (ae[2] < 0) ae[2] = 0;
-			break;
-		case 'r':
-			ae[3] += 10;
-			break;
-		case 'f':
-			ae[3] -= 10;
-			if (ae[3] < 0) ae[3] = 0;
-			break;
-		case 'l': // PANIC MODE - ABORT
-		;
-			// packet foobar;
-			// foobar.startByte = 0xAA;
-			// foobar.length = 0x04;
-			// foobar.mode = 0xED;
-
-			// t20_packet_tx(&foobar);
-			// char buf[5] = {'h', 'e', 'l', 'l', 'o'};
-			break;
-		printf("received l\n");
-			break;	
-		case 27:
-			demo_done = true;
-			break;
-		default:
-			nrf_gpio_pin_toggle(RED);
-	}
-}
-
-/*------------------------------------------------------------------
  * main -- everything you need is here :)
  *------------------------------------------------------------------
  */
@@ -87,7 +31,7 @@ int main(void)
 	imu_init(true, 100);	
 	baro_init();
 	spi_flash_init();
-	ble_init();
+	// ble_init();
 
 	uint32_t counter = 0;
 	demo_done = false;
@@ -106,18 +50,21 @@ int main(void)
 				}
 
 			adc_request_sample();
-			read_baro();
+			// read_baro();
 
-			// printf("%10ld | ", get_time_us());
-			// printf("%3d %3d %3d %3d | ", ae[0], ae[1], ae[2], ae[3]);
-			// printf("%6d %6d %6d | ", phi, theta, psi);
-			// printf("%6d %6d %6d | ", sp, sq, sr);
-			// printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
+			printf("%10ld | ", get_time_us());
+			printf("%3d %3d %3d %3d | ", ae[0], ae[1], ae[2], ae[3]);
+			printf("%6d %6d %6d | ", phi, theta, psi);
+			printf("%6d %6d %6d | ", sp, sq, sr);
+			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
 
 			clear_timer_flag();
+
 		}
 
 		fsmReceive();
+		
+
 
 		if (check_sensor_int_flag()) 
 		{

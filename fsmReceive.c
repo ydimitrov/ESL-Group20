@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <inttypes.h>
+#include <stdlib.h>
 #include "fsmReceive.h"
 #include "in4073.h"
 
@@ -50,30 +51,36 @@ void (* fsmStatesArr[])(void) = {initialState,
 							     storeValues};
 
 
-// void printCurrentState(uint8_t state)
-// {
-// 	printf("S%d\n", state);
-// }
+void printCurrentState(uint8_t state)
+{
+	printf("S%d\n", state);
+}
 
 
 void initialState(){
+	// printCurrentState(0);
 	arrIndex = 0;
 	stateIndex = 1;
 	crc = 0;
 	statesFunc = packetStatesArr[READBYTE];
+	buffer[0] = 0x00;
 	packetLen = 0x08;
 }
 
 void readByte(void){
-	if(rx_queue.count > 0) {	
+	// printCurrentState(1);
+		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
+	if(rx_queue.count > 0) {
 		buffer[arrIndex] = dequeue(&rx_queue);
-    	statesFunc = packetStatesArr[stateIndex];
+		statesFunc = packetStatesArr[stateIndex];
   	} else {
-  		// printf("No byte in rx_queue\n");
+  		return;
   	}
 }
 
 void preambleByte(void){
+	// stateIndex = 1
+	// printCurrentState(2);
 	temp = buffer[arrIndex];
 	// printf("temp in preambleByte is = %x\n", temp);
 	if(temp == 0xAA){
@@ -81,13 +88,16 @@ void preambleByte(void){
     	stateIndex++;
 		statesFunc = packetStatesArr[READBYTE];
 	} else {
-		// printf("temp is not equal to 0xAA\n");
+		printf("temp is not equal to 0xAA\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}	
 }
 
 void lengthByte(void){
+	// stateIndex = 2
+	// printCurrentState(3);
 	temp = buffer[arrIndex];
+
 	// if(temp >= MODELEN && temp <= MOVELEN ){
 	if(temp == PACKETLEN){
 		arrIndex++;
@@ -95,23 +105,29 @@ void lengthByte(void){
 		packetLen = temp;
 		statesFunc = packetStatesArr[READBYTE];
 	} else {
+		printf("temp is not equal to PACKETLEN\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
-
 }
 
 void packetTypeByte(void){
+	// stateIndex = 3
+	// printCurrentState(4);
 	temp = buffer[arrIndex];
 	if(checkModeByte(temp)){
 		arrIndex++;
     	stateIndex++;
 		statesFunc = packetStatesArr[READBYTE];
 	} else {
+		printf("temp is not equal to MODE\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
 }
 
 void message(void){
+	// stateIndex = 4
+	// printCurrentState(5);
+	// printf("<< arrIndex %d in message\n", arrIndex);
 	if(arrIndex == packetLen - 1){
     	stateIndex++;
 		statesFunc = fsmStatesArr[CRCCHECK];
@@ -122,68 +138,46 @@ void message(void){
 }
 
 void crcCheck(void){
+	// printCurrentState(6);
 	
 	for (int i = 0; i < packetLen - 1; i++){
 		crc ^= buffer[i];
 	}
 
 	if(crc == buffer[packetLen - 1]){
-		printf("Packet OK!\n");
+		// printf("Packet OK!\n");
     	stateIndex++;
 		statesFunc = fsmStatesArr[STOREVALUES];
 	} else {
+		printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 		printf("Packet ERROR!\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
 }
 
 void storeValues(void){
+	// printCurrentState(7);
 	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
-	printf("mode = %d\n", mode);
 	
-	if (buffer[2] >= 0 && buffer[2] <= 8){
-		mode = buffer[2];
-	} else if ( mode == 4 && buffer[2] == 9) {
-		P += 1;
-	} else if ( mode == 4 && buffer[2] == 10) {
-		P = (P > 0 ? P - 1 : 0); 
-	} else if ( mode == 5 && buffer[2] == 9) {
-		P += 1;
-	} else if ( mode == 5 && buffer[2] == 10) {
-		P = (P > 0 ? P - 1 : 0);
-	} else if ( mode == 5 && buffer[2] == 11) {
-		P1 += 1;
-	} else if ( mode == 5 && buffer[2] == 12) {
-		P1 = (P1 > 0 ? P1 - 1 : 0);
-	} else if ( mode == 5 && buffer[2] == 13) {
-		P2 += 1;
-	} else if ( mode == 5 && buffer[2] == 14) {
-		P2 = (P2 > 0 ? P2 - 1 : 0);
-	}
 
-	flightParameters.roll  = (int8_t)  	buffer[3]; 
+	modeStore(&buffer[2]);
+	flightParameters.roll  = (int8_t)  	buffer[3];
 	flightParameters.pitch = (int8_t)	buffer[4];
 	flightParameters.yaw   = (int8_t)	buffer[5];
-	flightParameters.lift  = (int8_t)	buffer[6];
-
+	flightParameters.lift  = (uint8_t)	buffer[6];
+	// printf("mode = %d\n", mode);
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
 
 void fsmReceive(){
-	
-	// (statesFunc)();
-	// (statesFunc)();
-	// (statesFunc)();
-	// (statesFunc)();
-	// (statesFunc)();
-	// (statesFunc)();
 
-	for (int i = 0; i < 6; i++){
-		(statesFunc)();
-	}
+	(statesFunc)();
+
+	// for (int i = 0; i < 12; i++){
+	// 	(statesFunc)();
+	// }
 }
-
 
 uint8_t checkModeByte(uint8_t byte){
 
@@ -207,4 +201,28 @@ uint8_t checkModeByte(uint8_t byte){
 		default:
 			return 0;
 	}		
+}
+
+
+void modeStore(uint8_t *p){
+	
+	if (*p >= 0 && *p <= 8){
+		mode = *p;
+	} else if ( mode == 4 && *p == 9) {
+		P += 1;
+	} else if ( mode == 4 && *p == 10) {
+		P = (P > 0 ? P - 1 : 0); 
+	} else if ( mode == 5 && *p == 9) {
+		P += 1;
+	} else if ( mode == 5 && *p == 10) {
+		P = (P > 0 ? P - 1 : 0);
+	} else if ( mode == 5 && *p == 11) {
+		P1 += 1;
+	} else if ( mode == 5 && *p == 12) {
+		P1 = (P1 > 0 ? P1 - 1 : 0);
+	} else if ( mode == 5 && *p == 13) {
+		P2 += 1;
+	} else if ( mode == 5 && *p == 14) {
+		P2 = (P2 > 0 ? P2 - 1 : 0);
+	}	
 }

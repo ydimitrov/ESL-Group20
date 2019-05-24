@@ -15,7 +15,7 @@
  */
 
 
-void dr_t20_packet_tx(packet* p) {
+void dr_t20_packet_tx(Packet* p) {
 
 	// Transmit packet byte-by-byte
 
@@ -34,35 +34,31 @@ void dr_t20_packet_tx(packet* p) {
 	}
 }
 
-packet dr_packet_init(uint8_t startByte, uint8_t length,  uint8_t functionCode,
-                      uint8_t roll,      uint8_t pitch,   uint8_t yaw,
-                      uint8_t elevation, uint8_t ae[4],   uint8_t phi,
-                      uint8_t theta,     uint8_t psi,     uint8_t sp,
-                      uint8_t sq,        uint8_t sr,      uint8_t temp,
-              		  uint8_t volt,      uint8_t press,   uint8_t mode)
+Packet dr_packet_init(uint8_t startByte,uint8_t length,uint8_t functionCode,uint8_t system_time,uint8_t roll,uint8_t pitch,uint8_t yaw,uint8_t elevation,uint8_t phi,uint8_t theta,uint8_t psi,uint8_t sp,uint8_t sq,uint8_t sr,uint8_t temp,uint8_t volt,uint8_t press)
 {
-	packet x;
-	x.startByte = startByte;
-	x.length = length;
-	x.functionCode = functionCode;
-	x.roll = roll;
-	x.pitch = pitch;
-	x.yaw = yaw;
-	x.elevation = elevation;
-	for (int i = 0; i < 4; i++) 
-		x.ae[i] = ae[i];
-	// x.ae = ae;
-	x.phi = phi;
-	x.theta = theta;
-	x.psi = psi;
-	x.sp = sp;
-	x.sq = sq;
-	x.sr = sr;
-	x.temp = temp;
-	x.volt = volt;
-	x.press = press;
-	x.mode = mode;
-	x.endByte = 0x21;
+	Packet x;
+	x.startByte =  startByte;
+	x.length =  length;
+	x.functionCode =  functionCode;
+	x.system_time =  system_time;
+	x.roll =  roll;
+	x.pitch =  pitch;
+	x.yaw =  yaw;
+	x.elevation =  elevation;
+	x.phi =  phi;
+	x.theta =  theta;
+	x.psi =  psi;
+	x.sp =  sp;
+	x.sq =  sq;
+	x.sr =  sr;
+	x.temp =  temp;
+	x.volt =  volt;
+	x.press =  press;
 
 	return x;
 }
+
+
+
+
+
