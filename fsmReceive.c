@@ -71,16 +71,10 @@ void readByte(void){
 	// printCurrentState(1);
 		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 	if(rx_queue.count > 0) {
-		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);
 		buffer[arrIndex] = dequeue(&rx_queue);
-		// printf("<< buffer[%d] = %d\n", arrIndex, buffer[arrIndex]);
-		// printf("<< packetLen %d\n", packetLen);
 		statesFunc = packetStatesArr[stateIndex];
   	} else {
-		//statesFunc = fsmStatesArr[INITIALSTATE];
   		return;
-	 	// nrf_delay_ms(1);
-	 	// printf("No byte in rx_queue\n");
   	}
 }
 
@@ -111,9 +105,9 @@ void lengthByte(void){
 		packetLen = temp;
 		statesFunc = packetStatesArr[READBYTE];
 	} else {
+		printf("temp is not equal to PACKETLEN\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
-	// printf("<< packetLen %d in lengthByte\n", packetLen);
 }
 
 void packetTypeByte(void){
@@ -125,6 +119,7 @@ void packetTypeByte(void){
     	stateIndex++;
 		statesFunc = packetStatesArr[READBYTE];
 	} else {
+		printf("temp is not equal to MODE\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
 }
@@ -150,10 +145,11 @@ void crcCheck(void){
 	}
 
 	if(crc == buffer[packetLen - 1]){
-		printf("Packet OK!\n");
+		// printf("Packet OK!\n");
     	stateIndex++;
 		statesFunc = fsmStatesArr[STOREVALUES];
 	} else {
+		printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 		printf("Packet ERROR!\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
@@ -169,24 +165,16 @@ void storeValues(void){
 	flightParameters.pitch = (int8_t)	buffer[4];
 	flightParameters.yaw   = (int8_t)	buffer[5];
 	flightParameters.lift  = (uint8_t)	buffer[6];
-	printf("mode = %d\n", mode);
-
-	// printf("flightParameters.lift = %d\n", flightParameters.lift);
-	// flightParameters.lift  = 150;
+	// printf("mode = %d\n", mode);
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
 
 void fsmReceive(){
-	
-	(statesFunc)();
-	// (statesFunc)();
-	// (statesFunc)();
-	// (statesFunc)();
-	// (statesFunc)();
-	// (statesFunc)();
 
-	// for (int i = 0; i < 1; i++){
+	(statesFunc)();
+
+	// for (int i = 0; i < 12; i++){
 	// 	(statesFunc)();
 	// }
 }

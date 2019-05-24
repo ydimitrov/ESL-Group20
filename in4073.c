@@ -59,9 +59,11 @@ int main(void)
 			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
 
 			clear_timer_flag();
+
 		}
 
 		fsmReceive();
+		
 
 
 		if (check_sensor_int_flag()) 
