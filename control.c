@@ -155,7 +155,7 @@ void safe()
 
 void calibration()
 {
-	//panic();
+	panic();
 	zp = zq = zr = zax = zay = zaz = 0;
 	get_dmp_data();
 	zp = sp;
