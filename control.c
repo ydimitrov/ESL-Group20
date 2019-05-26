@@ -14,6 +14,8 @@
 #include "in4073.h"
 #include "control.h"
 
+#define round(num) num > 0 ? ((num % 128) > 64 ? (num >> 7) + 1 : (num >> 7)) : (((num % 128) > -64) ? (num >> 7) + 1  : (num >> 7))
+
 int8_t roll;
 int8_t pitch;
 int8_t yaw;
@@ -21,6 +23,7 @@ uint8_t lift;
 int int_error_yaw = 0; //integral of error, needed for yaw control
 int int_error_roll = 0;
 int int_error_pitch = 0;
+
 
 void initialize_flight_Parameters()
 {
@@ -61,15 +64,19 @@ void run_filters_and_control()
 	switch(mode)
 	{
 		case PANIC_MODE :
-			panic();
+			if(oldMode != mode)
+				panic();
 			break;
 		case SAFE_MODE :
+			if(oldMode != mode)
+				safe();
 			break;
 		case MANUAL_MODE : 
 			manual();
 			break;
 		case CALIBRATION_MODE:
-			calibration();
+			if(oldMode != mode)
+				calibration();
 			break;
 		case YAW_MODE:
 			yaw_control();
@@ -114,7 +121,7 @@ void panic()
 		ae[3] -= 10;
 		update_motors(); 
 	}
-
+	printf("I'm done panicking bro\n");
 	mode = SAFE_MODE;	
 }
 
@@ -157,19 +164,33 @@ void calibration()
 {
 	panic();
 	zp = zq = zr = zax = zay = zaz = 0;
-	get_dmp_data();
-	zp = sp;
-	zq = sq;
-	zr = sr;
-	zax = sax;
-	zay = say;
-	zaz = saz;
-	printf("zp: %d\n",zp);
-	printf("zq: %d\n",zq);
-	printf("zr: %d\n",zr);
-	printf("zax: %d\n",zax);
-	printf("zay: %d\n",zay);
-	printf("zaz: %d\n",zaz);
+	for (int i = 0; i < 128; i++){
+		
+		get_dmp_data();
+		zp += sp;
+		zq += sq;
+		zr += sr;
+		zax += sax;
+		zay += say;
+		zaz += saz;
+	}
+
+	zp = round(zp);
+	zq = round(zq);
+	zr = round(zr);
+	zax = round(zax);
+	zay = round(zay);
+	zaz = round(zaz);
+
+
+	// printf("after zp = %d\n", zp);
+	// printf("after zq = %d\n", zq);
+	// printf("after zr = %d\n", zr);
+	// printf("after zax = %d\n", zax);
+	// printf("after zay = %d\n", zay);
+	// printf("after zaz = %d\n", zaz);
+
+	printf("Calibration completed!\n");
 }
 
 void yaw_control()
@@ -182,13 +203,24 @@ void yaw_control()
 	lift_status = (lift == 0 ? 0 : 1);	
 	
 	error = yaw - (sr - zr); //calculate yaw rate error
-	int_error_yaw = int_error_yaw + error; //integrate error
+	if (error > 1 || error < -1)
+	{
+		int_error_yaw = int_error_yaw + error;
+	}
+
+	// printf("zr = %d\n", zr);
+	// printf("sr = %d\n", sr);
+
+	// printf("error = %d, int_error_yaw = %d, P = %d\n", error, int_error_yaw, P);
 
 	//update motors based on pitch,roll,lift and control for yaw
-	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (P * int_error_yaw)) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (P * int_error_yaw)) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (P * int_error_yaw)) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (P * int_error_yaw)) * lift_status;
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (P * int_error_yaw >> 8)) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (P * int_error_yaw >> 8)) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (P * int_error_yaw >> 8)) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (P * int_error_yaw >> 8)) * lift_status;
+
+	printf("Error = %d Int Error = %d Yaw = %d\n",error,int_error_yaw,yaw);
+	printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);
 
 	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
@@ -201,7 +233,7 @@ void yaw_control()
 	if(ae[2] < MIN_SPEED) ae[2] = MIN_SPEED;
 	if(ae[3] < MIN_SPEED) ae[3] = MIN_SPEED;
 
-	printf("Motor speed 0: %d\n Motor speed 1: %d\n Motor speed 2: %d\n Motor speed 3: %d\n",ae[0],ae[1],ae[2],ae[3]);
+	// printf("Motor speed 0: %d\n Motor speeds 1: %d\n Motor speed 2: %d\n Motor speed 3: %d\n",ae[0],ae[1],ae[2],ae[3]);
 	
 	update_motors();
 }	

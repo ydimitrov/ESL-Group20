@@ -352,20 +352,26 @@ int main(int argc, char **argv)
 				if(input.P != 0) {
 					if(input.P == 1) {
 						modeTx = P_DECREMENT;
+						input.P = 0;
 					} else {
 						modeTx = P_INCREMENT;
+						input.P = 0;
 					}
 				} else if (input.P1 != 0) {
 					if(input.P1 == 1) {
 						modeTx = P1_DECREMENT;
+						input.P1 = 0;
 					} else {
 						modeTx = P1_INCREMENT;
+						input.P1 = 0;
 					}
 				} else if (input.P2 != 0) {
 					if(input.P2 == 1) {
 						modeTx = P2_DECREMENT;
+						input.P2 = 0;
 					} else {
 						modeTx = P2_INCREMENT;
+						input.P2 = 0;
 					}
 				} else {
 					modeTx = input.mode;

@@ -137,7 +137,7 @@ enum flightmode
 	RAW_MODE,
 	HEIGHT_MODE,
 	WIRELESS_MODE
-}mode;
+}mode, oldMode;
 
 
 #endif // IN4073_H__

@@ -159,7 +159,7 @@ void storeValues(void){
 	// printCurrentState(7);
 	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
 	
-
+	oldMode = mode;
 	modeStore(&buffer[2]);
 	flightParameters.roll  = (int8_t)  	buffer[3];
 	flightParameters.pitch = (int8_t)	buffer[4];
@@ -205,6 +205,7 @@ uint8_t checkModeByte(uint8_t byte){
 
 
 void modeStore(uint8_t *p){
+	
 	
 	if (*p >= 0 && *p <= 8){
 		mode = *p;
