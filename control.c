@@ -157,7 +157,7 @@ void calibration()
 {
 	panic();
 	zp = zq = zr = zax = zay = zaz = 0;
-	//get_dmp_data();
+	get_dmp_data();
 	zp = sp;
 	zq = sq;
 	zr = sr;
@@ -195,12 +195,15 @@ void yaw_control()
 	if(ae[2] < MIN_SPEED) ae[2] = MIN_SPEED;
 	if(ae[3] < MIN_SPEED) ae[3] = MIN_SPEED;
 
+	printf("Motor speed 0: %d\n Motor speed 1: %d\n Motor speed 2: %d\n Motor speed 3: %d\n",ae[0],ae[1],ae[2],ae[3]);
+	
 	update_motors();
 }	
 
 
 void full_control()
 {
+	/*
 	int lift_status; 
 	int error_yawrate;
 	int error_rollrate;
@@ -243,6 +246,7 @@ void full_control()
 	if(ae[3] < MIN_SPEED) ae[3] = MIN_SPEED;
 
 	update_motors();
+	*/
 }
 
 void raw_control(){
