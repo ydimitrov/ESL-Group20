@@ -228,11 +228,11 @@ void full_control()
 	
 	//roll control
 	error_roll = roll - sphi; //calculate roll error
-	int_error_roll = int_error_rollrate + P1 * error_roll - P2 * (sp - zp); //terms based on roll and rollrate error added
+	int_error_roll = int_error_roll + P1 * error_roll - P2 * (sp - zp); //integrate terms based on roll and rollrate error added
 
 	//pitch control
-	error_pitch = pitch - stheta; //calculate roll error
-	int_error_pitch = int_error_pitchrate + P1 * error_pitch - P2 * (sq - zq); //terms based on pitch and pitchrate error added
+	error_pitch = pitch - stheta; //calculate pitch error
+	int_error_pitch = int_error_pitch + P1 * error_pitch - P2 * (sq - zq); //integrate terms based on pitch and pitchrate error added
 
 	//update motors based on lift and control for pitch,roll,yaw rate
 	ae[0] = ((lift * MOTOR_RELATION) + (int_error_pitchrate) - (P * int_error)) * lift_status;
