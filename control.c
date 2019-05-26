@@ -155,7 +155,7 @@ void safe()
 
 void calibration()
 {
-	panic();
+	//panic();
 	zp = zq = zr = zax = zay = zaz = 0;
 	get_dmp_data();
 	zp = sp;
@@ -164,6 +164,12 @@ void calibration()
 	zax = sax;
 	zay = say;
 	zaz = saz;
+	printf("zp: %d\n",zp);
+	printf("zq: %d\n",zq);
+	printf("zr: %d\n",zr);
+	printf("zax: %d\n",zax);
+	printf("zay: %d\n",zay);
+	printf("zaz: %d\n",zaz);
 }
 
 void yaw_control()
