@@ -69,7 +69,7 @@ void initialState(){
 
 void readByte(void){
 	// printCurrentState(1);
-		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
+	// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 	if(rx_queue.count > 0) {
 		buffer[arrIndex] = dequeue(&rx_queue);
 		statesFunc = packetStatesArr[stateIndex];
@@ -145,11 +145,11 @@ void crcCheck(void){
 	}
 
 	if(crc == buffer[packetLen - 1]){
+		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 		// printf("Packet OK!\n");
     	stateIndex++;
 		statesFunc = fsmStatesArr[STOREVALUES];
 	} else {
-		printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 		printf("Packet ERROR!\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}

@@ -48,7 +48,7 @@
 #define STARTBYTE 0xAA
 #define PACKETLEN 0X08
 
-// pthread_mutex_t send_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t send_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* current axis and button readings
  */
@@ -91,10 +91,6 @@ struct input_status
 	uint8_t P2;	
 }input;
 
-Packet txPacket;
-unsigned int last_time;
-
-
 //timer
 unsigned int    mon_time_ms(void)
 {
@@ -128,7 +124,7 @@ int8_t checkByteOverflow(int8_t value, int8_t offset) {
 void keyboardfunction()
 {
 	int c; //keyboard input
-	// printf("IN KEYBOARDFUNCTION\n");
+	
 	if((c = term_getchar_nb()) != -1)
 	{
 		if (input.mode != PANIC_MODE)
@@ -163,6 +159,7 @@ void keyboardfunction()
 				{
 					// movement change
 					case 'a': //set lift up
+
 						 input.lift_offset = checkByteOverflow(input.lift_offset, 1);
 						 break;
 					case 'z': //set lift down
@@ -210,11 +207,22 @@ void keyboardfunction()
 				}
 			}
 		}
-		txPacket = pc_packet_init(STARTBYTE, PACKETLEN, input.mode, input.pitch, input.roll, input.yaw, input.yaw);
-		pc_t20_packet_tx(&txPacket);
-		printf("input.mode = %d\n", input.mode);
 	}
 }
+Packet txPacket;
+
+// void *thread_period_send()
+// {
+//  	uint64_t period = 20000; 
+//  	for(;;)
+//  	{
+//  		// pthread_mutex_lock(&send_mutex);
+//  		pc_t20_packet_tx(&txPacket);
+//  		// pthread_mutex_unlock(&send_mutex);
+//  		usleep(period);
+//  	}
+// }
+
 
 void *thread_receive(){
 	int c;
@@ -234,9 +242,10 @@ int main(int argc, char **argv)
 
 	// initialize
 
-	int 			fd = 0;
-	int c;
+	int 			fd;
 	struct 			js_event js;
+	unsigned int time;
+
 	uint8_t oldmode = 2;
 
 	int8_t yawTx;
@@ -263,68 +272,74 @@ int main(int argc, char **argv)
 	input.P1 = 0;
 	input.P2 = 0;
 
+	// pthread_t send_thread;
+	// pthread_create(&send_thread, NULL, thread_period_send, NULL);
+
 	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
-		perror("jstest");
+		//perror("jstest");
 		printf("Failed to initiate communication with joystick!\n");
 		exit(1);
 	}
 
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 
-	
+
 	term_initio();
 	rs232_open();
 
 	pthread_t thread1;
 	pthread_create(&thread1, NULL, thread_receive, NULL);
-
-	last_time = mon_time_ms();
 	
+	time = mon_time_ms();
+
 	for (;;)
 	{
+		if (mon_time_ms() - time >= 20){
 
-		while (read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))  {
-
-			switch(js.type & ~JS_EVENT_INIT) {
-				case JS_EVENT_BUTTON:
-					button[js.number] = js.value;
-					if (js.value == 1)
-					{
+			while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
+				switch(js.type & ~JS_EVENT_INIT) {
+					case JS_EVENT_BUTTON:
+						button[js.number] = js.value;
+						if (js.value == 1)
+						{
+							if (js.number == 0)
+							{
+								input.mode = PANIC_MODE;
+							}
+							else if (js.number == 1)
+							{
+								input.mode = SAFE_MODE;
+							}
+							else
+							{
+								input.mode = js.number;
+							}
+						}
+						break;
+					case JS_EVENT_AXIS:
+						axis[js.number] = js.value;
 						if (js.number == 0)
 						{
-							input.mode = PANIC_MODE;
+							input.roll = (int) js.value/256;
 						}
 						else if (js.number == 1)
 						{
-							input.mode = SAFE_MODE;
+							input.pitch = (int) js.value/256;
 						}
-						else
+						else if (js.number == 2)
+						{	
+							input.yaw = (int) js.value/256;
+						}
+						else if (js.number == 3)
 						{
-							input.mode = js.number;
+							input.lift = (int) -js.value/256;
 						}
-					}
-					break;
-				case JS_EVENT_AXIS:
-					axis[js.number] = js.value;
-					if (js.number == 0)
-					{
-						input.roll = (int) js.value/256;
-					}
-					else if (js.number == 1)
-					{
-						input.pitch = (int) js.value/256;
-					}
-					else if (js.number == 2)
-					{	
-						input.yaw = (int) js.value/256;
-					}
-					else if (js.number == 3)
-					{
-						input.lift = (int) -js.value/256;
-					}
-					break;
-				default: break;
+						break;
+					default: break;
+				}
 			}
+
+			keyboardfunction();
 
 			pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
 			rollTx = checkByteOverflow(input.roll, input.roll_offset);
@@ -355,19 +370,15 @@ int main(int argc, char **argv)
 				} else {
 					modeTx = input.mode;
 				}
-			}	
+			}
 
-			oldmode = input.mode;
-
-
-			txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
+			txPacket= pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
 			pc_t20_packet_tx(&txPacket);
-
+			
+			oldmode = input.mode;			
+			time = mon_time_ms();
 		}
-
-		keyboardfunction();
 	}
-
 	term_exitio();
 	rs232_close();
 	term_puts("\n<exit>\n");
