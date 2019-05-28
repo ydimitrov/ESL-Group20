@@ -48,8 +48,6 @@
 #define STARTBYTE 0xAA
 #define PACKETLEN 0X08
 
-pthread_mutex_t send_mutex = PTHREAD_MUTEX_INITIALIZER;
-
 /* current axis and button readings
  */
 
@@ -127,84 +125,78 @@ void keyboardfunction()
 	
 	if((c = term_getchar_nb()) != -1)
 	{
-		if (input.mode != PANIC_MODE)
+		switch(c)
+		{
+			// mode change
+			case '0': input.mode = SAFE_MODE;
+				break;
+			case '1': input.mode = PANIC_MODE;
+				break;
+			case '2': input.mode = MANUAL_MODE;
+				break;
+			case '3': input.mode = CALIBRATION_MODE;
+				break;
+			case '4': input.mode = YAW_MODE;
+				break;
+			case '5': input.mode = FULL_MODE;
+				break;
+			case '6': input.mode = RAW_MODE;
+				break;
+			case '7': input.mode = HEIGHT_MODE;
+				break;
+			case '8': input.mode = WIRELESS_MODE;
+				break;
+		}
+		if (input.mode != SAFE_MODE)
 		{
 			switch(c)
 			{
-				// mode change
-				case '0': input.mode = SAFE_MODE;
+				// movement change
+				case 'a': //set lift up
+					input.lift_offset = checkByteOverflow(input.lift_offset, 1);
 					break;
-				case '1': 
-					input.mode = PANIC_MODE;
+				case 'z': //set lift down
+					input.lift_offset = checkByteOverflow(input.lift_offset, -1);
 					break;
-				case '2': 
-					input.mode = MANUAL_MODE;
+				case 'w': //yaw rate up
+					input.yaw_offset = checkByteOverflow(input.yaw_offset, 1);
 					break;
-				case '3': input.mode = CALIBRATION_MODE;
+				case 'q': //yaw rate down
+					input.yaw_offset = checkByteOverflow(input.yaw_offset, -1);
 					break;
-				case '4': input.mode = YAW_MODE;
+				case 'u': //set P of yaw up
+					input.P = 2;
 					break;
-				case '5': input.mode = FULL_MODE;
+				case 'j': //set P of yaw down
+				 	input.P = 1;
 					break;
-				case '6': input.mode = RAW_MODE;
+				case 'i': //set roll/pitch P1 up
+				 	input.P1 = 2;
 					break;
-				case '7': input.mode = HEIGHT_MODE;
+				case 'k': //set roll/pitch P1 down
+				 	input.P1 = 1;
 					break;
-				case '8': input.mode = WIRELESS_MODE;
+				case 'o': //set roll/pitch P2 up
+				 	input.P2 = 2;
 					break;
-			}
-			if (input.mode != SAFE_MODE)
-			{
-				switch(c)
-				{
-					// movement change
-					case 'a': //set lift up
+				case 'l': //set roll/pitch P2 down
+				 	input.P2 = 1;
+					break;
 
-						 input.lift_offset = checkByteOverflow(input.lift_offset, 1);
-						 break;
-					case 'z': //set lift down
-						 input.lift_offset = checkByteOverflow(input.lift_offset, -1);
-						 break;
-					case 'w': //yaw rate up
-						 input.yaw_offset = checkByteOverflow(input.yaw_offset, 1);
-						 break;
-					case 'q': //yaw rate down
-						 input.yaw_offset = checkByteOverflow(input.yaw_offset, -1);
-					         break;
-					case 'u': //set P of yaw up
-						 input.P = 2;
-						 break;
-					case 'j': //set P of yaw down
-						 input.P = 1;
-						 break;
-					case 'i': //set roll/pitch P1 up
-						 input.P1 = 2;
-						 break;
-					case 'k': //set roll/pitch P1 down
-						 input.P1 = 1;
-						 break;
-					case 'o': //set roll/pitch P2 up
-						 input.P2 = 2;
-						 break;
-					case 'l': //set roll/pitch P2 down
-						 input.P2 = 1;
-						 break;
-
-					//arrow keys
-					case 65: //pitch down (up arrow)
-						 input.pitch_offset = checkByteOverflow(input.pitch_offset, 1);
-						 break;
-					case 66: //pitch up (down arrow)
-						 input.pitch_offset = checkByteOverflow(input.pitch_offset, -1);
-						 break;
-					case 67: //roll up (right arrow)
-						 input.roll_offset = checkByteOverflow(input.roll_offset, 1);
-						 break;
-					case 68: //roll down (left arrow)
-						 input.roll_offset = checkByteOverflow(input.roll_offset, -1);
-						 break;
-					default: break; //other key was pressed
-				}
+				//arrow keys
+				case 65: //pitch down (up arrow)
+					input.pitch_offset = checkByteOverflow(input.pitch_offset, 1);
+					break;
+				case 66: //pitch up (down arrow)
+					input.pitch_offset = checkByteOverflow(input.pitch_offset, -1);
+					break;
+				case 67: //roll up (right arrow)
+				 	input.roll_offset = checkByteOverflow(input.roll_offset, 1);
+				 	break;
+				case 68: //roll down (left arrow)
+				 	input.roll_offset = checkByteOverflow(input.roll_offset, -1);
+				 	break;
+				default: break; //other key was pressed
 			}
 		}
 	}
@@ -246,7 +238,6 @@ int main(int argc, char **argv)
 	struct 			js_event js;
 	unsigned int time;
 
-	uint8_t oldmode = 2;
 
 	int8_t yawTx;
 	int8_t rollTx;
@@ -266,7 +257,8 @@ int main(int argc, char **argv)
 	input.pitch_offset = 0;
 	input.lift_offset = 0;
 
-	input.mode = 2;
+	input.mode = 2;		   // set together
+	uint8_t oldmode = 2;   // set together
 
 	input.P = 0;
 	input.P1 = 0;
@@ -275,13 +267,13 @@ int main(int argc, char **argv)
 	// pthread_t send_thread;
 	// pthread_create(&send_thread, NULL, thread_period_send, NULL);
 
-	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
-		//perror("jstest");
-		printf("Failed to initiate communication with joystick!\n");
-		exit(1);
-	}
+	// if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
+	// 	//perror("jstest");
+	// 	printf("Failed to initiate communication with joystick!\n");
+	// 	exit(1);
+	// }
 
-	fcntl(fd, F_SETFL, O_NONBLOCK);
+	// fcntl(fd, F_SETFL, O_NONBLOCK);
 
 
 	term_initio();
@@ -296,48 +288,48 @@ int main(int argc, char **argv)
 	{
 		if (mon_time_ms() - time >= 20){
 
-			while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
-				switch(js.type & ~JS_EVENT_INIT) {
-					case JS_EVENT_BUTTON:
-						button[js.number] = js.value;
-						if (js.value == 1)
-						{
-							if (js.number == 0)
-							{
-								input.mode = PANIC_MODE;
-							}
-							else if (js.number == 1)
-							{
-								input.mode = SAFE_MODE;
-							}
-							else
-							{
-								input.mode = js.number;
-							}
-						}
-						break;
-					case JS_EVENT_AXIS:
-						axis[js.number] = js.value;
-						if (js.number == 0)
-						{
-							input.roll = (int) js.value/256;
-						}
-						else if (js.number == 1)
-						{
-							input.pitch = (int) js.value/256;
-						}
-						else if (js.number == 2)
-						{	
-							input.yaw = (int) js.value/256;
-						}
-						else if (js.number == 3)
-						{
-							input.lift = (int) -js.value/256;
-						}
-						break;
-					default: break;
-				}
-			}
+			// while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
+			// 	switch(js.type & ~JS_EVENT_INIT) {
+			// 		case JS_EVENT_BUTTON:
+			// 			button[js.number] = js.value;
+			// 			if (js.value == 1)
+			// 			{
+			// 				if (js.number == 0)
+			// 				{
+			// 					input.mode = PANIC_MODE;
+			// 				}
+			// 				else if (js.number == 1)
+			// 				{
+			// 					input.mode = SAFE_MODE;
+			// 				}
+			// 				else
+			// 				{
+			// 					input.mode = js.number;
+			// 				}
+			// 			}
+			// 			break;
+			// 		case JS_EVENT_AXIS:
+			// 			axis[js.number] = js.value;
+			// 			if (js.number == 0)
+			// 			{
+			// 				input.roll = (int) js.value/256;
+			// 			}
+			// 			else if (js.number == 1)
+			// 			{
+			// 				input.pitch = (int) js.value/256;
+			// 			}
+			// 			else if (js.number == 2)
+			// 			{	
+			// 				input.yaw = (int) js.value/256;
+			// 			}
+			// 			else if (js.number == 3)
+			// 			{
+			// 				input.lift = (int) -js.value/256;
+			// 			}
+			// 			break;
+			// 		default: break;
+			// 	}
+			// }
 
 			keyboardfunction();
 

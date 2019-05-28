@@ -51,8 +51,7 @@ void (* fsmStatesArr[])(void) = {initialState,
 							     storeValues};
 
 
-void printCurrentState(uint8_t state)
-{
+void printCurrentState(uint8_t state){
 	printf("S%d\n", state);
 }
 
@@ -82,7 +81,6 @@ void preambleByte(void){
 	// stateIndex = 1
 	// printCurrentState(2);
 	temp = buffer[arrIndex];
-	// printf("temp in preambleByte is = %x\n", temp);
 	if(temp == 0xAA){
 		arrIndex++;
     	stateIndex++;
@@ -97,8 +95,6 @@ void lengthByte(void){
 	// stateIndex = 2
 	// printCurrentState(3);
 	temp = buffer[arrIndex];
-
-	// if(temp >= MODELEN && temp <= MOVELEN ){
 	if(temp == PACKETLEN){
 		arrIndex++;
     	stateIndex++;
@@ -127,7 +123,6 @@ void packetTypeByte(void){
 void message(void){
 	// stateIndex = 4
 	// printCurrentState(5);
-	// printf("<< arrIndex %d in message\n", arrIndex);
 	if(arrIndex == packetLen - 1){
     	stateIndex++;
 		statesFunc = fsmStatesArr[CRCCHECK];
@@ -145,7 +140,6 @@ void crcCheck(void){
 	}
 
 	if(crc == buffer[packetLen - 1]){
-		// printf("RXQUEUE SIZE: %d \n", rx_queue.count);	
 		// printf("Packet OK!\n");
     	stateIndex++;
 		statesFunc = fsmStatesArr[STOREVALUES];
@@ -157,8 +151,6 @@ void crcCheck(void){
 
 void storeValues(void){
 	// printCurrentState(7);
-	// printf("buffer[3] = %.2x, buffer[4] = %.2x, buffer[5] = %.2x, buffer[6] = %.2x\n", buffer[3], buffer[4], buffer[5], buffer[6]);
-	
 	oldMode = mode;
 	modeStore(&buffer[2]);
 	flightParameters.roll  = (int8_t)  	buffer[3];
@@ -174,7 +166,7 @@ void fsmReceive(){
 
 	(statesFunc)();
 
-	// for (int i = 0; i < 12; i++){
+	// for (int i = 0; i < 17; i++){  // 17 [0-16] states are required for one packet
 	// 	(statesFunc)();
 	// }
 }

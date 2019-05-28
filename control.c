@@ -63,13 +63,13 @@ void run_filters_and_control()
 
 	switch(mode)
 	{
-		case PANIC_MODE :
-			if(oldMode != mode)
-				panic();
-			break;
 		case SAFE_MODE :
 			if(oldMode != mode)
 				safe();
+			break;
+		case PANIC_MODE :
+			if(oldMode != mode)
+				panic();
 			break;
 		case MANUAL_MODE : 
 			manual();
@@ -122,7 +122,7 @@ void panic()
 		update_motors(); 
 	}
 	printf("I'm done panicking bro\n");
-	mode = SAFE_MODE;	
+	// mode = SAFE_MODE;
 }
 
 void manual()
