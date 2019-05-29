@@ -60,6 +60,7 @@ int main(void)
 			clear_timer_flag();
 		}
 
+		fsmReceive();
 
 		if (check_sensor_int_flag()) 
 		{
@@ -67,7 +68,6 @@ int main(void)
 			run_filters_and_control();
 		}
 		
-		fsmReceive();
 	}	
 
 	printf("\n\t Goodbye \n\n");

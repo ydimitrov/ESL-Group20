@@ -32,104 +32,24 @@ void (* state[])(void) = {safe_mode, panic_mode, manual_mode, calibration_mode, 
 void (* state_fun)(void) = safe_mode; // global
 // enum state_codes { manual, calibration, yaw, safe, full, panic, height, raw, wireless};
 
-enum ret_codes { fail, ok};
-struct transition {
-    enum flightmode  src_state;
-    enum flightmode  dst_state;
-    enum ret_codes   ret_code;
-};
+enum ret_codes {fail, ok};
 
-struct transition state_transitions[] = {
-    {MANUAL, PANIC, ok},
-    {MANUAL, SAFE,  ok},
-    {MANUAL, CALIBRATION, fail},
-    {MANUAL, YAW, fail},
-    {MANUAL, FULL, fail},
-    {MANUAL, WIRELESS, fail},
-    {MANUAL, RAW, fail},
-    {MANUAL, HEIGHT, fail},
-    {MANUAL, MANUAL, ok},
-    {CALIBRATION, PANIC, ok},
-    {CALIBRATION, SAFE,  ok},
-    {CALIBRATION, MANUAL, fail},
-    {CALIBRATION, YAW, fail},
-    {CALIBRATION, FULL, fail},
-    {CALIBRATION, WIRELESS, fail},
-    {CALIBRATION, RAW, fail},
-    {CALIBRATION, HEIGHT, fail},    
-    {CALIBRATION, CALIBRATION, fail},
-    {YAW, PANIC, ok},
-    {YAW, SAFE,  ok},
-    {YAW, MANUAL, fail},
-    {YAW, CALIBRATION, fail},  
-    {YAW, FULL, fail},
-    {YAW, WIRELESS, fail},
-    {YAW, RAW, fail},
-    {YAW, HEIGHT, fail},    
-    {YAW, YAW, ok},
-    {FULL, PANIC, ok},
-    {FULL, SAFE,  ok},
-    {FULL, MANUAL, fail},
-    {FULL, CALIBRATION, fail},  
-    {FULL, FULL, ok},
-    {FULL, WIRELESS, fail},
-    {FULL, RAW, fail},
-    {FULL, HEIGHT, fail},    
-    {FULL, YAW, fail},
-    {WIRELESS, PANIC, ok},
-    {WIRELESS, SAFE,  ok},
-    {WIRELESS, MANUAL, fail},
-    {WIRELESS, CALIBRATION, fail},  
-    {WIRELESS, FULL, fail},
-    {WIRELESS, WIRELESS, ok},
-    {WIRELESS, RAW, fail},
-    {WIRELESS, HEIGHT, fail},    
-    {WIRELESS, YAW, fail},
-    {RAW, PANIC, ok},
-    {RAW, SAFE,  ok},
-    {RAW, MANUAL, fail},
-    {RAW, CALIBRATION, fail},  
-    {RAW, FULL, fail},
-    {RAW, WIRELESS, fail},
-    {RAW, RAW, ok},
-    {RAW, HEIGHT, fail},    
-    {RAW, YAW, fail},
-    {HEIGHT, PANIC, ok},
-    {HEIGHT, SAFE,  ok},
-    {HEIGHT, MANUAL, fail},
-    {HEIGHT, CALIBRATION, fail},  
-    {HEIGHT, FULL, fail},
-    {HEIGHT, WIRELESS, fail},
-    {HEIGHT, RAW, fail},
-    {HEIGHT, HEIGHT, ok},    
-    {HEIGHT, YAW, fail},
-    {PANIC, PANIC, fail},
-    {PANIC, SAFE,  ok},
-    {PANIC, MANUAL, fail},
-    {PANIC, CALIBRATION, fail},  
-    {PANIC, FULL, fail},
-    {PANIC, WIRELESS, fail},
-    {PANIC, RAW, fail},
-    {PANIC, HEIGHT, fail},
-    {PANIC, YAW, fail},
-    {SAFE, SAFE, fail},
-    {SAFE, PANIC,  fail},
-    {SAFE, MANUAL, ok},
-    {SAFE, CALIBRATION, ok},  
-    {SAFE, FULL, ok},
-    {SAFE, WIRELESS, ok},
-    {SAFE, RAW, ok},
-    {SAFE, HEIGHT, ok},    
-    {SAFE, YAW, ok}};
+enum ret_codes state_transitions[9][9] = {
+{fail, fail, ok,   ok,   ok,   ok,   ok,   ok,   ok},
+{ok,   fail, fail, fail, fail, fail, fail, fail, fail},
+{ok,   ok,   ok,   fail, fail, fail, fail, fail, fail},
+{ok,   ok,   fail, fail, fail, fail, fail, fail, fail},
+{ok,   ok,   fail, fail, ok,   fail, fail, fail, fail},
+{ok,   ok,   fail, fail, fail, ok,   fail, fail, fail},
+{ok,   ok,   fail, fail, fail, fail, ok,   fail, fail},
+{ok,   ok,   fail, fail, fail, fail, fail, ok,   fail},
+{ok,   ok,   fail, fail, fail, fail, fail, fail, ok}};
 
 enum ret_codes lookup_transitions(enum flightmode mode, enum flightmode candidate) {
-	int i;
 
-    for (i = 0; i < 81; i++) {
-        if (state_transitions[i].src_state == mode && state_transitions[i].dst_state == candidate)
-        	break;
-    }
-    return state_transitions[i].ret_code;
+    // rows correspond to current state
+	// columns correspond to candidate state
+    return state_transitions[mode][candidate];
 }
 
 void droneState(enum flightmode candidate) {
@@ -143,7 +63,6 @@ void droneState(enum flightmode candidate) {
     	state_fun = state[mode];
     	state_fun();
     }
-
 }
 
 
