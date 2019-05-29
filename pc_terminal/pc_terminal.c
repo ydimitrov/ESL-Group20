@@ -377,6 +377,7 @@ int main(int argc, char **argv)
 			time = mon_time_ms();
 		}
 	}
+	
 	term_exitio();
 	rs232_close();
 	term_puts("\n<exit>\n");

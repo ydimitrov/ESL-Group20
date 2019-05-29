@@ -24,6 +24,128 @@ int int_error_yaw = 0; //integral of error, needed for yaw control
 int int_error_roll = 0;
 int int_error_pitch = 0;
 
+// mode = SAFE; // global
+
+
+/* array and enum flightmode(in4073.h) must be in sync! */
+void (* state[])(void) = {safe_mode, panic_mode, manual_mode, calibration_mode, yaw_control_mode, full_control_mode, raw_control_mode, height_control_mode, wireless_control_mode};
+void (* state_fun)(void) = safe_mode; // global
+// enum state_codes { manual, calibration, yaw, safe, full, panic, height, raw, wireless};
+
+enum ret_codes { fail, ok};
+struct transition {
+    enum flightmode  src_state;
+    enum flightmode  dst_state;
+    enum ret_codes   ret_code;
+};
+
+struct transition state_transitions[] = {
+    {MANUAL, PANIC, ok},
+    {MANUAL, SAFE,  ok},
+    {MANUAL, CALIBRATION, fail},
+    {MANUAL, YAW, fail},
+    {MANUAL, FULL, fail},
+    {MANUAL, WIRELESS, fail},
+    {MANUAL, RAW, fail},
+    {MANUAL, HEIGHT, fail},
+    {MANUAL, MANUAL, ok},
+    {CALIBRATION, PANIC, ok},
+    {CALIBRATION, SAFE,  ok},
+    {CALIBRATION, MANUAL, fail},
+    {CALIBRATION, YAW, fail},
+    {CALIBRATION, FULL, fail},
+    {CALIBRATION, WIRELESS, fail},
+    {CALIBRATION, RAW, fail},
+    {CALIBRATION, HEIGHT, fail},    
+    {CALIBRATION, CALIBRATION, fail},
+    {YAW, PANIC, ok},
+    {YAW, SAFE,  ok},
+    {YAW, MANUAL, fail},
+    {YAW, CALIBRATION, fail},  
+    {YAW, FULL, fail},
+    {YAW, WIRELESS, fail},
+    {YAW, RAW, fail},
+    {YAW, HEIGHT, fail},    
+    {YAW, YAW, ok},
+    {FULL, PANIC, ok},
+    {FULL, SAFE,  ok},
+    {FULL, MANUAL, fail},
+    {FULL, CALIBRATION, fail},  
+    {FULL, FULL, ok},
+    {FULL, WIRELESS, fail},
+    {FULL, RAW, fail},
+    {FULL, HEIGHT, fail},    
+    {FULL, YAW, fail},
+    {WIRELESS, PANIC, ok},
+    {WIRELESS, SAFE,  ok},
+    {WIRELESS, MANUAL, fail},
+    {WIRELESS, CALIBRATION, fail},  
+    {WIRELESS, FULL, fail},
+    {WIRELESS, WIRELESS, ok},
+    {WIRELESS, RAW, fail},
+    {WIRELESS, HEIGHT, fail},    
+    {WIRELESS, YAW, fail},
+    {RAW, PANIC, ok},
+    {RAW, SAFE,  ok},
+    {RAW, MANUAL, fail},
+    {RAW, CALIBRATION, fail},  
+    {RAW, FULL, fail},
+    {RAW, WIRELESS, fail},
+    {RAW, RAW, ok},
+    {RAW, HEIGHT, fail},    
+    {RAW, YAW, fail},
+    {HEIGHT, PANIC, ok},
+    {HEIGHT, SAFE,  ok},
+    {HEIGHT, MANUAL, fail},
+    {HEIGHT, CALIBRATION, fail},  
+    {HEIGHT, FULL, fail},
+    {HEIGHT, WIRELESS, fail},
+    {HEIGHT, RAW, fail},
+    {HEIGHT, HEIGHT, ok},    
+    {HEIGHT, YAW, fail},
+    {PANIC, PANIC, fail},
+    {PANIC, SAFE,  ok},
+    {PANIC, MANUAL, fail},
+    {PANIC, CALIBRATION, fail},  
+    {PANIC, FULL, fail},
+    {PANIC, WIRELESS, fail},
+    {PANIC, RAW, fail},
+    {PANIC, HEIGHT, fail},
+    {PANIC, YAW, fail},
+    {SAFE, SAFE, fail},
+    {SAFE, PANIC,  fail},
+    {SAFE, MANUAL, ok},
+    {SAFE, CALIBRATION, ok},  
+    {SAFE, FULL, ok},
+    {SAFE, WIRELESS, ok},
+    {SAFE, RAW, ok},
+    {SAFE, HEIGHT, ok},    
+    {SAFE, YAW, ok}};
+
+enum ret_codes lookup_transitions(enum flightmode mode, enum flightmode candidate) {
+	int i;
+
+    for (i = 0; i < 81; i++) {
+        if (state_transitions[i].src_state == mode && state_transitions[i].dst_state == candidate)
+        	break;
+    }
+    return state_transitions[i].ret_code;
+}
+
+void droneState(enum flightmode candidate) {
+
+    enum ret_codes rc;
+
+    rc = lookup_transitions(mode, candidate);
+    
+    if (rc) {
+    	mode = candidate;
+    	state_fun = state[mode];
+    	state_fun();
+    }
+
+}
+
 
 void initialize_flight_Parameters()
 {
@@ -60,47 +182,11 @@ void reset_motors()
 
 void run_filters_and_control()
 {
-
-	switch(mode)
-	{
-		case SAFE_MODE :
-			if(oldMode != mode)
-				safe();
-			break;
-		case PANIC_MODE :
-			if(oldMode != mode)
-				panic();
-			break;
-		case MANUAL_MODE : 
-			manual();
-			break;
-		case CALIBRATION_MODE:
-			if(oldMode != mode)
-				calibration();
-			break;
-		case YAW_MODE:
-			yaw_control();
-			break;
-		case FULL_MODE:
-			full_control();
-			break;
-		case RAW_MODE:
-			raw_control();
-			break;
-		case HEIGHT_MODE:
-			height_control();
-			break;
-		case WIRELESS_MODE:
-			wireless_control();
-			break;
-		default:
-			panic();
-			break;
-	}
+	droneState(candidate_mode);
 	update_motors();
 }
 
-void panic()
+void panic_mode()
 {
 	uint16_t i, average = (ae[0] + ae[1] + ae[2] + ae[3]);
 	average = average >> 3;
@@ -122,10 +208,10 @@ void panic()
 		update_motors(); 
 	}
 	printf("I'm done panicking bro\n");
-	// mode = SAFE_MODE;
+	mode = SAFE;
 }
 
-void manual()
+void manual_mode()
 {
 	int8_t lift_status; 
 
@@ -153,16 +239,16 @@ void manual()
 	update_motors();
 }
 
-void safe()
+void safe_mode()
 {
 	reset_motors();
 	// readLog();
 }
 
 
-void calibration()
+void calibration_mode()
 {
-	panic();
+	// panic_mode();
 	zp = zq = zr = zax = zay = zaz = 0;
 	for (int i = 0; i < 128; i++){
 		
@@ -182,7 +268,6 @@ void calibration()
 	zay = round(zay);
 	zaz = round(zaz);
 
-
 	// printf("after zp = %d\n", zp);
 	// printf("after zq = %d\n", zq);
 	// printf("after zr = %d\n", zr);
@@ -191,9 +276,10 @@ void calibration()
 	// printf("after zaz = %d\n", zaz);
 
 	printf("Calibration completed!\n");
+	// candidate_mode = SAFE;
 }
 
-void yaw_control()
+void yaw_control_mode()
 {
 	int lift_status; 
 	int error;
@@ -239,7 +325,7 @@ void yaw_control()
 }	
 
 
-void full_control()
+void full_control_mode()
 {
 	/*
 	int lift_status; 
@@ -287,14 +373,14 @@ void full_control()
 	*/
 }
 
-void raw_control(){
+void raw_control_mode(){
 
 }
 
-void height_control(){
+void height_control_mode(){
 
 }
 
-void wireless_control(){
+void wireless_control_mode(){
 
 }

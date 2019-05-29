@@ -116,8 +116,8 @@ void ble_send(void);
 // P VALUES
 uint8_t P, P1, P2;
 
-typedef struct 
-{
+// Pilot values
+typedef struct {
 	int8_t roll;
 	int8_t pitch;
 	int8_t yaw;
@@ -126,18 +126,18 @@ typedef struct
 
 pilotValues flightParameters;
 
-enum flightmode
-{
-	SAFE_MODE,
-	PANIC_MODE,
-	MANUAL_MODE,
-	CALIBRATION_MODE,
-	YAW_MODE,
-	FULL_MODE,
-	RAW_MODE,
-	HEIGHT_MODE,
-	WIRELESS_MODE
-}mode, oldMode;
+// Flight modes
+enum flightmode{
+	SAFE,
+	PANIC,
+	MANUAL,
+	CALIBRATION,
+	YAW,
+	FULL,
+	RAW,
+	HEIGHT,
+	WIRELESS
+}candidate_mode, mode;
 
 
 #endif // IN4073_H__

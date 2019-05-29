@@ -33,7 +33,7 @@ int main(void)
 	baro_init();
 	spi_flash_init();
 	// ble_init();
-
+	mode = SAFE;
 	P = 0;
 	uint32_t counter = 0;
 
@@ -60,13 +60,14 @@ int main(void)
 			clear_timer_flag();
 		}
 
-		fsmReceive();
 
 		if (check_sensor_int_flag()) 
 		{
 			get_dmp_data();
 			run_filters_and_control();
 		}
+		
+		fsmReceive();
 	}	
 
 	printf("\n\t Goodbye \n\n");

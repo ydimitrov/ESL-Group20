@@ -151,7 +151,7 @@ void crcCheck(void){
 
 void storeValues(void){
 	// printCurrentState(7);
-	oldMode = mode;
+	// oldMode = mode;
 	modeStore(&buffer[2]);
 	flightParameters.roll  = (int8_t)  	buffer[3];
 	flightParameters.pitch = (int8_t)	buffer[4];
@@ -200,7 +200,7 @@ void modeStore(uint8_t *p){
 	
 	
 	if (*p >= 0 && *p <= 8){
-		mode = *p;
+		candidate_mode = *p;
 	} else if ( mode == 4 && *p == 9) {
 		P += 1;
 	} else if ( mode == 4 && *p == 10) {
