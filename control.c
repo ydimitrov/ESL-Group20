@@ -24,9 +24,6 @@ int int_error_yaw = 0; //integral of error, needed for yaw control
 int int_error_roll = 0;
 int int_error_pitch = 0;
 
-// mode = SAFE; // global
-
-
 /* array and enum flightmode(in4073.h) must be in sync! */
 void (* state[])(void) = {safe_mode, panic_mode, manual_mode, calibration_mode, yaw_control_mode, full_control_mode, raw_control_mode, height_control_mode, wireless_control_mode};
 void (* state_fun)(void) = safe_mode; // global
@@ -61,6 +58,11 @@ void droneState(enum flightmode candidate) {
     if (rc) {
     	mode = candidate;
     	state_fun = state[mode];
+    	state_fun();
+    } else if (rc == okIM){
+    	mode = candidate;
+    	state_fun = state[mode];
+    	motor_initilisation();
     	state_fun();
     }
 }
