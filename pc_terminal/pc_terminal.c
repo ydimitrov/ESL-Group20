@@ -245,7 +245,6 @@ int main(int argc, char **argv)
 	uint8_t liftTx;
 	uint8_t modeTx;
 
-	// Initialize input values
 
 	input.roll = 0;
 	input.yaw = 0;
@@ -257,8 +256,8 @@ int main(int argc, char **argv)
 	input.pitch_offset = 0;
 	input.lift_offset = 0;
 
-	input.mode = 2;		   // set together
-	uint8_t oldmode = 2;   // set together
+	input.mode = 0;		   // set together
+	uint8_t oldmode = 0;   // set together
 
 	input.P = 0;
 	input.P1 = 0;
@@ -267,13 +266,13 @@ int main(int argc, char **argv)
 	// pthread_t send_thread;
 	// pthread_create(&send_thread, NULL, thread_period_send, NULL);
 
-	// if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
-	// 	//perror("jstest");
-	// 	printf("Failed to initiate communication with joystick!\n");
-	// 	exit(1);
-	// }
+	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
+		//perror("jstest");
+		printf("Failed to initiate communication with joystick!\n");
+		exit(1);
+	}
 
-	// fcntl(fd, F_SETFL, O_NONBLOCK);
+	fcntl(fd, F_SETFL, O_NONBLOCK);
 
 
 	term_initio();
@@ -288,48 +287,48 @@ int main(int argc, char **argv)
 	{
 		if (mon_time_ms() - time >= 20){
 
-			// while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
-			// 	switch(js.type & ~JS_EVENT_INIT) {
-			// 		case JS_EVENT_BUTTON:
-			// 			button[js.number] = js.value;
-			// 			if (js.value == 1)
-			// 			{
-			// 				if (js.number == 0)
-			// 				{
-			// 					input.mode = PANIC_MODE;
-			// 				}
-			// 				else if (js.number == 1)
-			// 				{
-			// 					input.mode = SAFE_MODE;
-			// 				}
-			// 				else
-			// 				{
-			// 					input.mode = js.number;
-			// 				}
-			// 			}
-			// 			break;
-			// 		case JS_EVENT_AXIS:
-			// 			axis[js.number] = js.value;
-			// 			if (js.number == 0)
-			// 			{
-			// 				input.roll = (int) js.value/256;
-			// 			}
-			// 			else if (js.number == 1)
-			// 			{
-			// 				input.pitch = (int) js.value/256;
-			// 			}
-			// 			else if (js.number == 2)
-			// 			{	
-			// 				input.yaw = (int) js.value/256;
-			// 			}
-			// 			else if (js.number == 3)
-			// 			{
-			// 				input.lift = (int) -js.value/256;
-			// 			}
-			// 			break;
-			// 		default: break;
-			// 	}
-			// }
+			while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
+				switch(js.type & ~JS_EVENT_INIT) {
+					case JS_EVENT_BUTTON:
+						button[js.number] = js.value;
+						if (js.value == 1)
+						{
+							if (js.number == 0)
+							{
+								input.mode = PANIC_MODE;
+							}
+							else if (js.number == 1)
+							{
+								input.mode = SAFE_MODE;
+							}
+							else
+							{
+								input.mode = js.number;
+							}
+						}
+						break;
+					case JS_EVENT_AXIS:
+						axis[js.number] = js.value;
+						if (js.number == 0)
+						{
+							input.roll = (int) js.value/256;
+						}
+						else if (js.number == 1)
+						{
+							input.pitch = -(int) js.value/256;
+						}
+						else if (js.number == 2)
+						{	
+							input.yaw = (int) js.value/256;
+						}
+						else if (js.number == 3)
+						{
+							input.lift = (int) -js.value/256;
+						}
+						break;
+					default: break;
+				}
+			}
 
 			keyboardfunction();
 
