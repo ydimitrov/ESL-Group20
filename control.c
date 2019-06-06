@@ -59,12 +59,20 @@ void droneState(enum flightmode candidate) {
     	mode = candidate;
     	state_fun = state[mode];
     	state_fun();
-    } else if (rc == okIM){
-    	mode = candidate;
-    	state_fun = state[mode];
-    	motor_initilisation();
-    	state_fun();
     }
+ //    } else if (rc == okIM){
+ //    	mode = candidate;
+ //    	state_fun = state[mode];
+ //    	motor_initilisation();
+ //    	state_fun();
+ //    }
+
+	// if (rc) {
+ //    	mode = candidate;
+ //    	state_fun = state[mode];
+ //    	if(rc == okIM)
+ //    		motor_initilisation();
+ //    	state_fun();
 }
 
 
