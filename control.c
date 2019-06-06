@@ -118,7 +118,8 @@ void run_filters_and_control()
 void panic_mode()
 {
 	uint16_t i, average = (ae[0] + ae[1] + ae[2] + ae[3]);
-	average = average >> 3;
+	// average = average >> 3;
+	average = average >> 2;
 	while(i < 1000)
 	{
 		ae[0] = average;
@@ -130,10 +131,11 @@ void panic_mode()
 	}
 	while(ae[0] != 0)
 	{
-		ae[0] -= 10;
-		ae[1] -= 10;
-		ae[2] -= 10;
-		ae[3] -= 10;
+		ae[0] -= 1;
+		ae[1] -= 1;
+		ae[2] -= 1;
+		ae[3] -= 1;
+		for (int i = 0; i < 1000; ++i);
 		update_motors(); 
 	}
 	printf("I'm done panicking bro\n");
@@ -144,16 +146,18 @@ void manual_mode()
 {
 	int8_t lift_status; 
 
+	uint8_t MOTOR_RELATION_M = MOTOR_RELATION >> 1;
+
 	initialize_flight_Parameters();
 
 	//set lift to uint16_t
 
 	lift_status = (lift == 0 ? 0 : 1);
 
-	ae[0] = (((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status);
-	ae[1] = (((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status);
-	ae[2] = (((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status);
-	ae[3] = (((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status);
+	ae[0] = (((lift * MOTOR_RELATION_M) - (roll * MOTOR_RELATION_M) - (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
+	ae[1] = (((lift * MOTOR_RELATION_M) - (pitch * MOTOR_RELATION_M) + (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
+	ae[2] = (((lift * MOTOR_RELATION_M) + (roll * MOTOR_RELATION_M) - (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
+	ae[3] = (((lift * MOTOR_RELATION_M) + (pitch * MOTOR_RELATION_M) + (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 	
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
 	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
@@ -226,10 +230,10 @@ void yaw_control_mode()
 	// printf("error = %d, int_error_yaw = %d, P = %d\n", error, int_error_yaw, P);
 
 	//update motors based on pitch,roll,lift and control for yaw
-	ae[0] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - ((P * error)>>6) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + ((P * error)>>6) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - ((P * error)>>6) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + ((P * error)>>6) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[0] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - ((P * error)>>8) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + ((P * error)>>8) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - ((P * error)>>8) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + ((P * error)>>8) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
 
 	printf("Error = %d Yaw = %d P = %d\n",error,yaw,P);
 	//ensure motor speeds are within acceptable bounds
@@ -273,17 +277,17 @@ void full_control_mode()
 	
 	//roll control
 	error_roll = roll - (phi >> 8); //calculate roll error
-	K_r = P1 * error_roll - P2 * (sp - zp); //integrate terms based on roll and rollrate error added
+	K_p = (4 * P1) * error_roll - P2 * (sp - zp); //integrate terms based on roll and rollrate error added
 
 	//pitch control
-	error_pitch = pitch - (theta >> 8); //calculate pitch error
-	K_p = P1 * error_pitch - P2 * (sq - zq); //integrate terms based on pitch and pitchrate error added
+	error_pitch = -(pitch - (theta >> 8)); //calculate pitch error
+	K_r = (4 * P1) * error_pitch - P2 * (sq - zq); //integrate terms based on pitch and pitchrate error added
 
 	//update motors based on lift and control for pitch,roll,yaw rate
-	ae[0] = ((lift * MOTOR_RELATION) + (K_p>>6) + ((P * error_yawrate)>>6)) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (K_r>>6) - ((P * error_yawrate)>>6)) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) - (K_p>>6) + ((P * error_yawrate)>>6)) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (K_r>>6) - ((P * error_yawrate)>>6)) * lift_status;
+	ae[0] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_r>>6) - ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_p>>6) + ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + (K_r>>6) - ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + (K_p>>6) + ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
 
 	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;

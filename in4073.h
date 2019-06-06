@@ -27,10 +27,10 @@
 #define GREEN		28
 #define BLUE		30
 #define INT_PIN		5
-#define MAX_SPEED 	450
+#define MAX_SPEED 	750
 #define MAX_SPEED_YAW   750
 #define MIN_SPEED 	200
-#define MOTOR_RELATION 1
+#define MOTOR_RELATION 2
 
 bool demo_done;
 
