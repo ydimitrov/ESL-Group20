@@ -218,6 +218,7 @@ void yaw_control_mode()
 	lift_status = (lift == 0 ? 0 : 1);	
 	
 	error = yaw - (sr - zr); //calculate yaw rate error
+	// yaw = yaw - error;
 
 	// printf("zr = %d\n", zr);
 	// printf("sr = %d\n", sr);
@@ -225,10 +226,10 @@ void yaw_control_mode()
 	// printf("error = %d, int_error_yaw = %d, P = %d\n", error, int_error_yaw, P);
 
 	//update motors based on pitch,roll,lift and control for yaw
-	ae[0] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + ((P * error)>>6)) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - ((P * error)>>6)) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + ((P * error)>>6)) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - ((P * error)>>6)) * lift_status;
+	ae[0] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - ((P * error)>>6) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + ((P * error)>>6) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - ((P * error)>>6) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + ((P * error)>>6) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
 
 	printf("Error = %d Yaw = %d P = %d\n",error,yaw,P);
 	//ensure motor speeds are within acceptable bounds
