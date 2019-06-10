@@ -15,6 +15,9 @@
 #include "control.h"
 
 #define round(num) num > 0 ? ((num % 128) > 64 ? (num >> 7) + 1 : (num >> 7)) : (((num % 128) > -64) ? (num >> 7) + 1  : (num >> 7))
+#define cap_base(num) num < 0 ? 0 : num
+#define cap_lift(num,elevation) num > elevation ? elevation : num
+
 
 int8_t roll;
 int8_t pitch;
@@ -110,6 +113,35 @@ void reset_motors()
 	update_motors();
 }
 
+void gradual_lift()
+{
+	reset_motors();
+	while((ae[0]+ae[1]+ae[2]+ae[3]) < (4*lift))
+	{
+		ae[0] += 1;
+		ae[1] += 1;
+		ae[2] += 1;
+		ae[3] += 1;
+		ae[0] = cap_lift(ae[0],lift);
+		ae[1] = cap_lift(ae[1],lift);
+		ae[2] = cap_lift(ae[2],lift);
+		ae[3] = cap_lift(ae[3],lift);
+
+		update_motors();
+		for (int j = 0; j < 100000; ++j)
+		{
+			if(j == 0)
+			{
+				printf("%10ld | ", get_time_us());
+				printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
+				printf("%6d %6d %6d | ", phi, theta, psi);
+				printf("%6d %6d %6d | ", sp, sq, sr);
+				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+			}
+		}
+	}
+}
+
 void run_filters_and_control()
 {
 	droneState(candidate_mode);
@@ -118,10 +150,11 @@ void run_filters_and_control()
 
 void panic_mode()
 {
-	uint16_t i, average = (ae[0] + ae[1] + ae[2] + ae[3]);
+	uint16_t average;
+	average = (ae[0] + ae[1] + ae[2] + ae[3]);
 	// average = average >> 3;
 	average = average >> 2;
-	while(i < 1000)
+	for (int i = 0; i < 100; ++i)
 	{
 		ae[0] = average;
 		ae[1] = average;
@@ -129,17 +162,42 @@ void panic_mode()
 		ae[3] = average;
 		i++;	
 		update_motors();
+		for (int j = 0; j < 100000; ++j)
+		{
+			if(j == 0)
+			{
+				printf("%10ld | ", get_time_us());
+				printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
+				printf("%6d %6d %6d | ", phi, theta, psi);
+				printf("%6d %6d %6d | ", sp, sq, sr);
+				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+			}
+		}
 	}
-	while(ae[0] != 0)
+	while((ae[0]+ae[1]+ae[2]+ae[3]) != 0)
 	{
 		ae[0] -= 1;
 		ae[1] -= 1;
 		ae[2] -= 1;
 		ae[3] -= 1;
-		for (int i = 0; i < 1000; ++i);
-		update_motors(); 
+		ae[0] = cap_base(ae[0]);
+		ae[1] = cap_base(ae[1]);
+		ae[2] = cap_base(ae[2]);
+		ae[3] = cap_base(ae[3]);
+		update_motors();
+		for (int j = 0; j < 100000; ++j)
+		{
+			if(j == 0)
+			{
+				printf("%10ld | ", get_time_us());
+				printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
+				printf("%6d %6d %6d | ", phi, theta, psi);
+				printf("%6d %6d %6d | ", sp, sq, sr);
+				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+			}
+		}
 	}
-	printf("I'm done panicking bro\n");
+	printf("I'm done panicking bro!\n");
 	mode = SAFE;
 }
 
@@ -165,10 +223,10 @@ void manual_mode()
 	if(ae[2] > MAX_SPEED) ae[2] = MAX_SPEED;
 	if(ae[3] > MAX_SPEED) ae[3] = MAX_SPEED;
 
-	if(ae[0] < MIN_SPEED) ae[0] = MIN_SPEED;
-	if(ae[1] < MIN_SPEED) ae[1] = MIN_SPEED;
-	if(ae[2] < MIN_SPEED) ae[2] = MIN_SPEED;
-	if(ae[3] < MIN_SPEED) ae[3] = MIN_SPEED;
+	if(ae[0] < MIN_SPEED) ae[0] = (MIN_SPEED * lift_status);
+	if(ae[1] < MIN_SPEED) ae[1] = (MIN_SPEED * lift_status);
+	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
+	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
 	update_motors();
 }
@@ -243,10 +301,10 @@ void yaw_control_mode()
 	if(ae[2] > MAX_SPEED) ae[2] = MAX_SPEED;
 	if(ae[3] > MAX_SPEED) ae[3] = MAX_SPEED;
 
-	if(ae[0] < MIN_SPEED) ae[0] = MIN_SPEED;
-	if(ae[1] < MIN_SPEED) ae[1] = MIN_SPEED;
-	if(ae[2] < MIN_SPEED) ae[2] = MIN_SPEED;
-	if(ae[3] < MIN_SPEED) ae[3] = MIN_SPEED;
+	if(ae[0] < MIN_SPEED) ae[0] = (MIN_SPEED * lift_status);
+	if(ae[1] < MIN_SPEED) ae[1] = (MIN_SPEED * lift_status);
+	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
+	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
 	printf("Motor speeds: %3d %3d %3d %3d\n", ae[0], ae[1], ae[2], ae[3]);
 	//printf("Motor speed 0: %d\n Motor speeds 1: %d\n Motor speed 2: %d\n Motor speed 3: 		%d\n",ae[0],ae[1],ae[2],ae[3]);
@@ -296,10 +354,10 @@ void full_control_mode()
 	if(ae[2] > MAX_SPEED) ae[2] = MAX_SPEED;
 	if(ae[3] > MAX_SPEED) ae[3] = MAX_SPEED;
 
-	if(ae[0] < MIN_SPEED) ae[0] = MIN_SPEED;
-	if(ae[1] < MIN_SPEED) ae[1] = MIN_SPEED;
-	if(ae[2] < MIN_SPEED) ae[2] = MIN_SPEED;
-	if(ae[3] < MIN_SPEED) ae[3] = MIN_SPEED;
+	if(ae[0] < MIN_SPEED) ae[0] = (MIN_SPEED * lift_status);
+	if(ae[1] < MIN_SPEED) ae[1] = (MIN_SPEED * lift_status);
+	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
+	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
 	printf("Error_Roll = %d P1 = %d P2 = %d Roll = %d Phi = %d sp = %d zp = %d\n", error_roll, P1, P2, roll, (phi>>8), sp, zp);
 	printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);
