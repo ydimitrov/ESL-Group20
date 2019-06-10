@@ -32,10 +32,10 @@ void (* state[])(void) = {safe_mode, panic_mode, manual_mode, calibration_mode, 
 void (* state_fun)(void) = safe_mode; // global
 // enum state_codes { manual, calibration, yaw, safe, full, panic, height, raw, wireless};
 
-enum ret_codes {fail, ok};
+enum ret_codes {fail, ok, okGL};
 
 enum ret_codes state_transitions[9][9] = {
-{fail, fail, ok,   ok,   ok,   ok,   ok,   ok,   ok},
+{fail, fail, okGL, ok,   okGL, okGL, okGL, okGL, okGL},
 {ok,   fail, fail, fail, fail, fail, fail, fail, fail},
 {ok,   ok,   ok,   fail, fail, fail, fail, fail, fail},
 {ok,   ok,   fail, fail, fail, fail, fail, fail, fail},
@@ -50,43 +50,6 @@ enum ret_codes lookup_transitions(enum flightmode mode, enum flightmode candidat
     // rows correspond to current state
 	// columns correspond to candidate state
     return state_transitions[mode][candidate];
-}
-
-void droneState(enum flightmode candidate) {
-
-    enum ret_codes rc;
-
-    rc = lookup_transitions(mode, candidate);
-    
-    if (rc) {
-    	mode = candidate;
-    	state_fun = state[mode];
-    	state_fun();
-    }
- //    } else if (rc == okIM){
- //    	mode = candidate;
- //    	state_fun = state[mode];
- //    	motor_initilisation();
- //    	state_fun();
- //    }
-
-	// if (rc) {
- //    	mode = candidate;
- //    	state_fun = state[mode];
- //    	if(rc == okIM)
- //    		motor_initilisation();
- //    	state_fun();
-	// }
-}
-
-
-void initialize_flight_Parameters()
-{
-	roll 	= flightParameters.roll;
-	pitch 	= flightParameters.pitch;
-	yaw 	= flightParameters.yaw;
-	lift 	= flightParameters.lift;
-	//consider removing these values if there is delay
 }
 
 void update_motors(void)
@@ -113,20 +76,21 @@ void reset_motors()
 	update_motors();
 }
 
+
 void gradual_lift()
-{
+{	
 	reset_motors();
-	while((ae[0]+ae[1]+ae[2]+ae[3]) < (4*lift))
+	while((ae[0] + ae[1] + ae[2] + ae[3]) < (4 * lift))
 	{
 		ae[0] += 1;
 		ae[1] += 1;
 		ae[2] += 1;
 		ae[3] += 1;
-		ae[0] = cap_lift(ae[0],lift);
-		ae[1] = cap_lift(ae[1],lift);
-		ae[2] = cap_lift(ae[2],lift);
-		ae[3] = cap_lift(ae[3],lift);
-
+		ae[0] = cap_lift(ae[0], lift);
+		ae[1] = cap_lift(ae[1], lift);
+		ae[2] = cap_lift(ae[2], lift);
+		ae[3] = cap_lift(ae[3], lift);
+		// printf("YOLOLOLOLO\n");
 		update_motors();
 		for (int j = 0; j < 100000; ++j)
 		{
@@ -140,6 +104,34 @@ void gradual_lift()
 			}
 		}
 	}
+}
+
+void droneState(enum flightmode candidate) {
+
+    enum ret_codes rc;
+
+    rc = lookup_transitions(mode, candidate);
+    
+    if (rc == ok) {
+    	mode = candidate;
+    	state_fun = state[mode];
+    	state_fun();
+    } else if (rc == okGL){
+    	mode = candidate;
+    	state_fun = state[mode];
+    	gradual_lift();
+    	state_fun();
+    }
+}
+
+
+void initialize_flight_Parameters()
+{
+	roll 	= flightParameters.roll;
+	pitch 	= flightParameters.pitch;
+	yaw 	= flightParameters.yaw;
+	lift 	= flightParameters.lift;
+	//consider removing these values if there is delay
 }
 
 void run_filters_and_control()
