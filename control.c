@@ -73,6 +73,7 @@ void droneState(enum flightmode candidate) {
  //    	if(rc == okIM)
  //    		motor_initilisation();
  //    	state_fun();
+	// }
 }
 
 

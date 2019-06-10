@@ -369,7 +369,7 @@ int main(int argc, char **argv)
 				}
 			}
 
-			txPacket= pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
+			txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
 			pc_t20_packet_tx(&txPacket);
 			
 			oldmode = input.mode;			
