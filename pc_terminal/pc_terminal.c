@@ -278,6 +278,7 @@ int main(int argc, char **argv)
 	pthread_create(&thread1, NULL, thread_receive, NULL);
 	
 	time = mon_time_ms();
+	unsigned int profiling;
 
 	for (;;)
 	{

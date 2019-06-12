@@ -72,6 +72,7 @@ void readByte(void){
 	if(rx_queue.count > 0) {
 		buffer[arrIndex] = dequeue(&rx_queue);
 		statesFunc = packetStatesArr[stateIndex];
+		nrf_delay_ms(1);	
   	} else {
   		return;
   	}

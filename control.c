@@ -33,6 +33,9 @@ void commStatus(){
         commCounter = 20;
     } else {
         commCounter--;
+        // printf("rx_queue.count = %d\n", rx_queue. count);
+        // printf("commCounter--\n");
+        // printf("commCounter = %d\n", commCounter);
     }
     
     if(!commCounter){
@@ -171,11 +174,11 @@ void panic_mode()
 		{
 			if(j == 0)
 			{
-				printf("%10ld | ", get_time_us());
-				printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
-				printf("%6d %6d %6d | ", phi, theta, psi);
-				printf("%6d %6d %6d | ", sp, sq, sr);
-				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+				// printf("%10ld | ", get_time_us());
+				// printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
+				// printf("%6d %6d %6d | ", phi, theta, psi);
+				// printf("%6d %6d %6d | ", sp, sq, sr);
+				// printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
 			}
 		}
 	}
@@ -194,11 +197,11 @@ void panic_mode()
 		{
 			if(j == 0)
 			{
-				printf("%10ld | ", get_time_us());
-				printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
-				printf("%6d %6d %6d | ", phi, theta, psi);
-				printf("%6d %6d %6d | ", sp, sq, sr);
-				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+				// printf("%10ld | ", get_time_us());
+				// printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
+				// printf("%6d %6d %6d | ", phi, theta, psi);
+				// printf("%6d %6d %6d | ", sp, sq, sr);
+				// printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
 			}
 		}
 	}
