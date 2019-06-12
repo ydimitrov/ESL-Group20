@@ -13,5 +13,6 @@ void raw_control_mode(void);
 void height_control_mode(void);
 void wireless_control_mode(void);
 void gradual_lift(void);
+void commStatus(void);
 
 #endif

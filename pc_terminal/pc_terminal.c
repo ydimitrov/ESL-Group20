@@ -219,9 +219,8 @@ Packet txPacket;
 void *thread_receive(){
 	int c;
 	while (1){
-		if((c = rs232_getchar_nb()) != -1) {
+		if((c = rs232_getchar_nb()) != -1)
 			term_putchar(c); 
-		}
 	}	
 }
 
@@ -236,7 +235,7 @@ int main(int argc, char **argv)
 
 	int 			fd;
 	struct 			js_event js;
-	unsigned int time;
+	unsigned int 	time;
 
 
 	int8_t yawTx;
@@ -262,9 +261,6 @@ int main(int argc, char **argv)
 	input.P = 0;
 	input.P1 = 0;
 	input.P2 = 0;
-
-	// pthread_t send_thread;
-	// pthread_create(&send_thread, NULL, thread_period_send, NULL);
 
 	// if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
 	// 	//perror("jstest");

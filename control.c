@@ -26,11 +26,20 @@ uint8_t lift;
 int int_error_yaw = 0; //integral of error, needed for yaw control
 int int_error_roll = 0;
 int int_error_pitch = 0;
+uint8_t commCounter = 0;
+
+void commStatus(){
+	if(!(rx_queue.count > 0))
+		commCounter++
+	if(commCounter >= 16){
+		commCounter = 0;
+		panic_mode();
+	}	
+}
 
 /* array and enum flightmode(in4073.h) must be in sync! */
 void (* state[])(void) = {safe_mode, panic_mode, manual_mode, calibration_mode, yaw_control_mode, full_control_mode, raw_control_mode, height_control_mode, wireless_control_mode};
 void (* state_fun)(void) = safe_mode; // global
-// enum state_codes { manual, calibration, yaw, safe, full, panic, height, raw, wireless};
 
 enum ret_codes {fail, ok, okGL};
 
@@ -90,7 +99,6 @@ void gradual_lift()
 		ae[1] = cap_lift(ae[1], lift);
 		ae[2] = cap_lift(ae[2], lift);
 		ae[3] = cap_lift(ae[3], lift);
-		// printf("YOLOLOLOLO\n");
 		update_motors();
 		for (int j = 0; j < 100000; ++j)
 		{
@@ -252,15 +260,7 @@ void calibration_mode()
 	zay = round(zay);
 	zaz = round(zaz);
 
-	// printf("after zp = %d\n", zp);
-	// printf("after zq = %d\n", zq);
-	// printf("after zr = %d\n", zr);
-	// printf("after zax = %d\n", zax);
-	// printf("after zay = %d\n", zay);
-	// printf("after zaz = %d\n", zaz);
-
 	printf("Calibration completed!\n");
-	// candidate_mode = SAFE;
 }
 
 void yaw_control_mode()

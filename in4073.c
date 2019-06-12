@@ -16,12 +16,13 @@
 #include "in4073.h"
 #include "dr_t20.h"
 #include "fsmReceive.h"
-
+#include "control.h"
 
 /*------------------------------------------------------------------
  * main -- everything you need is here :)
  *------------------------------------------------------------------
  */
+
 int main(void)
 {
 	uart_init();
@@ -58,7 +59,9 @@ int main(void)
 			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
 
 			clear_timer_flag();
+			commStatus();
 		}
+
 
 		fsmReceive();
 
@@ -66,8 +69,7 @@ int main(void)
 		{
 			get_dmp_data();
 			run_filters_and_control();
-		}
-		
+		}	
 	}	
 
 	printf("\n\t Goodbye \n\n");
