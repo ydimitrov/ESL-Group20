@@ -62,7 +62,6 @@ int main(void)
 			commStatus();
 		}
 
-
 		fsmReceive();
 
 		if (check_sensor_int_flag()) 

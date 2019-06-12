@@ -26,15 +26,20 @@ uint8_t lift;
 int int_error_yaw = 0; //integral of error, needed for yaw control
 int int_error_roll = 0;
 int int_error_pitch = 0;
-uint8_t commCounter = 0;
+uint8_t commCounter = 20;
 
 void commStatus(){
-	if(!(rx_queue.count > 0))
-		commCounter++
-	if(commCounter >= 16){
-		commCounter = 0;
-		panic_mode();
-	}	
+    if(rx_queue.count > 0){
+        commCounter = 20;
+    } else {
+        commCounter--;
+    }
+    
+    if(!commCounter){
+        commCounter = 20;
+        panic_mode();
+        // candidate_mode = PANIC;
+    }
 }
 
 /* array and enum flightmode(in4073.h) must be in sync! */

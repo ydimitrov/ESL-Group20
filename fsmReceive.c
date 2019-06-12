@@ -151,13 +151,12 @@ void crcCheck(void){
 
 void storeValues(void){
 	// printCurrentState(7);
-	// oldMode = mode;
+
 	modeStore(&buffer[2]);
 	flightParameters.roll  = (int8_t)  	buffer[3];
 	flightParameters.pitch = (int8_t)	buffer[4];
 	flightParameters.yaw   = (int8_t)	buffer[5];
 	flightParameters.lift  = (uint8_t)	buffer[6];
-	// printf("mode = %d\n", mode);
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
