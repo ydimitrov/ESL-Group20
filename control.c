@@ -304,12 +304,6 @@ void yaw_control_mode()
 	lift_status = (lift == 0 ? 0 : 1);	
 	
 	error = yaw - (sr - zr); //calculate yaw rate error
-	// yaw = yaw - error;
-
-	// printf("zr = %d\n", zr);
-	// printf("sr = %d\n", sr);
-
-	// printf("error = %d, int_error_yaw = %d, P = %d\n", error, int_error_yaw, P);
 
 	//update motors based on pitch,roll,lift and control for yaw
 	ae[0] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - ((P * error)>>8) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
@@ -318,6 +312,7 @@ void yaw_control_mode()
 	ae[3] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + ((P * error)>>8) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
 
 	printf("Error = %d Yaw = %d P = %d\n",error,yaw,P);
+	
 	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
 	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
@@ -330,7 +325,6 @@ void yaw_control_mode()
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
 	printf("Motor speeds: %3d %3d %3d %3d\n", ae[0], ae[1], ae[2], ae[3]);
-	//printf("Motor speed 0: %d\n Motor speeds 1: %d\n Motor speed 2: %d\n Motor speed 3: 		%d\n",ae[0],ae[1],ae[2],ae[3]);
 	
 	update_motors();
 }	
@@ -341,13 +335,11 @@ void full_control_mode()
 	
 	int lift_status; 
 	int error_yawrate;
-	//int error_rollrate;
-	//int error_pitchrate;
-	
 	int error_roll;
 	int error_pitch;
-	int K_r;
-	int K_p;
+	
+	int K_r; //roll action
+	int K_p; //pitch action
 
 	initialize_flight_Parameters();
 	
@@ -355,7 +347,6 @@ void full_control_mode()
 	
 	//yaw rate control
 	error_yawrate = yaw - (sr - zr); //calculate yaw rate error
-	//int_error_yaw = int_error_yaw + error_yawrate; //integrate yaw rate error
 	
 	//roll control
 	error_roll = roll - (phi >> 8); //calculate roll error
@@ -382,9 +373,8 @@ void full_control_mode()
 	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
-	printf("Error_Roll = %d P1 = %d P2 = %d Roll = %d Phi = %d sp = %d zp = %d\n", error_roll, P1, P2, roll, (phi>>8), sp, zp);
-	printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);
-	//printf("Phi = %d Theta = %d\n", phi, theta);	
+	printf("pitch = %d, error_p = %d, K_p = %d, roll = %d, error_r = %d, K_r = %d, P1 = %d, P2 = %d, sp = %d, sq = %d",pitch,error_pitch,K_p,roll,error_roll,K_r,P1,P2,sp,sq);
+	printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);	
 	
 	update_motors();
 }
