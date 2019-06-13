@@ -13,6 +13,7 @@
 #include <inttypes.h>
 #include "in4073.h"
 #include "control.h"
+#include "data_logging.h"
 
 #define round(num) num > 0 ? ((num % 128) > 64 ? (num >> 7) + 1 : (num >> 7)) : (((num % 128) > -64) ? (num >> 7) + 1  : (num >> 7))
 #define cap_base(num) num < 0 ? 0 : num
@@ -239,7 +240,7 @@ void manual_mode()
 void safe_mode()
 {
 	reset_motors();
-	// readLog();
+	dumpLog();
 }
 
 
