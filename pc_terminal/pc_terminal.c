@@ -295,8 +295,7 @@ int main(int argc, char **argv)
 	pthread_create(&thread1, NULL, thread_receive, NULL);
 	
 	time = mon_time_ms();
-	unsigned int profiling;
-
+	
 	for (;;)
 	{
 		if (mon_time_ms() - time >= 20){
@@ -383,7 +382,7 @@ int main(int argc, char **argv)
 				}
 			}
 
-			txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, pitchTx, rollTx, yawTx, liftTx);
+			txPacket = pc_packet_init(STARTBYTE, PACKETLEN, modeTx, rollTx, pitchTx, yawTx, liftTx);
 			pc_t20_packet_tx(&txPacket);
 			
 			oldmode = input.mode;			
