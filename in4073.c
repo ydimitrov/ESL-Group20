@@ -17,6 +17,7 @@
 #include "dr_t20.h"
 #include "fsmReceive.h"
 #include "control.h"
+#include "data_logging.h"
 
 /*------------------------------------------------------------------
  * main -- everything you need is here :)
@@ -57,10 +58,10 @@ int main(void)
 
 			// Create array to be logged
 			uint8_t data[20];
-			data[0] = (uint8_t)((sys_time & 0xFF000000) >> 24);
-			data[1] = (uint8_t)((sys_time & 0x00FF0000) >> 16);
-			data[2] = (uint8_t)((sys_time & 0x0000FF00) >> 8);
-			data[3] = (uint8_t)((sys_time & 0x000000FF));
+			data[0] = (int8_t)((sys_time & 0xFF000000) >> 24);
+			data[1] = (int8_t)((sys_time & 0x00FF0000) >> 16);
+			data[2] = (int8_t)((sys_time & 0x0000FF00) >> 8);
+			data[3] = (int8_t)((sys_time & 0x000000FF));
 			data[4] = ae[0];
 			data[5] = ae[1];
 			data[6] = ae[2];
@@ -80,7 +81,7 @@ int main(void)
 
 			// Do the actual write
 
-			if(counter++%1024 == 0) {
+			if(counter%4 == 0) {
 				writeLog(&data[0], 20);
 			}
 

@@ -39,6 +39,9 @@ bool writeLog(uint8_t* data, uint8_t size) {
 
 	// Address is valid and size is also good
 	if(address + size <= 0x01FFFF) {
+
+		// printf("data: %d\n", data[4]);
+
 		flash_write_bytes(address, data, size);
 		address += size;
 		//printf("Current address -> %ld \n", address);
@@ -74,7 +77,7 @@ bool writeLog(uint8_t* data, uint8_t size) {
 
 bool dumpLog(void){
 
-	printf("Dumping SPI Flash contents...\n");
+	printf("Dumping SPI Flash contents... Current address: %ld\n", address);
 
 	bool success = true;
 
@@ -84,14 +87,17 @@ bool dumpLog(void){
 	uart_put(0xAA);
 	uart_put(0xAA);
 
-	while(dumpAddr < 0xFFFFFFFF){		
+
+
+	while(dumpAddr < address+20){		
 
 		// Read 64 bytes from the SPI Flash
 		bool fread = flash_read_bytes(dumpAddr, &buffer[0], 64);
 
 		// Send 64 bytes with uart_put()
 		for(txCount = 0; txCount < 63; txCount++){
-			uart_put(buffer[txCount]);
+			printf("%d\n", buffer[txCount]);
+			// uart_put(buffer[txCount]);
 		}
 
 		// Read from next offset address
