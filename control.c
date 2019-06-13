@@ -373,7 +373,8 @@ void full_control_mode()
 	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
-	printf("pitch = %d, error_p = %d, K_p = %d, roll = %d, error_r = %d, K_r = %d, P = %d, P1 = %d, P2 = %d, sp = %d, sq = %d\n",pitch,error_pitch,K_p,roll,error_roll,K_r,P, P1,P2,sp,sq);
+	// printf("pitch = %d, error_p = %d, K_p = %d, roll = %d, error_r = %d, K_r = %d, P = %d, P1 = %d, P2 = %d, sp = %d, sq = %d\n",pitch,error_pitch,K_p,roll,error_roll,K_r,P, P1,P2,sp,sq);
+	printf("pitch = %d, roll = %d,  P = %d, P1 = %d, P2 = %d\n", pitch, roll, P, P1, P2);
 	// printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);	
 	
 	update_motors();
