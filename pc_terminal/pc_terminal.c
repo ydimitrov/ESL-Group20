@@ -78,7 +78,7 @@ struct input_status
 	int8_t yaw;
 	int8_t roll;
 	int8_t pitch;
-	uint8_t lift;
+	int8_t lift;
 	uint8_t mode;
 	int8_t yaw_offset;
 	int8_t roll_offset;
@@ -114,6 +114,23 @@ int8_t checkByteOverflow(int8_t value, int8_t offset) {
 		txValue = -128;	
 	} else {
 		txValue = value + offset; 
+	}
+				
+	return txValue;
+} 
+
+uint8_t checkByteOverflowLift(int8_t value, int8_t offset) {
+	
+	// Make sure overflows won't happen.
+
+	uint8_t txValue;
+
+	if((int16_t)(value + offset +127) > 255) {
+		txValue = 255;
+	} else if ((int16_t)(value + offset + 127) < 0) {
+		txValue = 0;	
+	} else {
+		txValue = value + offset + 127; 
 	}
 				
 	return txValue;
@@ -248,7 +265,7 @@ int main(int argc, char **argv)
 	input.roll = 0;
 	input.yaw = 0;
 	input.pitch = 0;
-	input.lift = 0;
+	input.lift = -127;
 
 	input.roll_offset = 0;
 	input.yaw_offset = 0;
@@ -262,13 +279,13 @@ int main(int argc, char **argv)
 	input.P1 = 0;
 	input.P2 = 0;
 
-	// if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
-	// 	//perror("jstest");
-	// 	printf("Failed to initiate communication with joystick!\n");
-	// 	exit(1);
-	// }
+	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
+		//perror("jstest");
+		printf("Failed to initiate communication with joystick!\n");
+		exit(1);
+	}
 
-	// fcntl(fd, F_SETFL, O_NONBLOCK);
+	fcntl(fd, F_SETFL, O_NONBLOCK);
 
 
 	term_initio();
@@ -284,55 +301,55 @@ int main(int argc, char **argv)
 	{
 		if (mon_time_ms() - time >= 20){
 
-			// while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
-			// 	switch(js.type & ~JS_EVENT_INIT) {
-			// 		case JS_EVENT_BUTTON:
-			// 			button[js.number] = js.value;
-			// 			if (js.value == 1)
-			// 			{
-			// 				if (js.number == 0)
-			// 				{
-			// 					input.mode = PANIC_MODE;
-			// 				}
-			// 				else if (js.number == 1)
-			// 				{
-			// 					input.mode = SAFE_MODE;
-			// 				}
-			// 				else
-			// 				{
-			// 					input.mode = js.number;
-			// 				}
-			// 			}
-			// 			break;
-			// 		case JS_EVENT_AXIS:
-			// 			axis[js.number] = js.value;
-			// 			if (js.number == 0)
-			// 			{
-			// 				input.roll = (int) js.value/256;
-			// 			}
-			// 			else if (js.number == 1)
-			// 			{
-			// 				input.pitch = -(int) js.value/256;
-			// 			}
-			// 			else if (js.number == 2)
-			// 			{	
-			// 				input.yaw = (int) js.value/256;
-			// 			}
-			// 			else if (js.number == 3)
-			// 			{
-			// 				input.lift = (int) -js.value/256;
-			// 			}
-			// 			break;
-			// 		default: break;
-			// 	}
-			// }
+			while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
+				switch(js.type & ~JS_EVENT_INIT) {
+					case JS_EVENT_BUTTON:
+						button[js.number] = js.value;
+						if (js.value == 1)
+						{
+							if (js.number == 0)
+							{
+								input.mode = PANIC_MODE;
+							}
+							else if (js.number == 1)
+							{
+								input.mode = SAFE_MODE;
+							}
+							else
+							{
+								input.mode = js.number;
+							}
+						}
+						break;
+					case JS_EVENT_AXIS:
+						axis[js.number] = js.value;
+						if (js.number == 0)
+						{
+							input.roll = (int) js.value/256;
+						}
+						else if (js.number == 1)
+						{
+							input.pitch = -(int) js.value/256;
+						}
+						else if (js.number == 2)
+						{	
+							input.yaw = (int) js.value/256;
+						}
+						else if (js.number == 3)
+						{
+							input.lift = (int) -js.value/256;
+						}
+						break;
+					default: break;
+				}
+			}
 
 			keyboardfunction();
 
 			pitchTx = checkByteOverflow(input.pitch, input.pitch_offset);
 			rollTx = checkByteOverflow(input.roll, input.roll_offset);
 			yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
-			liftTx = checkByteOverflow(input.lift, input.lift_offset) + 127;
+			liftTx = checkByteOverflowLift(input.lift, input.lift_offset);
 
 			if (oldmode != input.mode) {
 				modeTx = input.mode;

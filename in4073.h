@@ -125,6 +125,7 @@ typedef struct {
 	uint8_t lift;
 }pilotValues;
 
+uint8_t alive;
 
 pilotValues flightParameters;
 

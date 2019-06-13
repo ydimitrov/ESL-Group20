@@ -36,17 +36,18 @@ int main(void)
 	// ble_init();
 	mode = SAFE;
 	P = 0;
+	alive = 1;
 	uint32_t counter = 0;
 
-	while (1)
+	while (alive)
 	{
 
 		if (check_timer_flag()) 
 		{
 			if (counter++%20 == 0) 
-				{
-					nrf_gpio_pin_toggle(BLUE);
-				}
+			{
+				nrf_gpio_pin_toggle(BLUE);
+			}
 
 			adc_request_sample();
 			// read_baro();
@@ -59,7 +60,6 @@ int main(void)
 			printf("%4d | %4ld | %6ld \n", bat_volt, temperature, pressure);
 
 			clear_timer_flag();
-			commStatus();
 		}
 
 		fsmReceive();
@@ -67,7 +67,8 @@ int main(void)
 		if (check_sensor_int_flag()) 
 		{
 			get_dmp_data();
-			run_filters_and_control();
+			// run_filters_and_control();
+			// commStatus();
 		}	
 	}	
 

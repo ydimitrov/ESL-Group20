@@ -26,22 +26,24 @@ uint8_t lift;
 int int_error_yaw = 0; //integral of error, needed for yaw control
 int int_error_roll = 0;
 int int_error_pitch = 0;
-uint8_t commCounter = 20;
+uint16_t commCounter = 100;
 
 void commStatus(){
     if(rx_queue.count > 0){
-        commCounter = 20;
+        commCounter = 100;
     } else {
         commCounter--;
-        // printf("rx_queue.count = %d\n", rx_queue. count);
+        // printf("rx_queue.count = %d\n", rx_queue.count);
         // printf("commCounter--\n");
         // printf("commCounter = %d\n", commCounter);
     }
     
-    if(!commCounter){
-        commCounter = 20;
+    if(!commCounter && mode != SAFE){
+        commCounter = 100;
         panic_mode();
-        // candidate_mode = PANIC;
+        alive = 0;
+        // mode = PANIC;
+        // candidate_mode = SAFE;
     }
 }
 
@@ -96,17 +98,35 @@ void reset_motors()
 
 void gradual_lift()
 {	
-	reset_motors();
-	while((ae[0] + ae[1] + ae[2] + ae[3]) < (4 * lift))
+	int8_t lift_status; 
+
+	uint8_t MOTOR_RELATION_VALUE;
+
+	initialize_flight_Parameters();
+
+	if(mode == 2)
 	{
-		ae[0] += 1;
-		ae[1] += 1;
-		ae[2] += 1;
-		ae[3] += 1;
-		ae[0] = cap_lift(ae[0], lift);
-		ae[1] = cap_lift(ae[1], lift);
-		ae[2] = cap_lift(ae[2], lift);
-		ae[3] = cap_lift(ae[3], lift);
+		MOTOR_RELATION_VALUE = MOTOR_RELATION >>1;
+	}
+	else
+	{
+		MOTOR_RELATION_VALUE = MOTOR_RELATION;
+	}
+
+	lift_status = (lift == 0 ? 0 : 1);
+
+	reset_motors();
+	while((ae[0] + ae[1] + ae[2] + ae[3]) < ((4 * ((lift * MOTOR_RELATION_VALUE) + MIN_SPEED)) * lift_status))
+	{
+		ae[0] += 5;
+		ae[1] += 5;
+		ae[2] += 5;
+		ae[3] += 5;
+		ae[0] = cap_lift(ae[0], (((lift * MOTOR_RELATION_VALUE) + MIN_SPEED) * lift_status));
+		ae[1] = cap_lift(ae[1], (((lift * MOTOR_RELATION_VALUE) + MIN_SPEED) * lift_status));
+		ae[2] = cap_lift(ae[2], (((lift * MOTOR_RELATION_VALUE) + MIN_SPEED) * lift_status));
+		ae[3] = cap_lift(ae[3], (((lift * MOTOR_RELATION_VALUE) + MIN_SPEED) * lift_status));
+
 		update_motors();
 		for (int j = 0; j < 100000; ++j)
 		{
@@ -114,6 +134,7 @@ void gradual_lift()
 			{
 				printf("%10ld | ", get_time_us());
 				printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
+				printf("%d | ", mode);
 				printf("%6d %6d %6d | ", phi, theta, psi);
 				printf("%6d %6d %6d | ", sp, sq, sr);
 				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
@@ -174,20 +195,21 @@ void panic_mode()
 		{
 			if(j == 0)
 			{
-				// printf("%10ld | ", get_time_us());
-				// printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
-				// printf("%6d %6d %6d | ", phi, theta, psi);
-				// printf("%6d %6d %6d | ", sp, sq, sr);
-				// printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+				printf("%10ld | ", get_time_us());
+				printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
+				printf("%d | ", mode);
+				printf("%6d %6d %6d | ", phi, theta, psi);
+				printf("%6d %6d %6d | ", sp, sq, sr);
+				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
 			}
 		}
 	}
 	while((ae[0]+ae[1]+ae[2]+ae[3]) != 0)
 	{
-		ae[0] -= 1;
-		ae[1] -= 1;
-		ae[2] -= 1;
-		ae[3] -= 1;
+		ae[0] -= 5;
+		ae[1] -= 5;
+		ae[2] -= 5;
+		ae[3] -= 5;
 		ae[0] = cap_base(ae[0]);
 		ae[1] = cap_base(ae[1]);
 		ae[2] = cap_base(ae[2]);
@@ -197,11 +219,12 @@ void panic_mode()
 		{
 			if(j == 0)
 			{
-				// printf("%10ld | ", get_time_us());
-				// printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
-				// printf("%6d %6d %6d | ", phi, theta, psi);
-				// printf("%6d %6d %6d | ", sp, sq, sr);
-				// printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+				printf("%10ld | ", get_time_us());
+				printf("%3d %3d %3d %3d | ",ae[0],ae[1],ae[2],ae[3]);
+				printf("%d | ", mode);
+				printf("%6d %6d %6d | ", phi, theta, psi);
+				printf("%6d %6d %6d | ", sp, sq, sr);
+				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
 			}
 		}
 	}

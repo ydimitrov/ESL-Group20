@@ -72,7 +72,7 @@ void readByte(void){
 	if(rx_queue.count > 0) {
 		buffer[arrIndex] = dequeue(&rx_queue);
 		statesFunc = packetStatesArr[stateIndex];
-		nrf_delay_ms(1);	
+		// nrf_delay_ms(1);	
   	} else {
   		return;
   	}
@@ -145,6 +145,7 @@ void crcCheck(void){
     	stateIndex++;
 		statesFunc = fsmStatesArr[STOREVALUES];
 	} else {
+		printf("rx_queue.count = %d\n", rx_queue.count);
 		printf("Packet ERROR!\n");
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}
