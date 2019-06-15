@@ -30,9 +30,9 @@
 #define P2_INC 13
 #define P2_DEC 14
 
-
 #define PACKETLEN 8 // will be changed
 
+// int8_t temp;
 void (* statesFunc)(void) = initialState;
 uint8_t buffer[PACKETLEN];
 uint8_t arrIndex, stateIndex, temp, packetLen, crc;
@@ -153,12 +153,17 @@ void crcCheck(void){
 
 void storeValues(void){
 	// printCurrentState(7);
+	//int8_t testpitch = buffer[4];
+	// printf("buffer[pitch] = %d\n", buffer[4]);
+
 
 	modeStore(&buffer[2]);
-	flightParameters.roll  = (int32_t)  buffer[3];
-	flightParameters.pitch = (int32_t)	buffer[4];
-	flightParameters.yaw   = (int32_t)	buffer[5];
+	flightParameters.roll  = (int8_t)   buffer[3];
+	flightParameters.pitch = (int8_t)   buffer[4];
+	flightParameters.yaw   = (int8_t)	buffer[5];
 	flightParameters.lift  = (uint32_t)	buffer[6];
+
+	// printf("buffer_after[pitch] = %d  flightParameters.pitch = %ld \n ", buffer[4], flightParameters.pitch);
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
@@ -199,7 +204,6 @@ uint8_t checkModeByte(uint8_t byte){
 
 void modeStore(uint8_t *p){
 	
-	
 	if (*p >= 0 && *p <= 8){
 		candidate_mode = *p;
 	} else if ( mode == 4 && *p == 9) {
@@ -218,5 +222,21 @@ void modeStore(uint8_t *p){
 		P2 += 1;
 	} else if ( mode == 5 && *p == 14) {
 		P2 = (P2 > 0 ? P2 - 1 : 0);
-	}	
+	} else if ( mode == 6 && *p == 9) {
+		P += 1;	
+	} else if (mode == 6 && *p == 10) {
+		P = (P > 0 ? P - 1 : 0);
+	} else if (mode == 6 && *p == 11) {
+		P1 += 1;
+	} else if (mode == 6 && *p == 12) {
+		P1 = (P1 > 0 ? P1 - 1 : 0);
+	} else if (mode == 6 && *p == 13) {
+		P2 += 1;
+	} else if (mode == 6 && *p == 14) {
+		P2 = (P2 > 0 ? P2 - 1 : 0);
+	} else if (mode == 7 && *p == 9) {
+		P += 1;
+	} else if (mode == 7 && *p == 10) {
+		P = (P > 0 ? P - 1 : 0); 
+	}
 }
