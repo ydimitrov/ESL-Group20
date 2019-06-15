@@ -26,20 +26,20 @@ uint8_t lift;
 int int_error_yaw = 0; //integral of error, needed for yaw control
 int int_error_roll = 0;
 int int_error_pitch = 0;
-uint16_t commCounter = 500;
+uint16_t commCounter = 0;
 
 void commStatus(){
     if(rx_queue.count > 0){
-        commCounter = 500;
+        commCounter = 0;
     } else {
-        commCounter--;
-        // printf("rx_queue.count = %d\n", rx_queue.count);
-        // printf("commCounter--\n");
-        // printf("commCounter = %d\n", commCounter);
+        commCounter++;
+        printf("rx_queue.count = %d\n", rx_queue.count);
+        printf("commCounter--\n");
+        printf("commCounter = %d\n", commCounter);
     }
     
-    if(!commCounter && mode != SAFE){
-        commCounter = 500;
+    if(commCounter == 500 && mode != SAFE){
+        commCounter = 0;
         panic_mode();
         alive = 0;
         // mode = PANIC;
@@ -137,7 +137,7 @@ void gradual_lift()
 				printf("%d | ", mode);
 				printf("%6d %6d %6d | ", phi, theta, psi);
 				printf("%6d %6d %6d | ", sp, sq, sr);
-				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+				printf("%4d | %4ld | %4ld | inside\n", bat_volt, temperature, pressure);
 			}
 		}
 	}
@@ -200,7 +200,7 @@ void panic_mode()
 				printf("%d | ", mode);
 				printf("%6d %6d %6d | ", phi, theta, psi);
 				printf("%6d %6d %6d | ", sp, sq, sr);
-				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+				printf("%4d | %4ld | %4ld | inside\n", bat_volt, temperature, pressure);
 			}
 		}
 	}
@@ -224,7 +224,7 @@ void panic_mode()
 				printf("%d | ", mode);
 				printf("%6d %6d %6d | ", phi, theta, psi);
 				printf("%6d %6d %6d | ", sp, sq, sr);
-				printf("%4d | %4ld | %6ld inside\n", bat_volt, temperature, pressure);
+				printf("%4d | %4ld | %4ld | inside\n", bat_volt, temperature, pressure);
 			}
 		}
 	}
@@ -265,7 +265,6 @@ void manual_mode()
 void safe_mode()
 {
 	reset_motors();
-	// readLog();
 }
 
 
@@ -374,7 +373,7 @@ void full_control_mode()
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
 	// printf("pitch = %d, error_p = %d, K_p = %d, roll = %d, error_r = %d, K_r = %d, P = %d, P1 = %d, P2 = %d, sp = %d, sq = %d\n",pitch,error_pitch,K_p,roll,error_roll,K_r,P, P1,P2,sp,sq);
-	printf("pitch = %d, roll = %d,  P = %d, P1 = %d, P2 = %d\n", pitch, roll, P, P1, P2);
+	// printf("pitch = %d, roll = %d,  P = %d, P1 = %d, P2 = %d\n", pitch, roll, P, P1, P2);
 	// printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);	
 	
 	update_motors();
@@ -398,19 +397,19 @@ void raw_control_mode(){
 	error_yawrate = yaw - (sr - zr); //calculate yaw rate error
 	
 	//roll control with kalman
-	p = sp - p_b;
-	phi = phi + p * P2PHI;
-	phi = phi - (phi - say) / C1;
-	p_b = p_b + (phi - say) / C2;
+	// p = sp - p_b;
+	// phi = phi + p * P2PHI;
+	// phi = phi - (phi - say) / C1;
+	// p_b = p_b + (phi - say) / C2;
 
 	error_roll = roll - (phi >> 8); //calculate roll error
 	K_r = (4 * P1) * error_roll - (P2 * (sp - zp)>>2); //integrate terms based on roll and rollrate error added
 
 	//pitch control with kalman
-	q = sq - q_b;
-	theta = theta + q * P2THETA;
-	theta = theta - (theta - sax) / C1;
-	q_b = q_b + (theta - sax) / C2;
+	// q = sq - q_b;
+	// theta = theta + q * P2THETA;
+	// theta = theta - (theta - sax) / C1;
+	// q_b = q_b + (theta - sax) / C2;
 
 	error_pitch = -(pitch - (theta >> 8)); //calculate pitch error
 	K_p = (4 * P1) * error_pitch - (P2 * (sq - zq)>>2); //integrate terms based on pitch and pitchrate error added
@@ -445,4 +444,37 @@ void height_control_mode(){
 
 void wireless_control_mode(){
 
+}
+
+
+int32_t fpMult (int32_t a, int32_t b){
+
+    // printf("a                  = "); printBits(sizeof(a), &a);
+    // printf("b                  = "); printBits(sizeof(b), &b);
+    int32_t wPartA, wPartB;
+    int32_t dPartA, dPartB;
+    int32_t sum1, sum2, sum3, sum4;
+
+    wPartA = a & SHIFTMASK1;
+    wPartB = b & SHIFTMASK1;
+    dPartA = a & SHIFTMASK2;
+    dPartB = b & SHIFTMASK2;
+
+    sum1 = (wPartA >> SHIFT) * (wPartB >> SHIFT) << SHIFT;
+    // printf("sum1 = "); printBits(sizeof(sum1), &sum1);
+    sum2 = (wPartA * dPartB) >> SHIFT;
+    // printf("sum2 = "); printBits(sizeof(sum2), &sum2);
+    sum3 = (dPartA * wPartB) >> SHIFT;
+    // printf("sum3 = "); printBits(sizeof(sum3), &sum3);
+    sum4 = (dPartA * dPartB) >> SHIFT;
+    // printf("sum4 = "); printBits(sizeof(sum4), &sum4);
+
+    return sum1 + sum2 + sum3 + sum4;
+} 
+
+int32_t fpDiv(int32_t a, int32_t b)
+{
+    int64_t temp;
+    temp = (int64_t) a << SHIFT;
+    return (int32_t) (temp / b);
 }
