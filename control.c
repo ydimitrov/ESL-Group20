@@ -471,7 +471,7 @@ void raw_control_mode(){
 	lift_status = (lift == 0 ? 0 : 1);	
 	
 	//yaw rate control
-	error_yawrate = intToFix(yaw) - y_yaw[0]; //calculate yaw rate error
+	error_yawrate = intToFix(yaw) - y_yaw[2]; //calculate yaw rate error
 	// printf("error_yawrate = %ld\n", fixToInt(error_yawrate));
 	
 	//roll control with kalman
@@ -568,22 +568,22 @@ void butterworth(int32_t *x, int32_t *y, int16_t sensor){
 	for (int i = 0; i < 2; ++i){
 	
 		sensor >>= 6;
-		x[2] = x[1];
-		x[1] = x[0];
-		x[0] = fixed_div_14(intToFix(sensor), gain);
+		x[0] = x[1];
+		x[1] = x[2];
+		x[2] = fixed_div_14(intToFix(sensor), gain);
 
-		y[2] = y[1]; 
-		y[1] = y[0]; 
+		y[0] = y[1]; 
+		y[1] = y[2]; 
 
 		_x0 = x[0];
 		_x1 = x[1];
 		_x2 = x[2];
 
 		_y1 = y[1];
-		_y2 = y[2];
+		_y0 = y[0];
 
-		_y0 = fixed_mul_14(a0,_x0) + fixed_mul_14(a1,_x1) + fixed_mul_14(a2,_x2) - fixed_mul_14(b1,_y1) - fixed_mul_14(b2,_y2);
-		y[0] = _y0;
+		_y2 = fixed_mul_14(a0,_x0) + fixed_mul_14(a1,_x1) + fixed_mul_14(a2,_x2) - fixed_mul_14(b1,_y0) - fixed_mul_14(b2,_y1);
+		y[2] = _y2;
 	}
 }
 
