@@ -28,9 +28,10 @@
 #define BLUE		30
 #define INT_PIN		5
 #define MAX_SPEED 	750
-#define MAX_SPEED_YAW   750
+#define MAX_SPEED_M 450
 #define MIN_SPEED 	200
 #define MOTOR_RELATION 2
+#define MOTOR_RELATION_M 1
 
 bool demo_done;
 
@@ -119,10 +120,10 @@ uint8_t P, P1, P2;
 
 // Pilot values
 typedef struct {
-	int8_t roll;
-	int8_t pitch;
-	int8_t yaw;
-	uint8_t lift;
+	int32_t roll;
+	int32_t pitch;
+	int32_t yaw;
+	uint32_t lift;
 }pilotValues;
 
 uint8_t alive;

@@ -155,10 +155,10 @@ void storeValues(void){
 	// printCurrentState(7);
 
 	modeStore(&buffer[2]);
-	flightParameters.roll  = (int8_t)  	buffer[3];
-	flightParameters.pitch = (int8_t)	buffer[4];
-	flightParameters.yaw   = (int8_t)	buffer[5];
-	flightParameters.lift  = (uint8_t)	buffer[6];
+	flightParameters.roll  = (int32_t)  buffer[3];
+	flightParameters.pitch = (int32_t)	buffer[4];
+	flightParameters.yaw   = (int32_t)	buffer[5];
+	flightParameters.lift  = (uint32_t)	buffer[6];
 
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }

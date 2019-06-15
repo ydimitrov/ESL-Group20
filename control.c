@@ -14,19 +14,46 @@
 #include "in4073.h"
 #include "control.h"
 
+#define SHIFTMASK1 0xFFFFC000
+#define SHIFTMASK2 0x3FFF
+#define SHIFT 14
+
 #define round(num) num > 0 ? ((num % 128) > 64 ? (num >> 7) + 1 : (num >> 7)) : (((num % 128) > -64) ? (num >> 7) + 1  : (num >> 7))
 #define cap_base(num) num < 0 ? 0 : num
 #define cap_lift(num,elevation) num > elevation ? elevation : num
 
+#define a0 16384
+#define a1 32768
+#define a2 16384
+#define b1 -6763
+#define b2 18727
 
-int8_t roll;
-int8_t pitch;
-int8_t yaw;
-uint8_t lift;
-int int_error_yaw = 0; //integral of error, needed for yaw control
-int int_error_roll = 0;
-int int_error_pitch = 0;
+int32_t roll;
+int32_t pitch;
+int32_t yaw;
+uint32_t lift;
 uint16_t commCounter = 0;
+int8_t flag;
+
+int32_t _x0 = 0;
+int32_t _x1 = 0;
+int32_t _x2 = 0;
+int32_t _y0 = 0;
+int32_t _y1 = 0;
+int32_t _y2 = 0;
+
+
+int32_t x_roll[3] = {0, 0, 0};
+int32_t x_pitch[3] = {0, 0, 0};
+int32_t x_yaw[3] = {0, 0, 0};
+int32_t x_lift[3] = {0, 0, 0};
+
+int32_t y_roll[3] = {0, 0, 0};
+int32_t y_pitch[3] = {0, 0, 0};
+int32_t y_yaw[3] = {0, 0, 0};
+int32_t y_lift[3] = {0, 0, 0};
+
+
 
 void commStatus(){
     if(rx_queue.count > 0){
@@ -51,10 +78,10 @@ void commStatus(){
 void (* state[])(void) = {safe_mode, panic_mode, manual_mode, calibration_mode, yaw_control_mode, full_control_mode, raw_control_mode, height_control_mode, wireless_control_mode};
 void (* state_fun)(void) = safe_mode; // global
 
-enum ret_codes {fail, ok, okGL};
+enum ret_codes {fail, ok};
 
 enum ret_codes state_transitions[9][9] = {
-{fail, fail, okGL, ok,   okGL, okGL, okGL, okGL, okGL},
+{fail, fail, ok,   ok,   ok,   ok,   ok,   ok,   ok},
 {ok,   fail, fail, fail, fail, fail, fail, fail, fail},
 {ok,   ok,   ok,   fail, fail, fail, fail, fail, fail},
 {ok,   ok,   fail, fail, fail, fail, fail, fail, fail},
@@ -98,9 +125,9 @@ void reset_motors()
 
 void gradual_lift()
 {	
-	int8_t lift_status; 
+	int32_t lift_status; 
 
-	uint8_t MOTOR_RELATION_VALUE;
+	uint32_t MOTOR_RELATION_VALUE;
 
 	initialize_flight_Parameters();
 
@@ -149,14 +176,9 @@ void droneState(enum flightmode candidate) {
 
     rc = lookup_transitions(mode, candidate);
     
-    if (rc == ok) {
+    if (rc) {
     	mode = candidate;
     	state_fun = state[mode];
-    	state_fun();
-    } else if (rc == okGL){
-    	mode = candidate;
-    	state_fun = state[mode];
-    	gradual_lift();
     	state_fun();
     }
 }
@@ -171,10 +193,26 @@ void initialize_flight_Parameters()
 	//consider removing these values if there is delay
 }
 
-void run_filters_and_control()
+void initialize_flight_Parameters_RAW()
 {
+	roll 	= intToFix(flightParameters.roll);
+	pitch 	= intToFix(flightParameters.pitch);
+	yaw 	= intToFix(flightParameters.yaw);
+	lift 	= intToFix(flightParameters.lift);
+	//consider removing these values if there is delay
+}
+
+int32_t intToFix(int32_t a){
+	return a * 16384;
+}
+
+int32_t fixToInt(int32_t a){
+	return a / 16384;
+}
+
+void run_filters_and_control(){
+	
 	droneState(candidate_mode);
-	update_motors();
 }
 
 void panic_mode()
@@ -234,9 +272,15 @@ void panic_mode()
 
 void manual_mode()
 {
+
+	if(!flag){
+		gradual_lift();
+		flag = 1;
+	}
+
 	int8_t lift_status; 
 
-	uint8_t MOTOR_RELATION_M = MOTOR_RELATION >> 1;
+	// uint8_t MOTOR_RELATION_M = MOTOR_RELATION >> 1;
 
 	initialize_flight_Parameters();
 
@@ -249,10 +293,13 @@ void manual_mode()
 	ae[2] = (((lift * MOTOR_RELATION_M) + (pitch * MOTOR_RELATION_M) - (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 	ae[3] = (((lift * MOTOR_RELATION_M) + (roll * MOTOR_RELATION_M) + (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 	
-	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
-	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
-	if(ae[2] > MAX_SPEED) ae[2] = MAX_SPEED;
-	if(ae[3] > MAX_SPEED) ae[3] = MAX_SPEED;
+	printf("%d %d %d %d", ae[0],ae[1],ae[2],ae[3]);
+	printf("Lift: %ld Roll: %ld Pitch: %ld Yaw: %ld\n", lift, roll, pitch, yaw);
+
+	if(ae[0] > MAX_SPEED_M) ae[0] = MAX_SPEED_M;
+	if(ae[1] > MAX_SPEED_M) ae[1] = MAX_SPEED_M;
+	if(ae[2] > MAX_SPEED_M) ae[2] = MAX_SPEED_M;
+	if(ae[3] > MAX_SPEED_M) ae[3] = MAX_SPEED_M;
 
 	if(ae[0] < MIN_SPEED) ae[0] = (MIN_SPEED * lift_status);
 	if(ae[1] < MIN_SPEED) ae[1] = (MIN_SPEED * lift_status);
@@ -263,14 +310,19 @@ void manual_mode()
 }
 
 void safe_mode()
-{
+{	
+	flag = 0;
 	reset_motors();
 }
 
 
 void calibration_mode()
 {
-	// panic_mode();
+	if(!flag){
+		imu_init(true, 100);
+		flag = 1;
+	}
+
 	zp = zq = zr = zax = zay = zaz = 0;
 	for (int i = 0; i < 128; i++){
 		
@@ -295,6 +347,13 @@ void calibration_mode()
 
 void yaw_control_mode()
 {
+
+	if(!flag){
+		imu_init(true, 100);
+		gradual_lift();
+		flag = 1;
+	}
+
 	int lift_status; 
 	int error;
 
@@ -310,7 +369,7 @@ void yaw_control_mode()
 	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - ((P * error)>>8) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
 	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + ((P * error)>>8) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
 
-	printf("Error = %d Yaw = %d P = %d\n",error,yaw,P);
+	// printf("Error = %d Yaw = %d P = %d\n",error,yaw,P);
 	
 	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
@@ -323,7 +382,7 @@ void yaw_control_mode()
 	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
-	printf("Motor speeds: %3d %3d %3d %3d\n", ae[0], ae[1], ae[2], ae[3]);
+	// printf("Motor speeds: %3d %3d %3d %3d\n", ae[0], ae[1], ae[2], ae[3]);
 	
 	update_motors();
 }	
@@ -331,7 +390,12 @@ void yaw_control_mode()
 
 void full_control_mode()
 {
-	
+	if(!flag){
+		imu_init(true, 100);
+		gradual_lift();
+		flag = 1;
+	}
+
 	int lift_status; 
 	int error_yawrate;
 	int error_roll;
@@ -380,21 +444,31 @@ void full_control_mode()
 }
 
 void raw_control_mode(){
-	
-	int lift_status; 
-	int error_yawrate;
-	int error_roll;
-	int error_pitch;
-	
-	int K_r; //roll action
-	int K_p; //pitch action
 
-	initialize_flight_Parameters();
+
+	if(!flag){
+		imu_init(false, 1000);
+		gradual_lift();
+		flag = 1;
+	}
+		
+	int32_t lift_status; 
+	int32_t error_yawrate;
+	int32_t error_roll;
+	int32_t error_pitch;
+	
+	int32_t K_r; //roll action
+	int32_t K_p; //pitch action
+
+	initialize_flight_Parameters_RAW();
+
+	butterworth(x_yaw, y_yaw, sr);
+	// kalmanFilter();
 	
 	lift_status = (lift == 0 ? 0 : 1);	
 	
 	//yaw rate control
-	error_yawrate = yaw - (sr - zr); //calculate yaw rate error
+	error_yawrate = yaw - y_yaw[0]; //calculate yaw rate error
 	
 	//roll control with kalman
 	// p = sp - p_b;
@@ -432,20 +506,11 @@ void raw_control_mode(){
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
 	// printf("pitch = %d, error_p = %d, K_p = %d, roll = %d, error_r = %d, K_r = %d, P = %d, P1 = %d, P2 = %d, sp = %d, sq = %d\n",pitch,error_pitch,K_p,roll,error_roll,K_r,P, P1,P2,sp,sq);
-	printf("pitch = %d, roll = %d,  P = %d, P1 = %d, P2 = %d\n", pitch, roll, P, P1, P2);
+	// printf("pitch = %d, roll = %d,  P = %d, P1 = %d, P2 = %d\n", pitch, roll, P, P1, P2);
 	// printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);	
 	
 	update_motors();
 }
-
-void height_control_mode(){
-
-}
-
-void wireless_control_mode(){
-
-}
-
 
 int32_t fpMult (int32_t a, int32_t b){
 
@@ -477,4 +542,34 @@ int32_t fpDiv(int32_t a, int32_t b)
     int64_t temp;
     temp = (int64_t) a << SHIFT;
     return (int32_t) (temp / b);
+}
+
+
+void butterworth(int32_t *x, int32_t *y, int16_t sensor){
+
+	x[2] = x[1];
+	x[1] = x[0];
+	x[0] = intToFix(sensor);
+
+	y[2] = y[1]; 
+	y[1] = y[0]; 
+
+	_x0 = x[0];
+	_x1 = x[1];
+	_x2 = x[2];
+
+	_y1 = y[1];
+	_y2 = y[2];
+
+	_y0 = fpMult(a0,_x0) + fpMult(a1,_x1)+fpMult(a2,_x2) - fpMult(b1,_y1)-fpMult(b2,_y2);
+	y[0] = _y0;
+}
+
+
+void height_control_mode(){
+
+}
+
+void wireless_control_mode(){
+
 }
