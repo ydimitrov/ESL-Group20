@@ -27,6 +27,7 @@
 #define a2 16384
 #define b1 -6763
 #define b2 18727
+#define gain 245760
 
 int32_t roll;
 int32_t pitch;
@@ -494,14 +495,14 @@ void raw_control_mode(){
 	K_p = 0;
 
 	//update motors based on lift and control for pitch,roll,yaw rate
-	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p>>6) - fixToInt(((intToFix(P) * error_yawrate)>>6)) + MIN_SPEED) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_r>>6) + fixToInt(((intToFix(P) * error_yawrate)>>6)) + MIN_SPEED) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + (K_p>>6) - fixToInt(((intToFix(P) * error_yawrate)>>6)) + MIN_SPEED) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + (K_r>>6) + fixToInt(((intToFix(P) * error_yawrate)>>6)) + MIN_SPEED) * lift_status;
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p>>6) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_r>>6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + (K_p>>6) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + (K_r>>6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
 
 	// printf("a lot of things = %ld", fixToInt(((intToFix(P) * error_yawrate)>>6)));
-	printf("ae[0] = %d, ae[1] = %d, ae[2] = %d, ae[3] = %d\n", ae[0], ae[1], ae[2], ae[3]);
-	// printf("P = %d, P1 = %d, P2 = %d\n ", P, P1, P2);
+	printf("ae[0] = %d, ae[1] = %d, ae[2] = %d, ae[3] = %d ", ae[0], ae[1], ae[2], ae[3]);
+	printf("P = %d, P1 = %d, P2 = %d\n ", P, P1, P2);
 
 	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
@@ -544,7 +545,7 @@ int32_t fpMult (int32_t a, int32_t b){
     // printf("sum4 = "); printBits(sizeof(sum4), &sum4);
 
     return sum1 + sum2 + sum3 + sum4;
-} 
+}
 
 int32_t fpDiv(int32_t a, int32_t b)
 {
@@ -553,28 +554,37 @@ int32_t fpDiv(int32_t a, int32_t b)
     return (int32_t) (temp / b);
 }
 
+int32_t fixed_div_14(int32_t x, int32_t y){
+    return ((int64_t)x * (1 << SHIFT)) / y;
+}
+
+int32_t fixed_mul_14(int32_t x, int32_t y){
+    return ((int64_t)x * (int64_t)y) / (1 << SHIFT);
+}
 
 void butterworth(int32_t *x, int32_t *y, int16_t sensor){
 
 	// sensor = sensor >> 6;
-	sensor >>= 6;
+	for (int i = 0; i < 2; ++i){
+	
+		sensor >>= 6;
+		x[2] = x[1];
+		x[1] = x[0];
+		x[0] = fixed_div_14(intToFix(sensor), gain);
 
-	x[2] = x[1];
-	x[1] = x[0];
-	x[0] = intToFix(sensor);
+		y[2] = y[1]; 
+		y[1] = y[0]; 
 
-	y[2] = y[1]; 
-	y[1] = y[0]; 
+		_x0 = x[0];
+		_x1 = x[1];
+		_x2 = x[2];
 
-	_x0 = x[0];
-	_x1 = x[1];
-	_x2 = x[2];
+		_y1 = y[1];
+		_y2 = y[2];
 
-	_y1 = y[1];
-	_y2 = y[2];
-
-	_y0 = fpMult(a0,_x0) + fpMult(a1,_x1)+fpMult(a2,_x2) - fpMult(b1,_y1)-fpMult(b2,_y2);
-	y[0] = _y0;
+		_y0 = fixed_mul_14(a0,_x0) + fixed_mul_14(a1,_x1) + fixed_mul_14(a2,_x2) - fixed_mul_14(b1,_y1) - fixed_mul_14(b2,_y2);
+		y[0] = _y0;
+	}
 }
 
 
