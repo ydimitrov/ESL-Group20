@@ -1,0 +1,1395 @@
+/*
+
+Xilinx Vivado v2018.3 (64-bit) [Major: 2018, Minor: 3]
+SW Build: 2405991 on Thu Dec  6 23:36:41 MST 2018
+IP Build: 2404404 on Fri Dec  7 01:43:56 MST 2018
+
+Process ID (PID): 2999
+License: Customer
+
+Current time: 	Fri Jun 14 16:20:29 CEST 2019
+Time zone: 	Central European Standard Time (Europe/Amsterdam)
+
+OS: Ubuntu
+OS Version: 4.15.0-50-generic
+OS Architecture: amd64
+Available processors (cores): 4
+
+Display: :0
+Screen size: 1366x768
+Screen resolution (DPI): 96
+Available screens: 1
+Available disk space: 90 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	9.0.4 64-bit
+Java home: 	/tools/Xilinx/Vivado/2018.3/tps/lnx64/jre9.0.4
+Java executable location: 	/tools/Xilinx/Vivado/2018.3/tps/lnx64/jre9.0.4/bin/java
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	root
+User home directory: /root
+User working directory: /home/yordan/Music/software_package/in4073
+User country: 	GB
+User language: 	en
+User locale: 	en_GB
+
+RDI_BASEROOT: /tools/Xilinx/Vivado
+HDI_APPROOT: /tools/Xilinx/Vivado/2018.3
+RDI_DATADIR: /tools/Xilinx/Vivado/2018.3/data
+RDI_BINDIR: /tools/Xilinx/Vivado/2018.3/bin
+
+Vivado preferences file location: /home/yordan/.Xilinx/Vivado/2018.3/vivado.xml
+Vivado preferences directory: /home/yordan/.Xilinx/Vivado/2018.3/
+Vivado layouts directory: /home/yordan/.Xilinx/Vivado/2018.3/layouts
+PlanAhead jar file location: 	/tools/Xilinx/Vivado/2018.3/lib/classes/planAhead.jar
+Vivado log file location: 	/home/yordan/Music/software_package/in4073/vivado.log
+Vivado journal file location: 	/home/yordan/Music/software_package/in4073/vivado.jou
+Engine tmp dir: 	./.Xil/Vivado-2999-yordan-pc
+
+Xilinx Environment Variables
+----------------------------
+XILINX: /tools/Xilinx/Vivado/2018.3/ids_lite/ISE
+XILINX_DSP: /tools/Xilinx/Vivado/2018.3/ids_lite/ISE
+XILINX_PLANAHEAD: /tools/Xilinx/Vivado/2018.3
+XILINX_SDK: /tools/Xilinx/SDK/2018.3
+XILINX_VIVADO: /tools/Xilinx/Vivado/2018.3
+XILINX_VIVADO_HLS: /tools/Xilinx/Vivado/2018.3
+
+
+GUI allocated memory:	154 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 805 MB
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// HMemoryUtils.trashcanNow. Engine heap size: 793 MB. GUI used memory: 42 MB. Current time: 6/14/19, 4:20:32 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+selectList(PAResourceQtoS.SyntheticaGettingStartedView_RECENT_PROJECTS, "/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.xpr", 0); // q (Q, cp)
+// bx (cp):  Open Project : addNotify
+// Opening Vivado Project: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.xpr. Version: Vivado v2018.3 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.xpr 
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 84 MB (+85906kb) [00:00:37]
+// [Engine Memory]: 845 MB (+734317kb) [00:00:37]
+// [Engine Memory]: 888 MB (+1379kb) [00:00:39]
+// [GUI Memory]: 95 MB (+7147kb) [00:00:39]
+// WARNING: HEventQueue.dispatchEvent() is taking  5485 ms.
+// Tcl Message: open_project /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.xpr 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/Xilinx/Vivado/2018.3/data/ip'. 
+// HMemoryUtils.trashcanNow. Engine heap size: 903 MB. GUI used memory: 50 MB. Current time: 6/14/19, 4:20:57 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  1482 ms.
+// Tcl Message: open_project: Time (s): cpu = 00:00:25 ; elapsed = 00:00:11 . Memory (MB): peak = 6379.441 ; gain = 84.496 ; free physical = 514 ; free virtual = 11179 
+// Project name: zynq_fpga; location: /home/yordan/Music/PDP/fpga/zynq_fpga; part: xc7z020clg400-1
+// Elapsed time: 14 seconds
+dismissDialog("Open Project"); // bx (cp)
+// [Engine Memory]: 979 MB (+47963kb) [00:00:45]
+// a (cp): Critical Messages: addNotify
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (a)
+dismissDialog("Critical Messages"); // a (cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Synthesis, Run Synthesis]", 14, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design]", 18, true); // u (Q, cp) - Node
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design]", 18, true); // u (Q, cp) - Node
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: DG_GRAPH_STALE
+collapseTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design]", 18); // u (Q, cp)
+expandTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design]", 18); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Timing Summary]", 21, false); // u (Q, cp)
+// [Engine Memory]: 1,035 MB (+8390kb) [00:01:01]
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Timing Summary]", 21, false); // u (Q, cp)
+// bx (cp):  Open Implemented Design : addNotify
+// Tcl Message: open_run impl_1 
+// HMemoryUtils.trashcanNow. Engine heap size: 1,020 MB. GUI used memory: 52 MB. Current time: 6/14/19, 4:21:22 PM CEST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,207 MB. GUI used memory: 52 MB. Current time: 6/14/19, 4:21:37 PM CEST
+// TclEventType: SDC_CONSTRAINT_ADD
+// TclEventType: POWER_CNS_STALE
+// TclEventType: SDC_CONSTRAINT_ADD
+// HMemoryUtils.trashcanNow. Engine heap size: 1,874 MB. GUI used memory: 52 MB. Current time: 6/14/19, 4:21:57 PM CEST
+// TclEventType: FLOORPLAN_MODIFY
+// TclEventType: DESIGN_NEW
+// HMemoryUtils.trashcanNow. Engine heap size: 1,901 MB. GUI used memory: 52 MB. Current time: 6/14/19, 4:22:01 PM CEST
+// [Engine Memory]: 1,901 MB (+852998kb) [00:01:44]
+// TclEventType: DESIGN_NEW
+// Xgd.load filename: /tools/Xilinx/Vivado/2018.3/data/parts/xilinx/zynq/devint/zynq/xc7z020/xc7z020.xgd; ZipEntry: xc7z020_detail.xgd elapsed time: 1.6s
+// [Engine Memory]: 2,022 MB (+27258kb) [00:01:47]
+// [GUI Memory]: 118 MB (+18739kb) [00:01:48]
+// Device: addNotify
+// DeviceView Instantiated
+// [GUI Memory]: 133 MB (+9002kb) [00:01:52]
+// TclEventType: CURR_DESIGN_SET
+// WARNING: HEventQueue.dispatchEvent() is taking  6852 ms.
+// Tcl Message: INFO: [Netlist 29-17] Analyzing 5082 Unisim elements for replacement INFO: [Netlist 29-28] Unisim Transformation completed in 3 CPU seconds INFO: [Project 1-479] Netlist was created with Vivado 2018.3 INFO: [Device 21-403] Loading part xc7z020clg400-1 INFO: [Project 1-570] Preparing netlist for logic optimization INFO: [Timing 38-478] Restoring timing data from binary archive. INFO: [Timing 38-479] Binary timing data restore complete. INFO: [Project 1-856] Restoring constraints from binary archive. INFO: [Project 1-853] Binary constraint restore complete. 
+// Tcl Message: Reading XDEF placement. Reading placer database... Reading XDEF routing. 
+// Tcl Message: Read XDEF File: Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 7342.668 ; gain = 38.074 ; free physical = 184 ; free virtual = 10281 
+// Tcl Message: Restored from archive | CPU: 4.950000 secs | Memory: 41.432892 MB | 
+// Tcl Message: Finished XDEF File Restore: Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 7342.668 ; gain = 38.074 ; free physical = 184 ; free virtual = 10281 Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 7342.668 ; gain = 0.000 ; free physical = 190 ; free virtual = 10288 
+// Tcl Message: INFO: [Project 1-111] Unisim Transformation Summary:   A total of 2912 instances were transformed.   RAM256X1S => RAM256X1S (MUXF7, MUXF7, MUXF8, RAMS64E, RAMS64E, RAMS64E, RAMS64E): 96 instances   RAM32M => RAM32M (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 64 instances   RAM64M => RAM64M (RAMD64E, RAMD64E, RAMD64E, RAMD64E): 2720 instances   RAM64X1D => RAM64X1D (RAMD64E, RAMD64E): 32 instances  
+// Tcl Message: INFO: [Common 17-14] Message 'Designutils 20-3303' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. 
+// Tcl Message: open_run: Time (s): cpu = 00:01:26 ; elapsed = 00:00:48 . Memory (MB): peak = 7547.090 ; gain = 1056.590 ; free physical = 147 ; free virtual = 10157 
+// ExpRunCommands.openImplResults elapsed time: 49.1s
+// TclEventType: DRC_ADDED
+// Device view-level: 0.0
+// WARNING: HEventQueue.dispatchEvent() is taking  1485 ms.
+// RouteApi: Init Delay Mediator Swing Worker Finished
+// TclEventType: DRC_ADDED
+// TclEventType: METHODOLOGY_ADDED
+// TclEventType: HFED_INIT_ROUTE_STORAGE_COMPLETED
+// RouteApi::loadEngineXgd elapsed time: 13s
+// Device view-level: 0.1
+// [Engine Memory]: 2,262 MB (+146015kb) [00:01:58]
+// TclEventType: POWER_UPDATED
+// [GUI Memory]: 140 MB (+363kb) [00:01:58]
+// [GUI Memory]: 155 MB (+8497kb) [00:02:02]
+// [GUI Memory]: 162 MB (+72kb) [00:02:03]
+// [GUI Memory]: 171 MB (+310kb) [00:02:03]
+// [Engine Memory]: 2,526 MB (+157756kb) [00:02:03]
+// WARNING: HEventQueue.dispatchEvent() is taking  7340 ms.
+// TclEventType: TIMING_SUMMARY_UPDATED
+// HMemoryUtils.trashcanNow. Engine heap size: 2,437 MB. GUI used memory: 112 MB. Current time: 6/14/19, 4:22:23 PM CEST
+// TclEventType: TIMING_SUMMARY_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  2061 ms.
+// Run Command: PAResourceCommand.PACommandNames_REPORT_TIMING_SUMMARY
+// aJ (cp): Report Timing Summary: addNotify
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed time: 69 seconds
+applyEnter(PAResourceTtoZ.TimingDialogUtils_RESULTS_NAME, "timing_1"); // Y (C, aJ)
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (aJ)
+// 'r' command handler elapsed time: 4 seconds
+dismissDialog("Report Timing Summary"); // aJ (cp)
+// bx (cp):  Report Timing Summary : addNotify
+// Tcl Message: report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1 
+// Tcl Message: INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max. INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs 
+// TclEventType: TIMING_RESULTS_STALE
+// TclEventType: TIMING_SUMMARY_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  1556 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 2,643 MB. GUI used memory: 123 MB. Current time: 6/14/19, 4:22:47 PM CEST
+// Tcl Message: report_timing_summary: Time (s): cpu = 00:00:53 ; elapsed = 00:00:16 . Memory (MB): peak = 7720.543 ; gain = 27.711 ; free physical = 133 ; free virtual = 9734 
+// [Engine Memory]: 2,659 MB (+7450kb) [00:02:30]
+// Elapsed time: 17 seconds
+dismissDialog("Report Timing Summary"); // bx (cp)
+selectTree(PAResourceItoN.NavigableTimingReportTab_TIMING_REPORT_NAVIGATION_TREE, "[Root, Design Timing Summary]", 2, false); // a (Q, cp)
+selectTree(PAResourceItoN.NavigableTimingReportTab_TIMING_REPORT_NAVIGATION_TREE, "[Root, Design Timing Summary]", 2, false); // a (Q, cp)
+selectTree(PAResourceItoN.NavigableTimingReportTab_TIMING_REPORT_NAVIGATION_TREE, "[Root, General Information]", 0, false); // a (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Utilization]", 27, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_RESOURCE_UTILIZATION
+// a (cp): Report Utilization: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (a)
+dismissDialog("Report Utilization"); // a (cp)
+// bx (cp):  Report Utilization : addNotify
+// Tcl Message: report_utilization -name utilization_1 
+// TclEventType: UTILIZATION_RESULT_GENERATED
+// [GUI Memory]: 180 MB (+795kb) [00:02:40]
+// [GUI Memory]: 190 MB (+272kb) [00:02:42]
+// HMemoryUtils.trashcanNow. Engine heap size: 2,603 MB. GUI used memory: 135 MB. Current time: 6/14/19, 4:23:01 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  2775 ms.
+// Tcl Message: report_utilization: Time (s): cpu = 00:00:20 ; elapsed = 00:00:08 . Memory (MB): peak = 7746.309 ; gain = 9.719 ; free physical = 153 ; free virtual = 9738 
+dismissDialog("Report Utilization"); // bx (cp)
+// PAPropertyPanels.initPanels (design_2_wrapper) elapsed time: 0.2s
+selectTreeTable("PAResourceTtoZ.UtilizationHierViewTreeTablePanel_TABLE(Hierarchy)", "design_2_wrapper ; 23515 ; 2 ; 2 ; 130 ; 1 ; 1 ; 6291 ; 1617 ; 776 ; 6845 ; 11776 ; 11739", 0, "0", 10, true); // z (Q, cp) - Node
+// Elapsed time: 27 seconds
+selectTreeTable("PAResourceTtoZ.UtilizationHierViewTreeTablePanel_TABLE(Hierarchy)", "design_2_wrapper ; 23515 ; 2 ; 2 ; 130 ; 1 ; 1 ; 6291 ; 1617 ; 776 ; 6845 ; 11776 ; 11739", 0, "0", 10, true); // z (Q, cp) - Node
+collapseTreeTable((HResource) null, "design_2_wrapper ; 23515 ; 2 ; 2 ; 130 ; 1 ; 1 ; 6291 ; 1617 ; 776 ; 6845 ; 11776 ; 11739", 0); // z (Q, cp)
+selectTreeTable("PAResourceTtoZ.UtilizationHierViewTreeTablePanel_TABLE(Hierarchy)", "design_2_wrapper ; 23515 ; 2 ; 2 ; 130 ; 1 ; 1 ; 6291 ; 1617 ; 776 ; 6845 ; 11776 ; 11739", 0, "0", 10, true, false, false, false, false, true); // z (Q, cp) - Double Click - Node
+selectTreeTable("PAResourceTtoZ.UtilizationHierViewTreeTablePanel_TABLE(Hierarchy)", "design_2_wrapper ; 23515 ; 2 ; 2 ; 130 ; 1 ; 1 ; 6291 ; 1617 ; 776 ; 6845 ; 11776 ; 11739", 0, "0", 12, true); // z (Q, cp) - Node
+selectTreeTable("PAResourceTtoZ.UtilizationHierViewTreeTablePanel_TABLE(Hierarchy)", "design_2_wrapper ; 23515 ; 2 ; 2 ; 130 ; 1 ; 1 ; 6291 ; 1617 ; 776 ; 6845 ; 11776 ; 11739", 0, "0", 10, true); // z (Q, cp) - Node
+// Elapsed time: 336 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_BLOCK_DESIGN
+// bx (cp):  Open Block Design : addNotify
+// TclEventType: LOAD_FEATURE
+// Tcl Message: open_bd_design {/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd} 
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: LOAD_FEATURE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// Tcl Message: Excluding </crossbar_wrap_0/cpu_s_axi/reg0> from </cpu_0/axi> Successfully read diagram <design_2> from BD file </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd> 
+// TclEventType: RSB_OPEN_DIAGRAM
+// WARNING: HEventQueue.dispatchEvent() is taking  1574 ms.
+// TclEventType: RSB_CONNECTION_CHANGE
+closeView(PAResourceOtoP.PAViews_PROJECT_SUMMARY, "Project Summary"); // v
+// TclEventType: RSB_LOCK_CHANGE
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// TclEventType: RSB_LOCK_CHANGE
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// 'bA' command handler elapsed time: 3 seconds
+dismissDialog("Open Block Design"); // bx (cp)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cp): Re-customize Module Reference: addNotify
+// [GUI Memory]: 200 MB (+906kb) [00:10:12]
+// Elapsed time: 1404 seconds
+setText("Cache Offset Width", "3"); // z (bh, r)
+// HMemoryUtils.trashcanNow. Engine heap size: 2,632 MB. GUI used memory: 141 MB. Current time: 6/14/19, 4:53:02 PM CEST
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 109 seconds
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cp)
+// Tcl Command: 'set_property -dict [list CONFIG.cache_offset_width {3}] [get_bd_cells cpu_0]'
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// Tcl Message: startgroup 
+// Tcl Message: set_property -dict [list CONFIG.cache_offset_width {3}] [get_bd_cells cpu_0] 
+// Tcl Message: endgroup 
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (cQ, cp)
+// HOptionPane Warning: 'A background task is running. Please wait until it completes and try again. (Background Task)'
+selectButton("OptionPane.button", "OK"); // JButton (C, I)
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (cQ, cp)
+// TclEventType: IP_LOCK_CHANGE
+// bx (cp):  Refresh Changed Modules : addNotify
+// Tcl Message: update_module_reference design_2_cpu_0_0 
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: Upgrading '/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded design_2_cpu_0_0 from cpu_v1_0 1.0 to cpu_v1_0 1.0 
+// Tcl Message: Excluding </crossbar_wrap_0/cpu_s_axi/reg0> from </cpu_0/axi> 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd>  Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ui/bd_1fdbff51.ui>  
+// Tcl Message: update_module_reference: Time (s): cpu = 00:00:20 ; elapsed = 00:00:10 . Memory (MB): peak = 7929.980 ; gain = 48.020 ; free physical = 287 ; free virtual = 9719 
+// Elapsed time: 10 seconds
+dismissDialog("Refresh Changed Modules"); // bx (cp)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// O (cp):  Re-customize IP : addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1373 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 2,697 MB. GUI used memory: 139 MB. Current time: 6/14/19, 4:55:03 PM CEST
+// r (cp): Re-customize IP: addNotify
+// cl (r): Configuration Presets: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  3211 ms.
+// Elapsed time: 11 seconds
+dismissDialog("Re-customize IP"); // O (cp)
+selectButton("Clock Configuration", "Clock Configuration"); // k (ch, r)
+// WARNING: HEventQueue.dispatchEvent() is taking  1267 ms.
+expandTreeTable(PAResourceAtoD.ClkConfigTreeTablePanel_CLK_CONFIG_TREE_TABLE, "PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks", 2); // A (Q, r)
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize IP"); // r (cp)
+// [GUI Memory]: 211 MB (+1261kb) [00:34:59]
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cp): Re-customize Module Reference: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cp)
+// Elapsed time: 33 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Synthesis, Run Synthesis]", 14, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_RUN_SYNTHESIS
+// A (cp): Run Synthesis: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (A)
+// bx (cp):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Run Synthesis"); // A (cp)
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// f (cp): Launch Runs: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (f)
+// bx (cp):  Starting Design Runs : addNotify
+dismissDialog("Launch Runs"); // f (cp)
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// Tcl Message: launch_runs synth_1 -jobs 4 
+// TclEventType: FILE_SET_CHANGE
+// HMemoryUtils.trashcanNow. Engine heap size: 2,749 MB. GUI used memory: 149 MB. Current time: 6/14/19, 4:55:57 PM CEST
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_CLOSE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd>  
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// Tcl Message: VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.vhd VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/sim/design_2.vhd VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hdl/design_2_wrapper.vhd 
+// [Engine Memory]: 2,827 MB (+36458kb) [00:35:59]
+// HMemoryUtils.trashcanNow. Engine heap size: 2,836 MB. GUI used memory: 147 MB. Current time: 6/14/19, 4:56:22 PM CEST
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block proc_sys_reset_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block cpu_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block crossbar_wrap_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block bram_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_full2lite_conver_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block uart_0 . 
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0.hwh Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0_bd.tcl Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/synth/design_2_axi_smc_0.hwdef 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_smc . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar . INFO: [BD 41-1029] Generation completed for the IP Integrator block xadc_wiz_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2.hwh Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2_bd.tcl Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.hwdef 
+// HMemoryUtils.trashcanNow. Engine heap size: 2,914 MB. GUI used memory: 147 MB. Current time: 6/14/19, 4:56:38 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  1056 ms.
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Fri Jun 14 16:56:41 2019] Launched synth_1... Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/synth_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:00:56 ; elapsed = 00:00:46 . Memory (MB): peak = 8218.453 ; gain = 199.605 ; free physical = 170 ; free virtual = 9527 
+// aX (cp): Launch Run Critical Messages: addNotify
+// Elapsed time: 48 seconds
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (aX)
+// 'k' command handler elapsed time: 51 seconds
+dismissDialog("Launch Run Critical Messages"); // aX (cp)
+applyEscape(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, (String) null); // u (Q, cp)
+// WARNING: HTimer (ActiveMsgMonitor Process Messages Timer) is taking 587ms to process. Increasing delay to 2000 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1286 ms.
+// WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 1021 ms. Increasing delay to 3063 ms.
+// TclEventType: RUN_COMPLETED
+// ah (cp): Synthesis Completed: addNotify
+// Elapsed time: 734 seconds
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (ah)
+// Run Command: PAResourceCommand.PACommandNames_RUN_IMPLEMENTATION
+// f (cp): Launch Runs: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (f)
+// bx (cp):  Starting Design Runs : addNotify
+dismissDialog("Launch Runs"); // f (cp)
+// TclEventType: DESIGN_STALE
+// TclEventType: RUN_LAUNCH
+// Tcl Message: launch_runs impl_1 -jobs 4 
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Fri Jun 14 17:09:05 2019] Launched impl_1... Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/runme.log 
+dismissDialog("Starting Design Runs"); // bx (cp)
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: DESIGN_STALE
+// TclEventType: RUN_COMPLETED
+// ah (cp): Implementation Completed: addNotify
+// Elapsed time: 480 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (ah)
+dismissDialog("Implementation Completed"); // ah (cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Synthesis, Run Synthesis]", 14, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Edit Timing Constraints]", 20, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Schematic]", 28, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Timing Summary]", 21, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_REPORT_TIMING_SUMMARY
+// aJ (cp): Report Timing Summary: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1321 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 2,907 MB. GUI used memory: 154 MB. Current time: 6/14/19, 5:17:14 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  1532 ms.
+// Device view-level: 0.1
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (aJ)
+// 'r' command handler elapsed time: 3 seconds
+dismissDialog("Report Timing Summary"); // aJ (cp)
+// bx (cp):  Report Timing Summary : addNotify
+// Tcl Message: report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_2 
+// Tcl Message: INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max. INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs 
+// TclEventType: TIMING_SUMMARY_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  1405 ms.
+// Tcl Message: report_timing_summary: Time (s): cpu = 00:00:14 ; elapsed = 00:00:05 . Memory (MB): peak = 8218.453 ; gain = 0.000 ; free physical = 3382 ; free virtual = 9351 
+dismissDialog("Report Timing Summary"); // bx (cp)
+// Elapsed time: 21 seconds
+selectButton(PAResourceOtoP.ProjectTab_RELOAD, "Reload"); // h (cQ, cp)
+// bx (cp):  Reloading : addNotify
+// Tcl Message: refresh_design 
+// TclEventType: DESIGN_REFRESH
+// [Engine Memory]: 3,036 MB (+70655kb) [00:57:33]
+// HMemoryUtils.trashcanNow. Engine heap size: 2,840 MB. GUI used memory: 105 MB. Current time: 6/14/19, 5:17:50 PM CEST
+// TclEventType: TIMING_RESULTS_UNLOAD
+// Engine heap size: 2,840 MB. GUI used memory: 106 MB. Current time: 6/14/19, 5:17:51 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  2731 ms.
+// Tcl Message: INFO: [Netlist 29-17] Analyzing 2555 Unisim elements for replacement 
+// Tcl Message: INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds 
+// Tcl Message: INFO: [Project 1-479] Netlist was created with Vivado 2018.3 INFO: [Project 1-570] Preparing netlist for logic optimization 
+// Tcl Message: INFO: [Timing 38-478] Restoring timing data from binary archive. 
+// TclEventType: SDC_CONSTRAINT_ADD
+// TclEventType: POWER_CNS_STALE
+// TclEventType: SDC_CONSTRAINT_ADD
+// Tcl Message: INFO: [Timing 38-479] Binary timing data restore complete. INFO: [Project 1-856] Restoring constraints from binary archive. INFO: [Project 1-853] Binary constraint restore complete. 
+// Tcl Message: Reading XDEF placement. Reading placer database... 
+// Tcl Message: Reading XDEF routing. 
+// TclEventType: FLOORPLAN_MODIFY
+// Tcl Message: Read XDEF File: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 8218.453 ; gain = 0.000 ; free physical = 3600 ; free virtual = 9696 
+// Tcl Message: Restored from archive | CPU: 2.790000 secs | Memory: 25.695290 MB | 
+// Tcl Message: Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 8218.453 ; gain = 0.000 ; free physical = 3600 ; free virtual = 9696 
+// TclEventType: DESIGN_REFRESH
+// HMemoryUtils.trashcanNow. Engine heap size: 2,731 MB. GUI used memory: 80 MB. Current time: 6/14/19, 5:18:01 PM CEST
+// Xgd.load filename: /tools/Xilinx/Vivado/2018.3/data/parts/xilinx/zynq/devint/zynq/xc7z020/xc7z020.xgd; ZipEntry: xc7z020_detail.xgd elapsed time: 1s
+// Device: addNotify
+// DeviceView Instantiated
+// WARNING: HEventQueue.dispatchEvent() is taking  4103 ms.
+// Tcl Message: INFO: [Common 17-14] Message 'Designutils 20-3303' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. 
+// WARNING: HEventQueue.dispatchEvent() is taking  1048 ms.
+// Device view-level: 0.0
+// TclEventType: DRC_ADDED
+// Tcl Message: refresh_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:22 . Memory (MB): peak = 8240.555 ; gain = 22.102 ; free physical = 3492 ; free virtual = 9595 
+// RouteApi: Init Delay Mediator Swing Worker Finished
+// TclEventType: DRC_ADDED
+// TclEventType: METHODOLOGY_ADDED
+// TclEventType: HFED_INIT_ROUTE_STORAGE_COMPLETED
+// RouteApi::loadEngineXgd elapsed time: 6.7s
+// Device view-level: 0.1
+// TclEventType: POWER_UPDATED
+// [Engine Memory]: 3,372 MB (+193739kb) [00:57:55]
+// WARNING: HEventQueue.dispatchEvent() is taking  4856 ms.
+// TclEventType: TIMING_SUMMARY_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  1040 ms.
+// Elapsed time: 32 seconds
+dismissDialog("Reloading"); // bx (cp)
+// Elapsed time: 17 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Utilization]", 27, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_RESOURCE_UTILIZATION
+// a (cp): Report Utilization: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (a)
+dismissDialog("Report Utilization"); // a (cp)
+// bx (cp):  Report Utilization : addNotify
+// Tcl Message: report_utilization -name utilization_1 
+// TclEventType: UTILIZATION_RESULT_GENERATED
+// HMemoryUtils.trashcanNow. Engine heap size: 3,009 MB. GUI used memory: 152 MB. Current time: 6/14/19, 5:18:41 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  2506 ms.
+// Tcl Message: report_utilization: Time (s): cpu = 00:00:10 ; elapsed = 00:00:06 . Memory (MB): peak = 8240.555 ; gain = 0.000 ; free physical = 3305 ; free virtual = 9426 
+dismissDialog("Report Utilization"); // bx (cp)
+// Elapsed time: 37 seconds
+selectTree(PAResourceQtoS.ReportUtilTab_REPORT_UTILIZATION_NAVIGATION_TREE, "[Report Contents, Slice Logic, F8 Muxes]", 8, false); // l (Q, cp)
+selectTree(PAResourceQtoS.ReportUtilTab_REPORT_UTILIZATION_NAVIGATION_TREE, "[Report Contents, Slice Logic Distribution, LUT as Memory, LUT as Shift Register]", 17, true); // l (Q, cp) - Node
+selectTree(PAResourceQtoS.ReportUtilTab_REPORT_UTILIZATION_NAVIGATION_TREE, "[Report Contents, Slice Logic Distribution, LUT as Logic]", 29, true); // l (Q, cp) - Node
+selectTree(PAResourceQtoS.ReportUtilTab_REPORT_UTILIZATION_NAVIGATION_TREE, "[Report Contents, Specific Feature, XADC]", 44, false); // l (Q, cp)
+selectTree(PAResourceQtoS.ReportUtilTab_REPORT_UTILIZATION_NAVIGATION_TREE, "[Report Contents, Memory, Block RAM Tile]", 33, true); // l (Q, cp) - Node
+selectTree(PAResourceQtoS.ReportUtilTab_REPORT_UTILIZATION_NAVIGATION_TREE, "[Report Contents, Memory, Block RAM Tile, RAMB36/FIFO]", 34, true); // l (Q, cp) - Node
+selectTree(PAResourceQtoS.ReportUtilTab_REPORT_UTILIZATION_NAVIGATION_TREE, "[Report Contents, Memory, Block RAM Tile, RAMB36/FIFO, RAMB36E1 only]", 35, false); // l (Q, cp)
+// Elapsed time: 15 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Create Block Design]", 6, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Create Block Design]", 6, false); // u (Q, cp)
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_CONSTRAINTS, "Constraints"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_IP, "IP"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_TEXT_EDITOR, "Text Editor"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_IMPORT, "Import"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_EXPORT, "Export"); // ac (cp, Popup.HeavyWeightWindow)
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 31, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// f (cp): Launch Runs: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (f)
+dismissDialog("Launch Runs"); // f (cp)
+// TclEventType: RUN_LAUNCH
+// bx (cp):  Generate Bitstream : addNotify
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 4 
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Fri Jun 14 17:19:46 2019] Launched impl_1... Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/runme.log 
+dismissDialog("Generate Bitstream"); // bx (cp)
+// TclEventType: RUN_COMPLETED
+// ah (cp): Bitstream Generation Completed: addNotify
+// Elapsed time: 97 seconds
+selectRadioButton(PAResourceCommand.PACommandNames_OPEN_HARDWARE_MANAGER, "Open Hardware Manager"); // a (Q, ah)
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (ah)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_HARDWARE_MANAGER
+// Tcl Command: 'rdi::info_commands get_hw_probes'
+// Tcl Command: 'load_features labtools'
+// TclEventType: LOAD_FEATURE
+// bx (cp):  Open Hardware Manager : addNotify
+// TclEventType: HW_SESSION_OPEN
+// WARNING: HEventQueue.dispatchEvent() is taking  1560 ms.
+// Tcl Message: open_hw 
+closeView(PAResourceOtoP.PAViews_PROJECT_SUMMARY, "Project Summary"); // v
+dismissDialog("Open Hardware Manager"); // bx (cp)
+// Elapsed time: 44 seconds
+selectButton(PAResourceOtoP.ProgramDebugTab_OPEN_TARGET, "Open target"); // h (cQ, cp)
+selectMenuItem(PAResourceCommand.PACommandNames_AUTO_CONNECT_TARGET, "Auto Connect"); // af (al, Popup.HeavyWeightWindow)
+// Run Command: PAResourceCommand.PACommandNames_AUTO_CONNECT_TARGET
+// bx (cp):  Auto Connect : addNotify
+// Tcl Message: connect_hw_server 
+// Tcl Message: INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121 INFO: [Labtools 27-2222] Launching hw_server... 
+// TclEventType: HW_SERVER_UPDATE
+// Tcl Message: INFO: [Labtools 27-2221] Launch Output:  ****** Xilinx hw_server v2018.3   **** Build date : Dec  6 2018-23:53:53     ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   
+// TclEventType: HW_TARGET_CHANGE
+// TclEventType: HW_TARGET_CLOSE
+// Tcl Message: open_hw_target 
+// Tcl Message: INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/003017A4D012A 
+// TclEventType: HW_DEVICE_CHANGE
+// TclEventType: HW_SYSMON_ADD
+// TclEventType: HW_TARGET_UPDATE
+// WARNING: HEventQueue.dispatchEvent() is taking  2627 ms.
+// Tcl Message: open_hw_target: Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 8808.465 ; gain = 567.910 ; free physical = 2158 ; free virtual = 8545 
+// TclEventType: HW_DEVICE_CHANGE
+// Tcl Message: set_property PROGRAM.FILE {/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/design_2_wrapper.bit} [get_hw_devices xc7z020_1] 
+// Tcl Message: current_hw_device [get_hw_devices xc7z020_1] 
+// TclEventType: HW_DEVICE_CHANGE
+// TclEventType: HW_SYSMON_CHANGE
+// TclEventType: HW_DEVICE_UPDATE
+// [Engine Memory]: 3,628 MB (+90819kb) [01:02:04]
+// TclEventType: HW_DEVICE_CHANGE
+// Tcl Message: refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0] 
+// Tcl Message: INFO: [Labtools 27-1435] Device xc7z020 (JTAG device index = 1) is not programmed (DONE status = 0). 
+dismissDialog("Auto Connect"); // bx (cp)
+// HMemoryUtils.trashcanNow. Engine heap size: 3,620 MB. GUI used memory: 149 MB. Current time: 6/14/19, 5:22:22 PM CEST
+// Elapsed time: 16 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Open Hardware Manager, Open Target]", 32, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_HW_TARGET
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_IP, "IP"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_TEXT_EDITOR, "Text Editor"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_IMPORT, "Import"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_EXPORT, "Export"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenuItem(PAResourceCommand.PACommandNames_EXPORT_HARDWARE, "Export Hardware..."); // af (cp, Popup.HeavyWeightWindow)
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+// Run Command: PAResourceCommand.PACommandNames_EXPORT_HARDWARE
+// X (cp): Export Hardware: addNotify
+selectCheckBox(PAResourceItoN.NewExportHardwareDialog_INCLUDE_BITSTREAM, "Include bitstream", true); // g (Q, X): TRUE
+selectComboBox(PAResourceItoN.NewExportHardwareDialog_EXPORT_TO, "Choose Location...", 1); // e (Q, X)
+setFolderChooser("/home/yordan/Downloads");
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (X)
+// HMemoryUtils.trashcanNow. Engine heap size: 3,653 MB. GUI used memory: 150 MB. Current time: 6/14/19, 5:22:52 PM CEST
+// 'm' command handler elapsed time: 9 seconds
+selectButton("PAResourceItoN.NewExportHardwareDialog_EXPORTED_FILE_FOR_THIS_MODULE_WAS_Yes", "Yes"); // JButton (C, J)
+dismissDialog("Export Hardware"); // X (cp)
+// Tcl Message: file copy -force /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/design_2_wrapper.sysdef /home/yordan/Downloads/design_2_wrapper.hdf  
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_IP, "IP"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_TEXT_EDITOR, "Text Editor"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_IMPORT, "Import"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenu(PAResourceItoN.MainMenuMgr_EXPORT, "Export"); // ac (cp, Popup.HeavyWeightWindow)
+selectMenuItem(PAResourceCommand.PACommandNames_LAUNCH_HARDWARE, "Launch SDK"); // af (cp, Popup.HeavyWeightWindow)
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+// Run Command: PAResourceCommand.PACommandNames_LAUNCH_HARDWARE
+// aa (cp): Launch SDK: addNotify
+selectComboBox(PAResourceItoN.NewLaunchHardwareDialog_LOCATION_OF_HARDWARE_DESCRIPTION_FILE, "Choose Location...", 1); // e (Q, aa)
+setFolderChooser("/home/yordan/Downloads");
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (aa)
+// 'o' command handler elapsed time: 5 seconds
+dismissDialog("Launch SDK"); // aa (cp)
+// Tcl Message: launch_sdk -workspace /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.sdk -hwspec /home/yordan/Downloads/design_2_wrapper.hdf 
+// Tcl Message: INFO: [Vivado 12-393] Launching SDK... INFO: [Vivado 12-417] Running xsdk -workspace /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.sdk -hwspec /home/yordan/Downloads/design_2_wrapper.hdf INFO: [Vivado 12-3157] SDK launch initiated. Please check console for any further messages. 
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 333 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Create Block Design]", 6, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Create Block Design]", 6, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Create Block Design]", 6, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Create Block Design]", 6, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_CREATE_NEW_DIAGRAM
+// aF (cp): Create Block Design: addNotify
+// HMemoryUtils.trashcanNow. Engine heap size: 3,685 MB. GUI used memory: 150 MB. Current time: 6/14/19, 5:28:38 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  1371 ms.
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (aF)
+// 'J' command handler elapsed time: 5 seconds
+dismissDialog("Create Block Design"); // aF (cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_BLOCK_DESIGN
+// bx (cp):  Open Block Design : addNotify
+// TclEventType: RSB_OPEN_DIAGRAM
+// Tcl Message: open_bd_design {/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd} 
+dismissDialog("Open Block Design"); // bx (cp)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cp): Re-customize Module Reference: addNotify
+// Elapsed time: 13 seconds
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cp)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// O (cp):  Re-customize IP : addNotify
+// r (cp): Re-customize IP: addNotify
+// cl (r): Configuration Presets: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1738 ms.
+dismissDialog("Re-customize IP"); // O (cp)
+selectButton("Clock Configuration", "Clock Configuration"); // k (ch, r)
+expandTreeTable(PAResourceAtoD.ClkConfigTreeTablePanel_CLK_CONFIG_TREE_TABLE, "PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks", 2); // A (Q, r)
+selectTreeTable(PAResourceAtoD.ClkConfigTreeTablePanel_CLK_CONFIG_TREE_TABLE, "FCLK_CLK0 ; IO PLL ; 30 ; 30.000000 ; 0.100000 : 250.000000 ; PL Fabric Clocks", 3, "30", 2, false); // A (Q, r)
+setText("PCW FPGA0 PERIPHERAL FREQMHZ", "40"); // z (bh, r)
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (r)
+dismissDialog("Re-customize IP"); // r (cp)
+// Tcl Command: 'set_property -dict [list CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {40}] [get_bd_cells processing_system7_0]'
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// r (cp): Re-customize IP: addNotify
+// bx (r):  Customize IP : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// Tcl Message: startgroup 
+// Tcl Message: set_property -dict [list CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {40}] [get_bd_cells processing_system7_0] 
+// Tcl Message: endgroup 
+dismissDialog("Customize IP"); // bx (r)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// O (cp):  Re-customize IP : addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1326 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 3,740 MB. GUI used memory: 160 MB. Current time: 6/14/19, 5:29:18 PM CEST
+// r (cp): Re-customize IP: addNotify
+// cl (r): Configuration Presets: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  2251 ms.
+dismissDialog("Re-customize IP"); // O (cp)
+selectButton("Clock Configuration", "Clock Configuration"); // k (ch, r)
+// WARNING: HEventQueue.dispatchEvent() is taking  1365 ms.
+expandTreeTable(PAResourceAtoD.ClkConfigTreeTablePanel_CLK_CONFIG_TREE_TABLE, "PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks", 2); // A (Q, r)
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+// [GUI Memory]: 224 MB (+2484kb) [01:09:10]
+// [Engine Memory]: 3,855 MB (+48244kb) [01:09:11]
+dismissDialog("Re-customize IP"); // r (cp)
+// HMemoryUtils.trashcanNow. Engine heap size: 3,821 MB. GUI used memory: 169 MB. Current time: 6/14/19, 5:29:32 PM CEST
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// TclEventType: IP_LOCK_CHANGE
+// r (cp): Re-customize Module Reference: addNotify
+// Elapsed time: 13 seconds
+setText("Clock Frequency", "40000000"); // z (bh, r)
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cp)
+// Tcl Command: 'set_property -dict [list CONFIG.clock_frequency {40000000}] [get_bd_cells uart_0]'
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// Tcl Message: startgroup 
+// Tcl Message: set_property -dict [list CONFIG.clock_frequency {40000000}] [get_bd_cells uart_0] 
+// Tcl Message: endgroup 
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (cQ, cp)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// bx (cp):  Refresh Changed Modules : addNotify
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: update_module_reference design_2_uart_0_0 
+// Tcl Message: Upgrading '/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded design_2_uart_0_0 from uart_v1_0 1.0 to uart_v1_0 1.0 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd>  
+dismissDialog("Refresh Changed Modules"); // bx (cp)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// O (cp):  Re-customize IP : addNotify
+// r (cp): Re-customize IP: addNotify
+// cl (r): Configuration Presets: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  2125 ms.
+dismissDialog("Re-customize IP"); // O (cp)
+selectButton("Clock Configuration", "Clock Configuration"); // k (ch, r)
+// WARNING: HEventQueue.dispatchEvent() is taking  1518 ms.
+expandTreeTable(PAResourceAtoD.ClkConfigTreeTablePanel_CLK_CONFIG_TREE_TABLE, "PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks", 2); // A (Q, r)
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize IP"); // r (cp)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// r (cp): Re-customize Module Reference: addNotify
+selectButton(RDIResource.BaseDialog_CANCEL, "Cancel"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Synthesis, Run Synthesis]", 14, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Clock Interaction]", 23, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Open Hardware Manager]", 31, true); // u (Q, cp) - Node
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Open Hardware Manager]", 31, true); // u (Q, cp) - Node
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Open Hardware Manager]", 31, true); // u (Q, cp) - Node
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Open Hardware Manager]", 31, true); // u (Q, cp) - Node
+// Run Command: PAResourceCommand.PACommandNames_OPEN_HARDWARE_MANAGER
+// Tcl Command: 'rdi::info_commands get_hw_probes'
+// [GUI Memory]: 239 MB (+4282kb) [01:09:52]
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 30, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cp): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bx (cp):  Resetting Runs : addNotify
+dismissDialog("Synthesis is Out-of-date"); // A (cp)
+// TclEventType: RUN_MODIFY
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// Tcl Message: reset_run synth_1 
+// f (cp): Launch Runs: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (f)
+// 'cw' command handler elapsed time: 6 seconds
+dismissDialog("Launch Runs"); // f (cp)
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 4 
+// TclEventType: FILE_SET_CHANGE
+// bx (cp):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_CLOSE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd>  VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.vhd 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// Tcl Message: VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/sim/design_2.vhd VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hdl/design_2_wrapper.vhd 
+// HMemoryUtils.trashcanNow. Engine heap size: 3,883 MB. GUI used memory: 176 MB. Current time: 6/14/19, 5:30:43 PM CEST
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block proc_sys_reset_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block cpu_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block crossbar_wrap_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block bram_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_full2lite_conver_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block uart_0 . 
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0.hwh Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0_bd.tcl Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/synth/design_2_axi_smc_0.hwdef 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_smc . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar . INFO: [BD 41-1029] Generation completed for the IP Integrator block xadc_wiz_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2.hwh Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2_bd.tcl Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.hwdef 
+// WARNING: HEventQueue.dispatchEvent() is taking  1126 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 3,912 MB. GUI used memory: 173 MB. Current time: 6/14/19, 5:31:08 PM CEST
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: DESIGN_STALE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Fri Jun 14 17:31:14 2019] Launched synth_1... Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/synth_1/runme.log [Fri Jun 14 17:31:14 2019] Launched impl_1... Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:01:06 ; elapsed = 00:00:55 . Memory (MB): peak = 9142.316 ; gain = 128.133 ; free physical = 1013 ; free virtual = 7816 
+// aX (cp): Launch Run Critical Messages: addNotify
+// Elapsed time: 58 seconds
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (aX)
+dismissDialog("Launch Run Critical Messages"); // aX (cp)
+// WARNING: HTimer (ActiveMsgMonitor Process Messages Timer) is taking 400ms to process. Increasing delay to 2000 ms.
+// TclEventType: RUN_COMPLETED
+// WARNING: HEventQueue.dispatchEvent() is taking  1044 ms.
+// WARNING: HTimer (ExpRunMgr Pending Runs Timer) is taking 409ms to process. Increasing delay to 3000 ms.
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// ah (cp): Bitstream Generation Completed: addNotify
+// Elapsed time: 1538 seconds
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (ah)
+// Run Command: PAResourceCommand.PACommandNames_REPORTS_WINDOW
+dismissDialog("Bitstream Generation Completed"); // ah (cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, RTL Analysis]", 11, true); // u (Q, cp) - Node
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Synthesis]", 13, true); // u (Q, cp) - Node
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Utilization]", 26, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Utilization]", 26, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Timing Summary]", 21, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_REPORT_TIMING_SUMMARY
+// aJ (cp): Report Timing Summary: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1436 ms.
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (aJ)
+dismissDialog("Report Timing Summary"); // aJ (cp)
+// bx (cp):  Report Timing Summary : addNotify
+// Tcl Message: report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1 
+// Tcl Message: INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max. INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs 
+// WARNING: HEventQueue.dispatchEvent() is taking  3334 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 3,968 MB. GUI used memory: 181 MB. Current time: 6/14/19, 5:57:15 PM CEST
+// TclEventType: TIMING_RESULTS_STALE
+// Tcl Message: INFO: [Common 17-14] Message 'Designutils 20-3303' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. 
+// TclEventType: TIMING_SUMMARY_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  1321 ms.
+// Tcl Message: report_timing_summary: Time (s): cpu = 00:00:36 ; elapsed = 00:00:14 . Memory (MB): peak = 9142.316 ; gain = 0.000 ; free physical = 2493 ; free virtual = 7355 
+// Elapsed time: 14 seconds
+dismissDialog("Report Timing Summary"); // bx (cp)
+selectButton(PAResourceOtoP.ProjectTab_RELOAD, "Reload"); // h (cQ, cp)
+// bx (cp):  Reloading : addNotify
+// Tcl Message: refresh_design 
+// TclEventType: DESIGN_REFRESH
+// HMemoryUtils.trashcanNow. Engine heap size: 3,902 MB. GUI used memory: 140 MB. Current time: 6/14/19, 5:57:36 PM CEST
+// TclEventType: TIMING_RESULTS_UNLOAD
+// Engine heap size: 3,902 MB. GUI used memory: 141 MB. Current time: 6/14/19, 5:57:37 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  2788 ms.
+// Tcl Message: INFO: [Netlist 29-17] Analyzing 2555 Unisim elements for replacement 
+// Tcl Message: INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds 
+// Tcl Message: INFO: [Project 1-479] Netlist was created with Vivado 2018.3 INFO: [Project 1-570] Preparing netlist for logic optimization 
+// Tcl Message: INFO: [Timing 38-478] Restoring timing data from binary archive. 
+// TclEventType: SDC_CONSTRAINT_ADD
+// TclEventType: POWER_CNS_STALE
+// TclEventType: SDC_CONSTRAINT_ADD
+// Tcl Message: INFO: [Timing 38-479] Binary timing data restore complete. INFO: [Project 1-856] Restoring constraints from binary archive. INFO: [Project 1-853] Binary constraint restore complete. 
+// Tcl Message: Reading XDEF placement. Reading placer database... 
+// Tcl Message: Reading XDEF routing. 
+// TclEventType: FLOORPLAN_MODIFY
+// TclEventType: DESIGN_REFRESH
+// HMemoryUtils.trashcanNow. Engine heap size: 3,806 MB. GUI used memory: 117 MB. Current time: 6/14/19, 5:57:49 PM CEST
+// Xgd.load filename: /tools/Xilinx/Vivado/2018.3/data/parts/xilinx/zynq/devint/zynq/xc7z020/xc7z020.xgd; ZipEntry: xc7z020_detail.xgd elapsed time: 1s
+// Device: addNotify
+// DeviceView Instantiated
+// WARNING: HEventQueue.dispatchEvent() is taking  3654 ms.
+// Tcl Message: Read XDEF File: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9142.316 ; gain = 0.000 ; free physical = 2462 ; free virtual = 7584 
+// Tcl Message: Restored from archive | CPU: 2.980000 secs | Memory: 26.024498 MB | 
+// Tcl Message: Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9142.316 ; gain = 0.000 ; free physical = 2462 ; free virtual = 7584 
+// Device view-level: 0.0
+// [Engine Memory]: 4,301 MB (+265382kb) [01:37:37]
+// RouteApi: Init Delay Mediator Swing Worker Finished
+// Tcl Message: refresh_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:23 . Memory (MB): peak = 9144.777 ; gain = 2.461 ; free physical = 2337 ; free virtual = 7474 
+// TclEventType: DRC_ADDED
+// TclEventType: METHODOLOGY_ADDED
+// TclEventType: HFED_INIT_ROUTE_STORAGE_COMPLETED
+// RouteApi::loadEngineXgd elapsed time: 6.2s
+// Device view-level: 0.1
+// [Engine Memory]: 4,568 MB (+54630kb) [01:37:39]
+// TclEventType: POWER_UPDATED
+// [Engine Memory]: 4,816 MB (+20840kb) [01:37:42]
+// WARNING: HEventQueue.dispatchEvent() is taking  4928 ms.
+// TclEventType: TIMING_SUMMARY_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  1105 ms.
+// Elapsed time: 33 seconds
+dismissDialog("Reloading"); // bx (cp)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Elapsed time: 669 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_BLOCK_DESIGN
+// bx (cp):  Open Block Design : addNotify
+// TclEventType: RSB_OPEN_DIAGRAM
+// Tcl Message: open_bd_design {/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd} 
+closeView(PAResourceOtoP.PAViews_PROJECT_SUMMARY, "Project Summary"); // v
+dismissDialog("Open Block Design"); // bx (cp)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// O (cp):  Re-customize IP : addNotify
+// r (cp): Re-customize IP: addNotify
+// cl (r): Configuration Presets: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  2384 ms.
+dismissDialog("Re-customize IP"); // O (cp)
+selectButton("DDR Configuration", "DDR Configuration"); // k (ch, r)
+selectButton("Clock Configuration", "Clock Configuration"); // k (ch, r)
+// WARNING: HEventQueue.dispatchEvent() is taking  1378 ms.
+expandTreeTable(PAResourceAtoD.ClkConfigTreeTablePanel_CLK_CONFIG_TREE_TABLE, "PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks ; PL Fabric Clocks", 2); // A (Q, r)
+// HMemoryUtils.trashcanNow. Engine heap size: 4,096 MB. GUI used memory: 188 MB. Current time: 6/14/19, 6:09:28 PM CEST
+selectTreeTable(PAResourceAtoD.ClkConfigTreeTablePanel_CLK_CONFIG_TREE_TABLE, "FCLK_CLK0 ; IO PLL ; 40 ; 40.000000 ; 0.100000 : 250.000000 ; PL Fabric Clocks", 3, "40", 2, false); // A (Q, r)
+setText("PCW FPGA0 PERIPHERAL FREQMHZ", "35"); // z (bh, r)
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (r)
+dismissDialog("Re-customize IP"); // r (cp)
+// Tcl Command: 'set_property -dict [list CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {35}] [get_bd_cells processing_system7_0]'
+// TclEventType: FILE_SET_CHANGE
+// r (cp): Re-customize IP: addNotify
+// bx (r):  Customize IP : addNotify
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// Tcl Message: startgroup 
+// Tcl Message: set_property -dict [list CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {35}] [get_bd_cells processing_system7_0] 
+// TclEventType: RSB_PROPERTY_CHANGE
+// Tcl Message: endgroup 
+dismissDialog("Customize IP"); // bx (r)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// TclEventType: IP_LOCK_CHANGE
+// r (cp): Re-customize Module Reference: addNotify
+// Elapsed time: 16 seconds
+setText("Clock Frequency", "35000000"); // z (bh, r)
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (r)
+dismissDialog("Re-customize Module Reference"); // r (cp)
+// Tcl Command: 'set_property -dict [list CONFIG.clock_frequency {35000000}] [get_bd_cells uart_0]'
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_PROPERTY_CHANGE
+// Tcl Message: startgroup 
+// Tcl Message: set_property -dict [list CONFIG.clock_frequency {35000000}] [get_bd_cells uart_0] 
+// Tcl Message: endgroup 
+selectButton(PAResourceOtoP.PlanAheadTab_REFRESH_CHANGED_MODULES, "Refresh Changed Modules"); // h (cQ, cp)
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: BDCELL_LOCK_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// bx (cp):  Refresh Changed Modules : addNotify
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: update_module_reference design_2_uart_0_0 
+// Tcl Message: Upgrading '/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd' 
+// Tcl Message: INFO: [IP_Flow 19-1972] Upgraded design_2_uart_0_0 from uart_v1_0 1.0 to uart_v1_0 1.0 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILESET_UPDATE_IP
+// TclEventType: IP_UPGRADE_COMPLETE
+// Tcl Message: Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd>  
+dismissDialog("Refresh Changed Modules"); // bx (cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Create Block Design]", 6, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Timing Summary]", 21, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Create Block Design]", 6, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Timing Summary]", 21, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Timing Summary]", 21, false); // u (Q, cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 30, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cp): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bx (cp):  Resetting Runs : addNotify
+dismissDialog("Synthesis is Out-of-date"); // A (cp)
+// TclEventType: RUN_MODIFY
+// TclEventType: RUN_RESET
+// Tcl Message: reset_run synth_1 
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// f (cp): Launch Runs: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (f)
+// 'cw' command handler elapsed time: 3 seconds
+// TclEventType: RSB_SCRIPT_TASK
+dismissDialog("Launch Runs"); // f (cp)
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: RSB_SCRIPT_TASK
+// bx (cp):  Generate Bitstream : addNotify
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 4 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_REMOVE_OBJECT
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_CLOSE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: REPORT_IP_STATUS_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SCRIPT_TASK
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// Tcl Message: Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd>  
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RSB_SAVE_DIAGRAM
+// TclEventType: RSB_SCRIPT_TASK
+// Tcl Message: VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.vhd VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/sim/design_2.vhd VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hdl/design_2_wrapper.vhd 
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block proc_sys_reset_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block cpu_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block crossbar_wrap_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block bram_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_full2lite_conver_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block uart_0 . 
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0.hwh Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0_bd.tcl Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/synth/design_2_axi_smc_0.hwdef 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_smc . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 . INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar . INFO: [BD 41-1029] Generation completed for the IP Integrator block xadc_wiz_0 . 
+// Tcl Message: INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_pc . 
+// Tcl Message: Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2.hwh Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2_bd.tcl Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.hwdef 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: RUN_LAUNCH
+// TclEventType: DESIGN_STALE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// Tcl Message: [Fri Jun 14 18:11:16 2019] Launched synth_1... Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/synth_1/runme.log [Fri Jun 14 18:11:16 2019] Launched impl_1... Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/runme.log 
+// Tcl Message: launch_runs: Time (s): cpu = 00:01:17 ; elapsed = 00:01:07 . Memory (MB): peak = 9346.672 ; gain = 150.871 ; free physical = 1751 ; free virtual = 7396 
+// aX (cp): Launch Run Critical Messages: addNotify
+// Elapsed time: 69 seconds
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (aX)
+dismissDialog("Launch Run Critical Messages"); // aX (cp)
+// WARNING: HEventQueue.dispatchEvent() is taking  1725 ms.
+// WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 2129 ms. Increasing delay to 6387 ms.
+// WARNING: HTimer (ActiveMsgMonitor Process Messages Timer) is taking 333ms to process. Increasing delay to 2000 ms.
+// WARNING: HTimer (FileMgr Design Graph Update Timer) is taking 834ms to process. Increasing delay to 3000 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 2072 ms. Increasing delay to 3000 ms.
+// WARNING: HTimer (HSTRUtils Dump STR Log Timer) is taking 17995ms to process. Increasing delay to 4000 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  18016 ms.
+// WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 13141 ms. Increasing delay to 39423 ms.
+// WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 14 ms. Decreasing delay to 2014 ms.
+// TclEventType: RUN_COMPLETED
+// WARNING: HTimer (ExpRunMgr Pending Runs Timer) is taking 665ms to process. Increasing delay to 4000 ms.
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_COMPLETED
+// ah (cp): Bitstream Generation Completed: addNotify
+// Elapsed time: 1301 seconds
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (ah)
+// Run Command: PAResourceCommand.PACommandNames_REPORTS_WINDOW
+dismissDialog("Bitstream Generation Completed"); // ah (cp)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Timing Summary]", 21, false); // u (Q, cp)
+// [GUI Memory]: 257 MB (+6134kb) [02:12:48]
+// Run Command: PAResourceCommand.PACommandNames_REPORT_TIMING_SUMMARY
+// aJ (cp): Report Timing Summary: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1892 ms.
+// Device view-level: 0.0
+// HMemoryUtils.trashcanNow. Engine heap size: 4,198 MB. GUI used memory: 188 MB. Current time: 6/14/19, 6:33:14 PM CEST
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (aJ)
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (aJ)
+// 'r' command handler elapsed time: 7 seconds
+dismissDialog("Report Timing Summary"); // aJ (cp)
+// bx (cp):  Report Timing Summary : addNotify
+// Tcl Message: report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1 
+// Tcl Message: INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max. INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs 
+// TclEventType: TIMING_RESULTS_STALE
+// Tcl Message: INFO: [Common 17-14] Message 'Designutils 20-3303' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. 
+// TclEventType: TIMING_SUMMARY_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  1158 ms.
+// Tcl Message: report_timing_summary: Time (s): cpu = 00:00:35 ; elapsed = 00:00:17 . Memory (MB): peak = 9346.672 ; gain = 0.000 ; free physical = 4066 ; free virtual = 7447 
+// Elapsed time: 17 seconds
+dismissDialog("Report Timing Summary"); // bx (cp)
+// Elapsed time: 368 seconds
+selectButton(PAResourceOtoP.ProjectTab_RELOAD, "Reload"); // h (cQ, cp)
+// bx (cp):  Reloading : addNotify
+// Tcl Message: refresh_design 
+// TclEventType: DESIGN_REFRESH
+// HMemoryUtils.trashcanNow. Engine heap size: 4,122 MB. GUI used memory: 152 MB. Current time: 6/14/19, 6:39:48 PM CEST
+// TclEventType: TIMING_RESULTS_UNLOAD
+// Engine heap size: 4,125 MB. GUI used memory: 153 MB. Current time: 6/14/19, 6:39:48 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  2278 ms.
+// Tcl Message: INFO: [Netlist 29-17] Analyzing 2555 Unisim elements for replacement 
+// Tcl Message: INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds 
+// Tcl Message: INFO: [Project 1-479] Netlist was created with Vivado 2018.3 
+// Tcl Message: INFO: [Project 1-570] Preparing netlist for logic optimization 
+// Tcl Message: INFO: [Timing 38-478] Restoring timing data from binary archive. 
+// TclEventType: SDC_CONSTRAINT_ADD
+// Tcl Message: INFO: [Timing 38-479] Binary timing data restore complete. INFO: [Project 1-856] Restoring constraints from binary archive. 
+// TclEventType: POWER_CNS_STALE
+// TclEventType: SDC_CONSTRAINT_ADD
+// Tcl Message: INFO: [Project 1-853] Binary constraint restore complete. 
+// Tcl Message: Reading XDEF placement. Reading placer database... 
+// Tcl Message: Reading XDEF routing. 
+// Tcl Message: Read XDEF File: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9346.672 ; gain = 0.000 ; free physical = 3812 ; free virtual = 7666 
+// Tcl Message: Restored from archive | CPU: 2.900000 secs | Memory: 23.793007 MB | 
+// Tcl Message: Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9346.672 ; gain = 0.000 ; free physical = 3812 ; free virtual = 7666 
+// TclEventType: FLOORPLAN_MODIFY
+// TclEventType: DESIGN_REFRESH
+// HMemoryUtils.trashcanNow. Engine heap size: 4,020 MB. GUI used memory: 129 MB. Current time: 6/14/19, 6:40:04 PM CEST
+// Xgd.load filename: /tools/Xilinx/Vivado/2018.3/data/parts/xilinx/zynq/devint/zynq/xc7z020/xc7z020.xgd; ZipEntry: xc7z020_detail.xgd elapsed time: 1.6s
+// Device: addNotify
+// DeviceView Instantiated
+// WARNING: HEventQueue.dispatchEvent() is taking  4114 ms.
+// Device view-level: 0.0
+// RouteApi: Init Delay Mediator Swing Worker Finished
+// TclEventType: DRC_ADDED
+// Tcl Message: refresh_design: Time (s): cpu = 00:00:26 ; elapsed = 00:00:28 . Memory (MB): peak = 9351.781 ; gain = 5.109 ; free physical = 3750 ; free virtual = 7637 
+// TclEventType: DRC_ADDED
+// TclEventType: METHODOLOGY_ADDED
+// TclEventType: HFED_INIT_ROUTE_STORAGE_COMPLETED
+// RouteApi::loadEngineXgd elapsed time: 6s
+// Device view-level: 0.1
+// TclEventType: POWER_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  5013 ms.
+// TclEventType: TIMING_SUMMARY_UPDATED
+// WARNING: HEventQueue.dispatchEvent() is taking  1223 ms.
+// Elapsed time: 38 seconds
+dismissDialog("Reloading"); // bx (cp)
+// Elapsed time: 96 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Implementation, Open Implemented Design, Report Utilization]", 27, false); // u (Q, cp)
+// Run Command: PAResourceCommand.PACommandNames_RESOURCE_UTILIZATION
+// a (cp): Report Utilization: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (a)
+dismissDialog("Report Utilization"); // a (cp)
+// bx (cp):  Report Utilization : addNotify
+// Tcl Message: report_utilization -name utilization_1 
+// TclEventType: UTILIZATION_RESULT_GENERATED
+// HMemoryUtils.trashcanNow. Engine heap size: 4,319 MB. GUI used memory: 203 MB. Current time: 6/14/19, 6:42:02 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  2461 ms.
+// Tcl Message: report_utilization: Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 9351.781 ; gain = 0.000 ; free physical = 3382 ; free virtual = 7491 
+dismissDialog("Report Utilization"); // bx (cp)
+// Elapsed time: 31 seconds
+selectTree(PAResourceQtoS.ReportUtilTab_REPORT_UTILIZATION_NAVIGATION_TREE, "[Report Contents, Memory, Block RAM Tile]", 33, true); // l (Q, cp) - Node
+// Elapsed time: 44 seconds
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_CONSTRAINTS, "Constraints"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_IP, "IP"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_TEXT_EDITOR, "Text Editor"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_IMPORT, "Import"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_EXPORT, "Export"); // ac (cp)
+selectMenuItem(PAResourceCommand.PACommandNames_EXPORT_HARDWARE, "Export Hardware..."); // af (cp)
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+// Run Command: PAResourceCommand.PACommandNames_EXPORT_HARDWARE
+// X (cp): Export Hardware: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (X)
+selectButton("PAResourceItoN.NewExportHardwareDialog_EXPORTED_FILE_FOR_THIS_MODULE_WAS_Yes", "Yes"); // JButton (C, J)
+dismissDialog("Export Hardware"); // X (cp)
+// Tcl Message: file copy -force /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/design_2_wrapper.sysdef /home/yordan/Downloads/design_2_wrapper.hdf  
+selectMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+selectMenu(PAResourceItoN.MainMenuMgr_PROJECT, "Project"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_CONSTRAINTS, "Constraints"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_CHECKPOINT, "Checkpoint"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_IP, "IP"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_TEXT_EDITOR, "Text Editor"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_IMPORT, "Import"); // ac (cp)
+selectMenu(PAResourceItoN.MainMenuMgr_EXPORT, "Export"); // ac (cp)
+selectMenuItem(PAResourceCommand.PACommandNames_LAUNCH_HARDWARE, "Launch SDK"); // af (cp)
+dismissMenu(PAResourceItoN.MainMenuMgr_FILE, "File"); // X (q, cp)
+// Run Command: PAResourceCommand.PACommandNames_LAUNCH_HARDWARE
+// aa (cp): Launch SDK: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (aa)
+dismissDialog("Launch SDK"); // aa (cp)
+// Tcl Message: launch_sdk -workspace /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.sdk -hwspec /home/yordan/Downloads/design_2_wrapper.hdf 
+// Tcl Message: INFO: [Vivado 12-393] Launching SDK... INFO: [Vivado 12-417] Running xsdk -workspace /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.sdk -hwspec /home/yordan/Downloads/design_2_wrapper.hdf INFO: [Vivado 12-3157] SDK launch initiated. Please check console for any further messages. 
+// HMemoryUtils.trashcanNow. Engine heap size: 4,295 MB. GUI used memory: 194 MB. Current time: 6/14/19, 7:12:05 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  1024 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 4,287 MB. GUI used memory: 192 MB. Current time: 6/14/19, 7:42:05 PM CEST
+// TclEventType: HW_TARGET_NEEDS_CLOSE
+// TclEventType: HW_TARGET_CLOSE
+// TclEventType: HW_SYSMON_DELETE
+// TclEventType: HW_TARGET_UPDATE
+// TclEventType: DEBUG_PROBE_DELETE
+// Tcl Message: ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/003017A4D012A 
+// n (cp): Close Hardware Target: addNotify
+// TclEventType: HW_TARGET_NEEDS_CLOSE
+// TclEventType: HW_SERVER_UPDATE
+// Elapsed time: 3735 seconds
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (n)
+dismissDialog("Close Hardware Target"); // n (cp)
+// HMemoryUtils.trashcanNow. Engine heap size: 4,300 MB. GUI used memory: 192 MB. Current time: 6/14/19, 8:12:10 PM CEST
+// HMemoryUtils.trashcanNow. Engine heap size: 4,300 MB. GUI used memory: 192 MB. Current time: 6/14/19, 8:42:10 PM CEST
+// HMemoryUtils.trashcanNow. Engine heap size: 4,300 MB. GUI used memory: 192 MB. Current time: 6/14/19, 9:12:10 PM CEST
+// HMemoryUtils.trashcanNow. Engine heap size: 4,300 MB. GUI used memory: 192 MB. Current time: 6/14/19, 9:42:10 PM CEST
+// HMemoryUtils.trashcanNow. Engine heap size: 4,299 MB. GUI used memory: 191 MB. Current time: 6/14/19, 10:12:10 PM CEST
+// HMemoryUtils.trashcanNow. Engine heap size: 4,299 MB. GUI used memory: 192 MB. Current time: 6/14/19, 11:07:22 PM CEST

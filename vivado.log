@@ -1,0 +1,851 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Fri Jun 14 16:20:05 2019
+# Process ID: 2999
+# Current directory: /home/yordan/Music/software_package/in4073
+# Command line: vivado
+# Log file: /home/yordan/Music/software_package/in4073/vivado.log
+# Journal file: /home/yordan/Music/software_package/in4073/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.xpr
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/yordan/Music/PDP/rtl/mlite/FA.vhd'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/yordan/Music/PDP/rtl/mlite/bmul32.vhdl'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/yordan/Music/PDP/rtl/mlite/booth_mul.vhdl'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/yordan/Music/PDP/rtl/mlite/cla32.vhd'.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/Xilinx/Vivado/2018.3/data/ip'.
+open_project: Time (s): cpu = 00:00:25 ; elapsed = 00:00:11 . Memory (MB): peak = 6379.441 ; gain = 84.496 ; free physical = 514 ; free virtual = 11179
+open_run impl_1
+INFO: [Netlist 29-17] Analyzing 5082 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 3 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.3
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 7342.668 ; gain = 38.074 ; free physical = 184 ; free virtual = 10281
+Restored from archive | CPU: 4.950000 secs | Memory: 41.432892 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 7342.668 ; gain = 38.074 ; free physical = 184 ; free virtual = 10281
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 7342.668 ; gain = 0.000 ; free physical = 190 ; free virtual = 10288
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2912 instances were transformed.
+  RAM256X1S => RAM256X1S (MUXF7, MUXF7, MUXF8, RAMS64E, RAMS64E, RAMS64E, RAMS64E): 96 instances
+  RAM32M => RAM32M (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 64 instances
+  RAM64M => RAM64M (RAMD64E, RAMD64E, RAMD64E, RAMD64E): 2720 instances
+  RAM64X1D => RAM64X1D (RAMD64E, RAMD64E): 32 instances
+
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+INFO: [Common 17-14] Message 'Designutils 20-3303' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+open_run: Time (s): cpu = 00:01:26 ; elapsed = 00:00:48 . Memory (MB): peak = 7547.090 ; gain = 1056.590 ; free physical = 147 ; free virtual = 10157
+open_report: Time (s): cpu = 00:00:23 ; elapsed = 00:00:10 . Memory (MB): peak = 7662.152 ; gain = 115.062 ; free physical = 126 ; free virtual = 9869
+update_compile_order -fileset sources_1
+report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+report_timing_summary: Time (s): cpu = 00:00:53 ; elapsed = 00:00:16 . Memory (MB): peak = 7720.543 ; gain = 27.711 ; free physical = 133 ; free virtual = 9734
+report_utilization -name utilization_1
+report_utilization: Time (s): cpu = 00:00:20 ; elapsed = 00:00:08 . Memory (MB): peak = 7746.309 ; gain = 9.719 ; free physical = 153 ; free virtual = 9738
+open_bd_design {/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd}
+Adding cell -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - proc_sys_reset_0
+Adding cell -- xilinx.com:module_ref:crossbar_wrap:1.0 - crossbar_wrap_0
+Adding cell -- xilinx.com:ip:axi_bram_ctrl:4.1 - axi_bram_ctrl_0
+Adding cell -- xilinx.com:module_ref:axi_full2lite_converter:1.0 - axi_full2lite_conver_0
+Adding cell -- xilinx.com:ip:smartconnect:1.0 - axi_smc
+Adding cell -- xilinx.com:ip:axi_gpio:2.0 - axi_gpio_0
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - axi_interconnect_0
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - xbar
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Adding cell -- xilinx.com:ip:xadc_wiz:3.3 - xadc_wiz_0
+Adding cell -- xilinx.com:module_ref:bram:1.0 - bram_0
+Adding cell -- xilinx.com:module_ref:cpu:1.0 - cpu_0
+Adding cell -- xilinx.com:module_ref:uart:1.0 - uart_0
+WARNING: [BD 41-1731] Type mismatch between connected pins: /axi_bram_ctrl_0/bram_clk_a(clk) and /bram_0/bram_clk_a(undef)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /axi_bram_ctrl_0/bram_rst_a(rst) and /bram_0/bram_rst_a(undef)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /axi_gpio_0/gpio_io_o(undef) and /proc_sys_reset_0/ext_reset_in(rst)
+Excluding </crossbar_wrap_0/cpu_s_axi/reg0> from </cpu_0/axi>
+Successfully read diagram <design_2> from BD file </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd>
+startgroup
+set_property -dict [list CONFIG.cache_offset_width {3}] [get_bd_cells cpu_0]
+endgroup
+update_module_reference design_2_cpu_0_0
+INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'default_cache_way_width' by 1 for port or parameter 'cache_way_width'
+INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'default_cache_index_width' by 10 for port or parameter 'cache_index_width'
+INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'default_cache_offset_width' by 3 for port or parameter 'cache_offset_width'
+INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'default_cache_address_width' by 26 for port or parameter 'cache_address_width'
+INFO: [IP_Flow 19-5107] Inferred bus interface 'axi' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'aresetn' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'aclk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4728] Bus Interface 'aresetn': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4728] Bus Interface 'aclk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'axi'.
+INFO: [IP_Flow 19-4728] Bus Interface 'aclk': Added interface parameter 'ASSOCIATED_RESET' with value 'aresetn'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+Upgrading '/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd'
+INFO: [IP_Flow 19-1972] Upgraded design_2_cpu_0_0 from cpu_v1_0 1.0 to cpu_v1_0 1.0
+Excluding </crossbar_wrap_0/cpu_s_axi/reg0> from </cpu_0/axi>
+Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd> 
+Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ui/bd_1fdbff51.ui> 
+update_module_reference: Time (s): cpu = 00:00:20 ; elapsed = 00:00:10 . Memory (MB): peak = 7929.980 ; gain = 48.020 ; free physical = 287 ; free virtual = 9719
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+WARNING: [IP_Flow 19-474] Invalid Parameter 'Component_Name'
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_gpio_0/s_axi_aresetn (associated clock /axi_gpio_0/s_axi_aclk) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/ARESETN (associated clock /axi_interconnect_0/ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/interconnect_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/S00_ARESETN (associated clock /axi_interconnect_0/S00_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/M00_ARESETN (associated clock /axi_interconnect_0/M00_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/M01_ARESETN (associated clock /axi_interconnect_0/M01_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /xadc_wiz_0/s_axi_aresetn (associated clock /xadc_wiz_0/s_axi_aclk) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1630] All addressable segments in </cpu_0/axi> are excluded.
+CRITICAL WARNING: [BD 41-1629] </crossbar_wrap_0/cpu_s_axi/reg0> is excluded from all addressable master spaces.
+WARNING: [xilinx.com:ip:axi_bram_ctrl:4.1-1] /axi_bram_ctrl_0: PORT /axi_bram_ctrl_0/BRAM_PORTA is UNCONNECTED in the design. Leaving the BRAM interface unconnected will cause BRAMs not to be initialized by Data2Mem
+WARNING: [xilinx.com:ip:axi_bram_ctrl:4.1-1] /axi_bram_ctrl_0: PORT /axi_bram_ctrl_0/BRAM_PORTA is UNCONNECTED in the design. Leaving the BRAM interface unconnected will cause BRAMs not to be initialized by Data2Mem
+WARNING: [BD 41-927] Following properties on pin /crossbar_wrap_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /axi_full2lite_conver_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /xadc_wiz_0/s_axi_aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /uart_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /cpu_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd> 
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.vhd
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/sim/design_2.vhd
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hdl/design_2_wrapper.vhd
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block proc_sys_reset_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block cpu_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block crossbar_wrap_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block bram_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_full2lite_conver_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block uart_0 .
+Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0.hwh
+Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0_bd.tcl
+Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/synth/design_2_axi_smc_0.hwdef
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_smc .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xadc_wiz_0 .
+WARNING: [IP_Flow 19-3452] Invalid long/float value '3e+07' specified for parameter 'FREQ_HZ(CLK)' for design_2_auto_pc_0.
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_pc .
+Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2.hwh
+Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2_bd.tcl
+Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.hwdef
+[Fri Jun 14 16:56:41 2019] Launched synth_1...
+Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/synth_1/runme.log
+launch_runs: Time (s): cpu = 00:00:56 ; elapsed = 00:00:46 . Memory (MB): peak = 8218.453 ; gain = 199.605 ; free physical = 170 ; free virtual = 9527
+launch_runs impl_1 -jobs 4
+[Fri Jun 14 17:09:05 2019] Launched impl_1...
+Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/runme.log
+report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_2
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+report_timing_summary: Time (s): cpu = 00:00:14 ; elapsed = 00:00:05 . Memory (MB): peak = 8218.453 ; gain = 0.000 ; free physical = 3382 ; free virtual = 9351
+refresh_design
+INFO: [Netlist 29-17] Analyzing 2555 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.3
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 8218.453 ; gain = 0.000 ; free physical = 3600 ; free virtual = 9696
+Restored from archive | CPU: 2.790000 secs | Memory: 25.695290 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 8218.453 ; gain = 0.000 ; free physical = 3600 ; free virtual = 9696
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+INFO: [Common 17-14] Message 'Designutils 20-3303' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+refresh_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:22 . Memory (MB): peak = 8240.555 ; gain = 22.102 ; free physical = 3492 ; free virtual = 9595
+open_report: Time (s): cpu = 00:00:10 ; elapsed = 00:00:07 . Memory (MB): peak = 8240.555 ; gain = 0.000 ; free physical = 3316 ; free virtual = 9420
+report_utilization -name utilization_1
+report_utilization: Time (s): cpu = 00:00:10 ; elapsed = 00:00:06 . Memory (MB): peak = 8240.555 ; gain = 0.000 ; free physical = 3305 ; free virtual = 9426
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Fri Jun 14 17:19:46 2019] Launched impl_1...
+Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/runme.log
+open_hw
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2018.3
+  **** Build date : Dec  6 2018-23:53:53
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/003017A4D012A
+open_hw_target: Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 8808.465 ; gain = 567.910 ; free physical = 2158 ; free virtual = 8545
+set_property PROGRAM.FILE {/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/design_2_wrapper.bit} [get_hw_devices xc7z020_1]
+current_hw_device [get_hw_devices xc7z020_1]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1435] Device xc7z020 (JTAG device index = 1) is not programmed (DONE status = 0).
+file copy -force /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/design_2_wrapper.sysdef /home/yordan/Downloads/design_2_wrapper.hdf
+
+launch_sdk -workspace /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.sdk -hwspec /home/yordan/Downloads/design_2_wrapper.hdf
+INFO: [Vivado 12-393] Launching SDK...
+INFO: [Vivado 12-417] Running xsdk -workspace /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.sdk -hwspec /home/yordan/Downloads/design_2_wrapper.hdf
+INFO: [Vivado 12-3157] SDK launch initiated. Please check console for any further messages.
+open_bd_design {/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd}
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+WARNING: [IP_Flow 19-474] Invalid Parameter 'Component_Name'
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+startgroup
+set_property -dict [list CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {40}] [get_bd_cells processing_system7_0]
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+endgroup
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+WARNING: [IP_Flow 19-474] Invalid Parameter 'Component_Name'
+startgroup
+set_property -dict [list CONFIG.clock_frequency {40000000}] [get_bd_cells uart_0]
+endgroup
+update_module_reference design_2_uart_0_0
+INFO: [IP_Flow 19-5107] Inferred bus interface 'axi' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'aresetn' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'aclk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4728] Bus Interface 'aresetn': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4728] Bus Interface 'aclk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'axi'.
+INFO: [IP_Flow 19-4728] Bus Interface 'aclk': Added interface parameter 'ASSOCIATED_RESET' with value 'aresetn'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+Upgrading '/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd'
+INFO: [IP_Flow 19-1972] Upgraded design_2_uart_0_0 from uart_v1_0 1.0 to uart_v1_0 1.0
+Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd> 
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+WARNING: [IP_Flow 19-474] Invalid Parameter 'Component_Name'
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_gpio_0/s_axi_aresetn (associated clock /axi_gpio_0/s_axi_aclk) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/ARESETN (associated clock /axi_interconnect_0/ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/interconnect_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/S00_ARESETN (associated clock /axi_interconnect_0/S00_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/M00_ARESETN (associated clock /axi_interconnect_0/M00_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/M01_ARESETN (associated clock /axi_interconnect_0/M01_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /xadc_wiz_0/s_axi_aresetn (associated clock /xadc_wiz_0/s_axi_aclk) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1630] All addressable segments in </cpu_0/axi> are excluded.
+CRITICAL WARNING: [BD 41-1629] </crossbar_wrap_0/cpu_s_axi/reg0> is excluded from all addressable master spaces.
+WARNING: [xilinx.com:ip:axi_bram_ctrl:4.1-1] /axi_bram_ctrl_0: PORT /axi_bram_ctrl_0/BRAM_PORTA is UNCONNECTED in the design. Leaving the BRAM interface unconnected will cause BRAMs not to be initialized by Data2Mem
+WARNING: [xilinx.com:ip:axi_bram_ctrl:4.1-1] /axi_bram_ctrl_0: PORT /axi_bram_ctrl_0/BRAM_PORTA is UNCONNECTED in the design. Leaving the BRAM interface unconnected will cause BRAMs not to be initialized by Data2Mem
+WARNING: [BD 41-927] Following properties on pin /crossbar_wrap_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /axi_full2lite_conver_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /xadc_wiz_0/s_axi_aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /cpu_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /uart_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd> 
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.vhd
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/sim/design_2.vhd
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hdl/design_2_wrapper.vhd
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block proc_sys_reset_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block cpu_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block crossbar_wrap_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block bram_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_full2lite_conver_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block uart_0 .
+Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0.hwh
+Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0_bd.tcl
+Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/synth/design_2_axi_smc_0.hwdef
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_smc .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xadc_wiz_0 .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file '/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_auto_pc_0/design_2_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_pc .
+Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2.hwh
+Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2_bd.tcl
+Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.hwdef
+[Fri Jun 14 17:31:14 2019] Launched synth_1...
+Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/synth_1/runme.log
+[Fri Jun 14 17:31:14 2019] Launched impl_1...
+Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/runme.log
+launch_runs: Time (s): cpu = 00:01:06 ; elapsed = 00:00:55 . Memory (MB): peak = 9142.316 ; gain = 128.133 ; free physical = 1013 ; free virtual = 7816
+report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+INFO: [Common 17-14] Message 'Designutils 20-3303' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+report_timing_summary: Time (s): cpu = 00:00:36 ; elapsed = 00:00:14 . Memory (MB): peak = 9142.316 ; gain = 0.000 ; free physical = 2493 ; free virtual = 7355
+refresh_design
+INFO: [Netlist 29-17] Analyzing 2555 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.3
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9142.316 ; gain = 0.000 ; free physical = 2462 ; free virtual = 7584
+Restored from archive | CPU: 2.980000 secs | Memory: 26.024498 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9142.316 ; gain = 0.000 ; free physical = 2462 ; free virtual = 7584
+refresh_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:23 . Memory (MB): peak = 9144.777 ; gain = 2.461 ; free physical = 2337 ; free virtual = 7474
+open_report: Time (s): cpu = 00:00:10 ; elapsed = 00:00:07 . Memory (MB): peak = 9184.797 ; gain = 0.000 ; free physical = 2067 ; free virtual = 7208
+CRITICAL WARNING: [Timing 38-282] The design failed to meet the timing requirements. Please see the timing summary report for details on the timing violations.
+open_bd_design {/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd}
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+WARNING: [IP_Flow 19-474] Invalid Parameter 'Component_Name'
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+startgroup
+set_property -dict [list CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {35}] [get_bd_cells processing_system7_0]
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+endgroup
+startgroup
+set_property -dict [list CONFIG.clock_frequency {35000000}] [get_bd_cells uart_0]
+endgroup
+update_module_reference design_2_uart_0_0
+INFO: [IP_Flow 19-5107] Inferred bus interface 'axi' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'aresetn' of definition 'xilinx.com:signal:reset:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'aclk' of definition 'xilinx.com:signal:clock:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4728] Bus Interface 'aresetn': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4728] Bus Interface 'aclk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'axi'.
+INFO: [IP_Flow 19-4728] Bus Interface 'aclk': Added interface parameter 'ASSOCIATED_RESET' with value 'aresetn'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+Upgrading '/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd'
+INFO: [IP_Flow 19-1972] Upgraded design_2_uart_0_0 from uart_v1_0 1.0 to uart_v1_0 1.0
+Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd> 
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-1]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_2 has negative value -0.009 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [PSU-2]  Parameter : PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_3 has negative value -0.033 . PS DDR interfaces might fail when entering negative DQS skew values. 
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_gpio_0/s_axi_aresetn (associated clock /axi_gpio_0/s_axi_aclk) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/ARESETN (associated clock /axi_interconnect_0/ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/interconnect_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/S00_ARESETN (associated clock /axi_interconnect_0/S00_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/M00_ARESETN (associated clock /axi_interconnect_0/M00_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /axi_interconnect_0/M01_ARESETN (associated clock /axi_interconnect_0/M01_ACLK) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /xadc_wiz_0/s_axi_aresetn (associated clock /xadc_wiz_0/s_axi_aclk) is connected to asynchronous reset source /processing_system7_0/FCLK_RESET0_N.
+This may prevent design from meeting timing. Instead it should be connected to reset source /proc_sys_reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1630] All addressable segments in </cpu_0/axi> are excluded.
+CRITICAL WARNING: [BD 41-1629] </crossbar_wrap_0/cpu_s_axi/reg0> is excluded from all addressable master spaces.
+WARNING: [xilinx.com:ip:axi_bram_ctrl:4.1-1] /axi_bram_ctrl_0: PORT /axi_bram_ctrl_0/BRAM_PORTA is UNCONNECTED in the design. Leaving the BRAM interface unconnected will cause BRAMs not to be initialized by Data2Mem
+WARNING: [xilinx.com:ip:axi_bram_ctrl:4.1-1] /axi_bram_ctrl_0: PORT /axi_bram_ctrl_0/BRAM_PORTA is UNCONNECTED in the design. Leaving the BRAM interface unconnected will cause BRAMs not to be initialized by Data2Mem
+WARNING: [BD 41-927] Following properties on pin /crossbar_wrap_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /axi_full2lite_conver_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /xadc_wiz_0/s_axi_aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /cpu_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+WARNING: [BD 41-927] Following properties on pin /uart_0/aclk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_2_processing_system7_0_0_FCLK_CLK0 
+Wrote  : </home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/design_2.bd> 
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.vhd
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/sim/design_2.vhd
+VHDL Output written to : /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hdl/design_2_wrapper.vhd
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block proc_sys_reset_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block cpu_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block crossbar_wrap_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block bram_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_full2lite_conver_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block uart_0 .
+Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0.hwh
+Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/hw_handoff/design_2_axi_smc_0_bd.tcl
+Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_axi_smc_0/bd_0/synth/design_2_axi_smc_0.hwdef
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_smc .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xadc_wiz_0 .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file '/home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/ip/design_2_auto_pc_0/design_2_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_pc .
+Exporting to file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2.hwh
+Generated Block Design Tcl file /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/hw_handoff/design_2_bd.tcl
+Generated Hardware Definition File /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.srcs/sources_1/bd/design_2/synth/design_2.hwdef
+[Fri Jun 14 18:11:16 2019] Launched synth_1...
+Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/synth_1/runme.log
+[Fri Jun 14 18:11:16 2019] Launched impl_1...
+Run output will be captured here: /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/runme.log
+launch_runs: Time (s): cpu = 00:01:17 ; elapsed = 00:01:07 . Memory (MB): peak = 9346.672 ; gain = 150.871 ; free physical = 1751 ; free virtual = 7396
+report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 10 -input_pins -routable_nets -name timing_1
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 4 CPUs
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+WARNING: [Designutils 20-3303] unexpected site type 'IOPAD' in HDPYFinalizeIO
+INFO: [Common 17-14] Message 'Designutils 20-3303' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+report_timing_summary: Time (s): cpu = 00:00:35 ; elapsed = 00:00:17 . Memory (MB): peak = 9346.672 ; gain = 0.000 ; free physical = 4066 ; free virtual = 7447
+refresh_design
+INFO: [Netlist 29-17] Analyzing 2555 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.3
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9346.672 ; gain = 0.000 ; free physical = 3812 ; free virtual = 7666
+Restored from archive | CPU: 2.900000 secs | Memory: 23.793007 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9346.672 ; gain = 0.000 ; free physical = 3812 ; free virtual = 7666
+refresh_design: Time (s): cpu = 00:00:26 ; elapsed = 00:00:28 . Memory (MB): peak = 9351.781 ; gain = 5.109 ; free physical = 3750 ; free virtual = 7637
+open_report: Time (s): cpu = 00:00:10 ; elapsed = 00:00:07 . Memory (MB): peak = 9351.781 ; gain = 0.000 ; free physical = 3482 ; free virtual = 7374
+report_utilization -name utilization_1
+report_utilization: Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 9351.781 ; gain = 0.000 ; free physical = 3382 ; free virtual = 7491
+file copy -force /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.runs/impl_1/design_2_wrapper.sysdef /home/yordan/Downloads/design_2_wrapper.hdf
+
+launch_sdk -workspace /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.sdk -hwspec /home/yordan/Downloads/design_2_wrapper.hdf
+INFO: [Vivado 12-393] Launching SDK...
+INFO: [Vivado 12-417] Running xsdk -workspace /home/yordan/Music/PDP/fpga/zynq_fpga/zynq_fpga.sdk -hwspec /home/yordan/Downloads/design_2_wrapper.hdf
+INFO: [Vivado 12-3157] SDK launch initiated. Please check console for any further messages.
+ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/003017A4D012A
