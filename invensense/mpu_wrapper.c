@@ -72,7 +72,7 @@ void get_raw_sensor_data(void)
 			saz = accel[2];
 		}
 	}
-	else printf("Error reading raw sensor fifo: %d\n", read_stat);
+	//else printf("Error reading raw sensor fifo: %d\n", read_stat);
 }
 
 
