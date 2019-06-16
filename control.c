@@ -22,12 +22,19 @@
 #define cap_base(num) num < 0 ? 0 : num
 #define cap_lift(num,elevation) num > elevation ? elevation : num
 
-#define a0 16384
-#define a1 32768
-#define a2 16384
-#define b1 -6763
-#define b2 18727
+//butterworth definitions
+#define a0 16384	//1
+#define a1 32768	//2
+#define a2 16384	//1
+#define b1 -6763	//-0.41280
+#define b2 18727	//1.14298
 #define gain 245760
+
+//kalman definitions
+#define P2PHI 377
+#define Q2THETA 377
+#define C1 2097152
+#define C2 16384
 
 int32_t roll;
 int32_t pitch;
@@ -36,13 +43,13 @@ uint32_t lift;
 uint16_t commCounter = 0;
 int8_t flag;
 
+//butterworth variables
 int32_t _x0 = 0;
 int32_t _x1 = 0;
 int32_t _x2 = 0;
 int32_t _y0 = 0;
 int32_t _y1 = 0;
 int32_t _y2 = 0;
-
 
 int32_t x_roll[3] = {0, 0, 0};
 int32_t x_pitch[3] = {0, 0, 0};
@@ -54,16 +61,22 @@ int32_t y_pitch[3] = {0, 0, 0};
 int32_t y_yaw[3] = {0, 0, 0};
 int32_t y_lift[3] = {0, 0, 0};
 
-
+//kalman variables
+int32_t p;
+int32_t q;
+int32_t kalman_phi;
+int32_t kalman_theta;
+int32_t p_b;
+int32_t q_b;
 
 void commStatus(){
     if(rx_queue.count > 0){
         commCounter = 0;
     } else {
         commCounter++;
-        printf("rx_queue.count = %d\n", rx_queue.count);
-        printf("commCounter--\n");
-        printf("commCounter = %d\n", commCounter);
+        // printf("rx_queue.count = %d\n", rx_queue.count);
+        // printf("commCounter--\n");
+        // printf("commCounter = %d\n", commCounter);
     }
     
     if(commCounter == 500 && mode != SAFE){
@@ -457,8 +470,8 @@ void raw_control_mode(){
 		
 	int32_t lift_status; 
 	int32_t error_yawrate;
-	// int32_t error_roll;
-	// int32_t error_pitch;
+	int32_t error_roll;
+	int32_t error_pitch;
 	
 	int32_t K_r; //roll action
 	int32_t K_p; //pitch action
@@ -466,7 +479,9 @@ void raw_control_mode(){
 	initialize_flight_Parameters();
 	get_raw_sensor_data();
 	butterworth(x_yaw, y_yaw, sr);
-	// kalmanFilter();
+	butterworth(x_pitch, y_pitch, sq);
+	butterworth(x_roll, y_roll, sp);
+	// kalman();
 	
 	lift_status = (lift == 0 ? 0 : 1);	
 	
@@ -474,25 +489,13 @@ void raw_control_mode(){
 	error_yawrate = intToFix(yaw) - y_yaw[2]; //calculate yaw rate error
 	// printf("error_yawrate = %ld\n", fixToInt(error_yawrate));
 	
-	//roll control with kalman
-	// p = sp - p_b;
-	// phi = phi + p * P2PHI;
-	// phi = phi - (phi - say) / C1;
-	// p_b = p_b + (phi - say) / C2;
+	error_roll = roll - (phi >> 8); //calculate roll error
+	K_r = (4 * P1) * error_roll - (P2 * (sp - zp)>>2); //integrate terms based on roll and rollrate error added
+	// K_r = 0;
 
-	//error_roll = roll - (phi >> 8); //calculate roll error
-	// K_r = (4 * P1) * error_roll - (P2 * (sp - zp)>>2); //integrate terms based on roll and rollrate error added
-	K_r = 0;
-
-	//pitch control with kalman
-	// q = sq - q_b;
-	// theta = theta + q * P2THETA;
-	// theta = theta - (theta - sax) / C1;
-	// q_b = q_b + (theta - sax) / C2;
-
-	//error_pitch = -(pitch - (theta >> 8)); //calculate pitch error
-	// K_p = (4 * P1) * error_pitch - (P2 * (sq - zq)>>2); //integrate terms based on pitch and pitchrate error added
-	K_p = 0;
+	error_pitch = -(pitch - (theta >> 8)); //calculate pitch error
+	K_p = (4 * P1) * error_pitch - (P2 * (sq - zq)>>2); //integrate terms based on pitch and pitchrate error added
+	// K_p = 0;
 
 	//update motors based on lift and control for pitch,roll,yaw rate
 	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p>>6) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
@@ -501,8 +504,6 @@ void raw_control_mode(){
 	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + (K_r>>6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
 
 	// printf("a lot of things = %ld", fixToInt(((intToFix(P) * error_yawrate)>>6)));
-	printf("ae[0] = %d, ae[1] = %d, ae[2] = %d, ae[3] = %d ", ae[0], ae[1], ae[2], ae[3]);
-	printf("P = %d, P1 = %d, P2 = %d\n ", P, P1, P2);
 
 	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
@@ -517,7 +518,9 @@ void raw_control_mode(){
 
 	// printf("pitch = %d, error_p = %d, K_p = %d, roll = %d, error_r = %d, K_r = %d, P = %d, P1 = %d, P2 = %d, sp = %d, sq = %d\n",pitch,error_pitch,K_p,roll,error_roll,K_r,P, P1,P2,sp,sq);
 	// printf("pitch = %d, roll = %d,  P = %d, P1 = %d, P2 = %d\n", pitch, roll, P, P1, P2);
-	// printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);	
+	// printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);
+	// printf("ae[0] = %d, ae[1] = %d, ae[2] = %d, ae[3] = %d ", ae[0], ae[1], ae[2], ae[3]);
+	// printf("P = %d, P1 = %d, P2 = %d\n ", P, P1, P2);	
 	
 	update_motors();
 }
@@ -582,15 +585,68 @@ void butterworth(int32_t *x, int32_t *y, int16_t sensor){
 		_y1 = y[1];
 		_y0 = y[0];
 
-		_y2 = fixed_mul_14(a0,_x0) + fixed_mul_14(a1,_x1) + fixed_mul_14(a2,_x2) - fixed_mul_14(b1,_y0) - fixed_mul_14(b2,_y1);
+		_y2 = fixed_mul_14(a0,_x0) + fixed_mul_14(a1,_x1) + fixed_mul_14(a2,_x2) + fixed_mul_14(b1,_y0) + fixed_mul_14(b2,_y1);
 		y[2] = _y2;
 	}
 }
 
+void kalman()
+{
+	//pitch control with kalman
+	q = intToFix(sq) - q_b;
+	kalman_theta = kalman_theta + fixed_mul_14(q,Q2THETA);
+	kalman_theta = kalman_theta - fixed_div_14((kalman_theta - intToFix(sax)), C1);
+	q_b = q_b + fixed_div_14(fixed_div_14((kalman_theta - intToFix(sax)),(intToFix(1000))),intToFix(1000));
+
+	theta = fixToInt(kalman_theta);
+
+	//roll control with kalman
+	p = intToFix(sp) - p_b;
+	kalman_phi = kalman_phi + fixed_mul_14(p,P2PHI);
+	kalman_phi = kalman_phi - fixed_div_14((kalman_phi - intToFix(say)), C1);
+	p_b = p_b + fixed_div_14(fixed_div_14((kalman_phi - intToFix(say)),(intToFix(1000))),intToFix(1000));
+
+	phi = fixToInt(kalman_phi);
+
+}
 
 void height_control_mode(){
 
-}
+	if(!flag){
+		imu_init(false, 1000);
+		gradual_lift();
+		flag = 1;
+	}
+
+	int32_t lift_status; 
+	int32_t error_lift;
+
+	//calibrated height in zaz
+	initialize_flight_Parameters();
+	// get_raw_sensor_data();
+	butterworth(x_lift,y_lift,pressure);
+
+	lift_status = (lift == 0 ? 0 : 1);
+
+	error_lift = intToFix(lift) - y_lift[2];
+
+	//update motors based on pitch,roll,lift and control for yaw
+	ae[0] = ((lift * MOTOR_RELATION) - fixToInt(((fixed_mul_14(intToFix(P), error_lift)))) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - fixToInt(((fixed_mul_14(intToFix(P), error_lift)))) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) - fixToInt(((fixed_mul_14(intToFix(P), error_lift)))) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) - fixToInt(((fixed_mul_14(intToFix(P), error_lift)))) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+
+	//ensure motor speeds are within acceptable bounds
+	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
+	if(ae[1] > MAX_SPEED) ae[1] = MAX_SPEED;
+	if(ae[2] > MAX_SPEED) ae[2] = MAX_SPEED;
+	if(ae[3] > MAX_SPEED) ae[3] = MAX_SPEED;
+
+	if(ae[0] < MIN_SPEED) ae[0] = (MIN_SPEED * lift_status);
+	if(ae[1] < MIN_SPEED) ae[1] = (MIN_SPEED * lift_status);
+	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
+	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
+}	
 
 void wireless_control_mode(){
 
