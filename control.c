@@ -74,9 +74,9 @@ void commStatus(){
         commCounter = 0;
     } else {
         commCounter++;
-        // printf("rx_queue.count = %d\n", rx_queue.count);
-        // printf("commCounter--\n");
-        // printf("commCounter = %d\n", commCounter);
+        printf("rx_queue.count = %d\n", rx_queue.count);
+        printf("commCounter--\n");
+        printf("commCounter = %d\n", commCounter);
     }
     
     if(commCounter == 500 && mode != SAFE){
@@ -488,13 +488,13 @@ void raw_control_mode(){
 	//yaw rate control
 	error_yawrate = intToFix(yaw) - y_yaw[2]; //calculate yaw rate error
 	// printf("error_yawrate = %ld\n", fixToInt(error_yawrate));
-	
+
 	error_roll = roll - (phi >> 8); //calculate roll error
-	K_r = (4 * P1) * error_roll - (P2 * (sp - zp)>>2); //integrate terms based on roll and rollrate error added
+	K_r = (4 * P1) * error_roll - (P2 * fixToInt(y_roll[2]) >>2); //integrate terms based on roll and rollrate error added
 	// K_r = 0;
 
 	error_pitch = -(pitch - (theta >> 8)); //calculate pitch error
-	K_p = (4 * P1) * error_pitch - (P2 * (sq - zq)>>2); //integrate terms based on pitch and pitchrate error added
+	K_p = (4 * P1) * error_pitch - (P2 * fixToInt(y_pitch[2]) >>2); //integrate terms based on pitch and pitchrate error added
 	// K_p = 0;
 
 	//update motors based on lift and control for pitch,roll,yaw rate
