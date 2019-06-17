@@ -26,9 +26,9 @@
 #define a0 16384	//1
 #define a1 32768	//2
 #define a2 16384	//1
-#define b1 -3208	//-0.41280
-#define b2 6054	//1.14298
-#define gain 7931
+#define b1 -6763	//-0.41280
+#define b2 18727	//1.14298
+#define gain 242890
 
 //kalman definitions
 #define P2PHI 377
@@ -471,7 +471,7 @@ void raw_control_mode(){
 
 
 	if(!flag){
-		imu_init(false, 1000);
+		imu_init(false, 50);
 		gradual_lift();
 		flag = 1;
 	}
@@ -510,10 +510,10 @@ void raw_control_mode(){
 	// K_p = 0;
 
 	//update motors based on lift and control for pitch,roll,yaw rate
-	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p >> 6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_r >> 6) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + (K_p >> 6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + (K_r >> 6) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_r) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + (K_p) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + (K_r) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
 
 	// printf("a lot of things = %ld", fixToInt(((intToFix(P) * error_yawrate)>>6)));
 
@@ -581,7 +581,7 @@ int32_t fixed_mul_14(int32_t x, int32_t y){
 void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 
 	// sensor = sensor >> 6;
-	for (int i = 0; i < 2; ++i){
+	
 	
 		sensor >>= 6;
 		x[0] = x[1];
@@ -608,7 +608,7 @@ void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 		_y2 = fixed_mul_14(a0,_x0) + fixed_mul_14(a1,_x1) + fixed_mul_14(a2,_x2) + fixed_mul_14(b1,_y0) + fixed_mul_14(b2,_y1);
 		y[2] = _y2;
 
-	}
+	
 }
 
 int32_t diff(int32_t a, int32_t b){
