@@ -253,7 +253,7 @@ int main(int argc, char **argv)
 	int 			fd;
 	struct 			js_event js;
 	unsigned int 	time;
-
+	int8_t period = 20; // 20ms period, 50Hz freq
 
 	int8_t yawTx;
 	int8_t rollTx;
@@ -298,7 +298,7 @@ int main(int argc, char **argv)
 	
 	for (;;)
 	{
-		if (mon_time_ms() - time >= 20){
+		if (mon_time_ms() - time >= period){
 
 			while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
 				switch(js.type & ~JS_EVENT_INIT) {
