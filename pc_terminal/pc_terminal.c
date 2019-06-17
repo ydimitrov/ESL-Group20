@@ -279,13 +279,13 @@ int main(int argc, char **argv)
 	input.P1 = 0;
 	input.P2 = 0;
 
-	// if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
-	// 	//perror("jstest");
-	// 	printf("Failed to initiate communication with joystick!\n");
-	// 	exit(1);
-	// }
+	if ((fd = open(JS_DEV, O_RDONLY)) < 0) {
+		//perror("jstest");
+		printf("Failed to initiate communication with joystick!\n");
+		exit(1);
+	}
 
-	// fcntl(fd, F_SETFL, O_NONBLOCK);
+	fcntl(fd, F_SETFL, O_NONBLOCK);
 
 
 	term_initio();
@@ -300,48 +300,48 @@ int main(int argc, char **argv)
 	{
 		if (mon_time_ms() - time >= 20){
 
-			// while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
-			// 	switch(js.type & ~JS_EVENT_INIT) {
-			// 		case JS_EVENT_BUTTON:
-			// 			button[js.number] = js.value;
-			// 			if (js.value == 1)
-			// 			{
-			// 				if (js.number == 0)
-			// 				{
-			// 					input.mode = PANIC_MODE;
-			// 				}
-			// 				else if (js.number == 1)
-			// 				{
-			// 					input.mode = SAFE_MODE;
-			// 				}
-			// 				else
-			// 				{
-			// 					input.mode = js.number;
-			// 				}
-			// 			}
-			// 			break;
-			// 		case JS_EVENT_AXIS:
-			// 			axis[js.number] = js.value;
-			// 			if (js.number == 0)
-			// 			{
-			// 				input.roll = (int) js.value/256;
-			// 			}
-			// 			else if (js.number == 1)
-			// 			{
-			// 				input.pitch = -(int) js.value/256;
-			// 			}
-			// 			else if (js.number == 2)
-			// 			{	
-			// 				input.yaw = (int) js.value/256;
-			// 			}
-			// 			else if (js.number == 3)
-			// 			{
-			// 				input.lift = (int) -js.value/256;
-			// 			}
-			// 			break;
-			// 		default: break;
-			// 	}
-			// }
+			while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
+				switch(js.type & ~JS_EVENT_INIT) {
+					case JS_EVENT_BUTTON:
+						button[js.number] = js.value;
+						if (js.value == 1)
+						{
+							if (js.number == 0)
+							{
+								input.mode = PANIC_MODE;
+							}
+							else if (js.number == 1)
+							{
+								input.mode = SAFE_MODE;
+							}
+							else
+							{
+								input.mode = js.number;
+							}
+						}
+						break;
+					case JS_EVENT_AXIS:
+						axis[js.number] = js.value;
+						if (js.number == 0)
+						{
+							input.roll = (int) js.value/256;
+						}
+						else if (js.number == 1)
+						{
+							input.pitch = -(int) js.value/256;
+						}
+						else if (js.number == 2)
+						{	
+							input.yaw = (int) js.value/256;
+						}
+						else if (js.number == 3)
+						{
+							input.lift = (int) -js.value/256;
+						}
+						break;
+					default: break;
+				}
+			}
 
 			keyboardfunction();
 

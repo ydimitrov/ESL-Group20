@@ -170,11 +170,11 @@ void storeValues(void){
 
 void fsmReceive(){
 
-	(statesFunc)();
+	// (statesFunc)();
 
-	// for (int i = 0; i < 17; i++){  // 17 [0-16] states are required for one packet
-	// 	(statesFunc)();
-	// }
+	for (int i = 0; i < 17; i++){  // 17 [0-16] states are required for one packet
+		(statesFunc)();
+	}
 }
 
 uint8_t checkModeByte(uint8_t byte){
