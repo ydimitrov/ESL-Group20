@@ -385,10 +385,10 @@ void yaw_control_mode()
 	error = yaw - (sr - zr); //calculate yaw rate error
 
 	//update motors based on pitch,roll,lift and control for yaw
-	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - ((P * error)>>8) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + ((P * error)>>8) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
-	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - ((P * error)>>8) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
-	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + ((P * error)>>8) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) + ((P * error)>>6) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION)  - ((P * error)>>6) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + ((P * error)>>6) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
+	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION)  - ((P * error)>>6) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
 
 	// printf("Error = %d Yaw = %d P = %d\n",error,yaw,P);
 	
@@ -443,7 +443,7 @@ void full_control_mode()
 
 	//update motors based on lift and control for pitch,roll,yaw rate
 	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p>>6) + ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
-	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_r>>6) - ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
+	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_r>>6)  - ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
 	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + (K_p>>6) + ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
 	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + (K_r>>6) - ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
 
