@@ -17,12 +17,10 @@ void gradual_lift(void);
 void commStatus(void);
 int32_t intToFix(int32_t a);
 int32_t fixToInt(int32_t a);
-int32_t fpMult (int32_t a, int32_t b);
-int32_t fpDiv(int32_t a, int32_t b);
 int32_t fixed_div_14(int32_t x, int32_t y);
 int32_t fixed_mul_14(int32_t x, int32_t y);
 void butterworth(int32_t *x, int32_t *y, int32_t sensor);
 void kalman(void);
-int32_t diff(int32_t a, int32_t b);
+enum ret_codes lookup_transitions(enum flightmode mode, enum flightmode candidate);
 
 #endif

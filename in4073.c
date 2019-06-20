@@ -38,10 +38,11 @@ int main(void)
 	P = P1 = P2 = 0;
 	alive = 1;
 	uint32_t counter = 0;
+	int time = 0; 
 
 	while (alive)
 	{
-
+		time = get_time_us();
 		if (check_timer_flag()) 
 		{
 			if (counter++%20 == 0) 
@@ -58,8 +59,8 @@ int main(void)
 			printf("%6d %6d %6d | ", phi, theta, psi);
 			printf("%6d %6d %6d | ", sp, sq, sr);
 			printf("%4d | %4ld | %4ld |", bat_volt, temperature, pressure);
-			printf("P = %3d | P1 = %3d | P2 = %3d |\n ", P, P1, P2);
-
+			printf("P = %3d | P1 = %3d | P2 = %3d |\n", P, P1, P2);
+			
 			clear_timer_flag();
 		}
 
@@ -70,7 +71,8 @@ int main(void)
 			get_dmp_data();
 			run_filters_and_control();
 			commStatus();
-		}	
+		}
+		printf("time in main loop = %ld\n", get_time_us() - time);
 	}	
 
 	printf("\n\t Goodbye \n\n");

@@ -86,7 +86,7 @@ void commStatus(){
         // printf("commCounter = %d\n", commCounter);
     }
     
-    if(commCounter == 1000 && mode != SAFE){
+    if(commCounter == 1500 && mode != SAFE){
         commCounter = 0;
         panic_mode();
         alive = 0;
@@ -212,15 +212,6 @@ void initialize_flight_Parameters()
 	pitch 	= flightParameters.pitch;
 	yaw 	= flightParameters.yaw;
 	lift 	= flightParameters.lift;
-	//consider removing these values if there is delay
-}
-
-void initialize_flight_Parameters_RAW()
-{
-	roll 	= intToFix(flightParameters.roll);
-	pitch 	= intToFix(flightParameters.pitch);
-	yaw 	= intToFix(flightParameters.yaw);
-	lift 	= intToFix(flightParameters.lift);
 	//consider removing these values if there is delay
 }
 
@@ -542,38 +533,6 @@ void raw_control_mode(){
 	update_motors();
 }
 
-int32_t fpMult (int32_t a, int32_t b){
-
-    // printf("a                  = "); printBits(sizeof(a), &a);
-    // printf("b                  = "); printBits(sizeof(b), &b);
-    int32_t wPartA, wPartB;
-    int32_t dPartA, dPartB;
-    int32_t sum1, sum2, sum3, sum4;
-
-    wPartA = a & SHIFTMASK1;
-    wPartB = b & SHIFTMASK1;
-    dPartA = a & SHIFTMASK2;
-    dPartB = b & SHIFTMASK2;
-
-    sum1 = (wPartA >> SHIFT) * (wPartB >> SHIFT) << SHIFT;
-    // printf("sum1 = "); printBits(sizeof(sum1), &sum1);
-    sum2 = (wPartA * dPartB) >> SHIFT;
-    // printf("sum2 = "); printBits(sizeof(sum2), &sum2);
-    sum3 = (dPartA * wPartB) >> SHIFT;
-    // printf("sum3 = "); printBits(sizeof(sum3), &sum3);
-    sum4 = (dPartA * dPartB) >> SHIFT;
-    // printf("sum4 = "); printBits(sizeof(sum4), &sum4);
-
-    return sum1 + sum2 + sum3 + sum4;
-}
-
-int32_t fpDiv(int32_t a, int32_t b)
-{
-    int64_t temp;
-    temp = (int64_t) a << SHIFT;
-    return (int32_t) (temp / b);
-}
-
 int32_t fixed_div_14(int32_t x, int32_t y){
     return ((int64_t)x * (1 << SHIFT)) / y;
 }
@@ -592,10 +551,6 @@ void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 		x[1] = x[2];
 		x[2] = fixed_div_14(intToFix(sensor), gain);
 
-		//if (diff(x[2],x[1])>10000)
-		//{
-		//	x[2]=x[1];
-		//}
 
 		y[0] = y[1]; 
 		y[1] = y[2]; 
@@ -613,17 +568,6 @@ void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 		y[2] = _y2;
 
 	
-}
-
-int32_t diff(int32_t a, int32_t b){
-	if (a>b)
-	{
-		return a-b;
-	}
-	else
-	{
-		return b-a;
-	}
 }
 
 void kalman()
