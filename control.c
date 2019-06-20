@@ -510,7 +510,7 @@ void raw_control_mode(){
 
 	//pitch control
 	error_pitch = -(pitch - (theta >> 2)); //calculate pitch error
-	K_p = (4 * P1) * error_pitch - ((16*P2) * fixToInt(q)); //integrate terms based on pitch and pitchrate error added
+	K_p = (4 * P1) * error_pitch - ((16*P2) * fixToInt(q)); //terms based on pitch angle and pitchrate error added
 
 	//update motors based on lift and control for pitch,roll,yaw rate
 	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p>>6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
