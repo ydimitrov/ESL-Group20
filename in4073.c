@@ -34,15 +34,14 @@ int main(void)
 	baro_init();
 	spi_flash_init();
 	// ble_init();
+	
 	mode = SAFE;
 	P = P1 = P2 = 0;
 	alive = 1;
 	uint32_t counter = 0;
-	int time = 0; 
 
 	while (alive)
 	{
-		time = get_time_us();
 		if (check_timer_flag()) 
 		{
 			if (counter++%20 == 0) 
@@ -72,7 +71,6 @@ int main(void)
 			run_filters_and_control();
 			commStatus();
 		}
-		printf("time in main loop = %ld\n", get_time_us() - time);
 	}	
 
 	printf("\n\t Goodbye \n\n");

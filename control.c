@@ -76,6 +76,7 @@ int32_t q_b;
 //height
 uint32_t prev_lift;
 
+/*Yordan*/
 void commStatus(){
     if(rx_queue.count > 0){
         commCounter = 0;
@@ -96,6 +97,8 @@ void commStatus(){
 }
 
 /* array and enum flightmode(in4073.h) must be in sync! */
+
+/*Yordan*/
 void (* state[])(void) = {safe_mode, panic_mode, manual_mode, calibration_mode, yaw_control_mode, full_control_mode, raw_control_mode, height_control_mode, wireless_control_mode};
 void (* state_fun)(void) = safe_mode; // global
 
@@ -112,6 +115,8 @@ enum ret_codes state_transitions[9][9] = {
 {ok,   ok,   fail, fail, fail, fail, fail, ok,   fail},
 {ok,   ok,   fail, fail, fail, fail, fail, fail, ok}};
 
+
+/*Yordan*/
 enum ret_codes lookup_transitions(enum flightmode mode, enum flightmode candidate) {
 
     // rows correspond to current state
@@ -143,7 +148,7 @@ void reset_motors()
 	update_motors();
 }
 
-
+/*Nidhi*/
 void gradual_lift()
 {
 	int32_t lift_status; 
@@ -191,7 +196,7 @@ void gradual_lift()
 	}
 
 }
-
+/*Yordan*/
 void droneState(enum flightmode candidate) {
 
     enum ret_codes rc;
@@ -205,7 +210,7 @@ void droneState(enum flightmode candidate) {
     }
 }
 
-
+/*Yordan*/
 void initialize_flight_Parameters()
 {
 	roll 	= flightParameters.roll;
@@ -215,10 +220,12 @@ void initialize_flight_Parameters()
 	//consider removing these values if there is delay
 }
 
+/*Thies*/
 int32_t intToFix(int32_t a){
 	return a * 16384;
 }
 
+/*Yordan*/
 int32_t fixToInt(int32_t a){
 	return a / 16384;
 }
@@ -228,6 +235,7 @@ void run_filters_and_control(){
 	droneState(candidate_mode);
 }
 
+/*Nidhi*/
 void panic_mode()
 {
 	uint16_t average;
@@ -284,6 +292,7 @@ void panic_mode()
 	safe_mode();
 }
 
+/*Nidhi*/
 void manual_mode()
 {
 
@@ -323,6 +332,7 @@ void manual_mode()
 	update_motors();
 }
 
+/*Yordan*/
 void safe_mode()
 {	
 	flag = 0;
@@ -330,7 +340,7 @@ void safe_mode()
 	mode = SAFE;
 }
 
-
+/*Nidhi*/
 void calibration_mode()
 {
 	if(!flag){
@@ -362,6 +372,7 @@ void calibration_mode()
 	printf("Calibration completed!\n");
 }
 
+/*Thies*/
 void yaw_control_mode()
 {
 
@@ -405,9 +416,11 @@ void yaw_control_mode()
 	update_motors();
 }	
 
-
+/*Thies*/
 void full_control_mode()
 {
+	uint32_t time = 0;
+	time = get_time_us();
 	if(!flag){
 		imu_init(true, 100);
 		gradual_lift();
@@ -458,11 +471,13 @@ void full_control_mode()
 	//printf("theta = %d P1 = %d P2 = %d motors: %3d %3d %3d %3d\n",(theta>>8),P1,P2,ae[0],ae[1],ae[2],ae[3]);
 	
 	update_motors();
+	printf("time in full = %ld\n", get_time_us() - time);
 }
 
+/*Thies*/
 void raw_control_mode(){
 
-
+	uint32_t time = get_time_us();
 	if(!flag){
 		gradual_lift();
 		imu_init(false,50);
@@ -531,16 +546,20 @@ void raw_control_mode(){
 	//printf("K_p = %ld, P1 = %d, P2 = %d\n", K_p, P1, P2);
 	//printf("theta = %ld P1 = %d P2 = %d motors: %3d %3d %3d %3d\n",(theta_raw>>2),P1,P2,ae[0],ae[1],ae[2],ae[3]);
 	update_motors();
+	printf("time in raw = %ld\n", get_time_us() - time);
 }
 
+/*Yordan*/
 int32_t fixed_div_14(int32_t x, int32_t y){
     return ((int64_t)x * (1 << SHIFT)) / y;
 }
 
+/*Yordan*/
 int32_t fixed_mul_14(int32_t x, int32_t y){
     return ((int64_t)x * (int64_t)y) / (1 << SHIFT);
 }
 
+/*Nidhi*/
 void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 
 	// sensor = sensor >> 6;
@@ -567,9 +586,9 @@ void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 		_y2 = fixed_mul_14(a0,_x0) + fixed_mul_14(a1,_x1) + fixed_mul_14(a2,_x2) + fixed_mul_14(b1,_y0) + fixed_mul_14(b2,_y1);
 		y[2] = _y2;
 
-	
 }
 
+/*Thies*/
 void kalman()
 {
 	//pitch control with kalman
@@ -590,6 +609,7 @@ void kalman()
 
 }
 
+/*Nidhi*/
 void height_control_mode(){
 	
 	if(!flag){
@@ -629,6 +649,7 @@ void height_control_mode(){
 	//printf("pres: %ld error_f = %ld P = %d error=%ld motors: %d %d %d %d\n",pressure,fixToInt(y_lift[2]),P,error_lift,ae[0],ae[1],ae[2],ae[3]);  
 }	
 
+/**/
 void wireless_control_mode(){
 
 }

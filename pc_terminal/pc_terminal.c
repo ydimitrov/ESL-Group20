@@ -101,7 +101,7 @@ unsigned int    mon_time_ms(void)
         ms = ms + tv.tv_usec / 1000;
         return ms;
 }
-
+/*Thies*/
 int8_t checkByteOverflow(int8_t value, int8_t offset) {
 	
 	// Make sure overflows won't happen.
@@ -119,6 +119,7 @@ int8_t checkByteOverflow(int8_t value, int8_t offset) {
 	return txValue;
 } 
 
+/*Thomas*/
 uint8_t checkByteOverflowLift(int8_t value, int8_t offset) {
 	
 	// Make sure overflows won't happen.
@@ -136,6 +137,7 @@ uint8_t checkByteOverflowLift(int8_t value, int8_t offset) {
 	return txValue;
 } 
 
+/*Nidhi*/
 void keyboardfunction()
 {
 	int c; //keyboard input
@@ -232,7 +234,7 @@ Packet txPacket;
 //  	}
 // }
 
-
+/*Yordan*/
 void *thread_receive(){
 	int c;
 	while (1){
@@ -300,6 +302,7 @@ int main(int argc, char **argv)
 	{
 		if (mon_time_ms() - time >= period){
 
+			/*Thies*/
 			// while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
 			// 	switch(js.type & ~JS_EVENT_INIT) {
 			// 		case JS_EVENT_BUTTON:
@@ -350,6 +353,7 @@ int main(int argc, char **argv)
 			yawTx = checkByteOverflow(input.yaw, input.yaw_offset);
 			liftTx = checkByteOverflowLift(input.lift, input.lift_offset);
 
+			/*Thomas*/
 			if (oldmode != input.mode) {
 				modeTx = input.mode;
 			} else {

@@ -16,6 +16,7 @@
  *  mode, etc.
  */
 
+/*Thomas*/
 void pc_t20_packet_tx(Packet* p) {
 
 	// Transmit packet byte-by-byte
@@ -33,7 +34,7 @@ void pc_t20_packet_tx(Packet* p) {
 	}
 }
 
-
+/*Yordan*/
 Packet pc_packet_init(uint8_t startByte, uint8_t length, uint8_t mode,
 					  int8_t roll, 	 int8_t pitch,  int8_t yaw,
 					  uint8_t elevation)
@@ -52,7 +53,7 @@ Packet pc_packet_init(uint8_t startByte, uint8_t length, uint8_t mode,
 	return x;
 }
 
-
+/*Yordan*/
 void crcCalc (Packet *p) {
 	uint8_t crc = 0;
 	crc ^= p->startByte;

@@ -14,7 +14,7 @@
  *  mode, etc.
  */
 
-
+/*Thomas*/
 void dr_t20_packet_tx(Packet* p) {
 
 	// Transmit packet byte-by-byte
@@ -33,7 +33,7 @@ void dr_t20_packet_tx(Packet* p) {
 		}
 	}
 }
-
+/*Yordan*/
 Packet dr_packet_init(uint8_t startByte,uint8_t length,uint8_t functionCode,uint8_t system_time,uint8_t roll,uint8_t pitch,uint8_t yaw,uint8_t elevation,uint8_t phi,uint8_t theta,uint8_t psi,uint8_t sp,uint8_t sq,uint8_t sr,uint8_t temp,uint8_t volt,uint8_t press)
 {
 	Packet x;
