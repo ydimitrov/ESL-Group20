@@ -4,17 +4,16 @@
  *  Magic number definitions
  */
 
-#define MODELEN 0x04 // Packet length for a MODE command
-#define MOVELEN 0x07 // Packet length for a MOVE command
-#define TELELEN 0x30 // Packet length for a TELE command
+#define PREAMBLE 0xAA // Start byte
+#define LENGTH 0x26   // Length of packet in hex
+#define MODE 0x01     // Mode for the telemetry packet
+
 
 /*
- *  Receive function of the T20 protocol. It receives bytes from the serial port
- *  and translates them into configuration for the drone like rotor speeds,
- *  mode, etc.
+ * Transmit function of the T20 protocol.
+ *
  */
 
-/*Thomas*/
 void dr_t20_packet_tx(Packet* p) {
 
 	// Transmit packet byte-by-byte
@@ -25,40 +24,40 @@ void dr_t20_packet_tx(Packet* p) {
 
 	if(numberOfBytes){
 
-		for(byteToSend=packetPtr; numberOfBytes--; ++byteToSend)	
-		{	
-			uart_put(*byteToSend);
-			nrf_delay_ms(1); // derp implement timer interrupt DUDES!!!
-			// Wait for transmission to complete
+		for(byteToSend=packetPtr; numberOfBytes--; byteToSend++) {	
+			uart_put(*byteToSend); // Wait for transmission to complete
 		}
 	}
 }
-/*Yordan*/
-Packet dr_packet_init(uint8_t startByte,uint8_t length,uint8_t functionCode,uint8_t system_time,uint8_t roll,uint8_t pitch,uint8_t yaw,uint8_t elevation,uint8_t phi,uint8_t theta,uint8_t psi,uint8_t sp,uint8_t sq,uint8_t sr,uint8_t temp,uint8_t volt,uint8_t press)
+
+Packet dr_t20_packet_init(uint16_t ae1, uint16_t ae2, 
+					  	  uint16_t ae3, uint16_t ae4,uint16_t phi, 
+					      uint16_t theta, uint16_t psi, uint16_t sp, 
+					      uint16_t sq, uint16_t sr, uint32_t temp, 
+					      uint16_t volt, uint32_t press)
 {
-	Packet x;
-	x.startByte =  startByte;
-	x.length =  length;
-	x.functionCode =  functionCode;
-	x.system_time =  system_time;
-	x.roll =  roll;
-	x.pitch =  pitch;
-	x.yaw =  yaw;
-	x.elevation =  elevation;
-	x.phi =  phi;
-	x.theta =  theta;
-	x.psi =  psi;
-	x.sp =  sp;
-	x.sq =  sq;
-	x.sr =  sr;
-	x.temp =  temp;
-	x.volt =  volt;
-	x.press =  press;
+	Packet tx;
+	tx.startByte 	=	PREAMBLE;
+	tx.length 		=	LENGTH;
+	tx.functionCode =	MODE;
+	tx.system_time 	=  	get_time_us();
+	
+	tx.ae1  =  ae1;
+	tx.ae2  =  ae2;
+	tx.ae3 	=  ae3;
+	tx.ae4  =  ae4;
+	
+	tx.phi 	 =  phi;
+	tx.theta =  theta;
+	tx.psi 	 =  psi;
+	
+	tx.sp = sp;
+	tx.sq = sq;
+	tx.sr = sr;
+	
+	tx.temp  =  temp;
+	tx.volt  =  volt;
+	tx.press =  press;
 
-	return x;
+	return tx;
 }
-
-
-
-
-
