@@ -1,13 +1,21 @@
 #include <stdio.h>
 #include "in4073.h"
 
-// Define packet structure
+/**
+ * @author Thomas Makryniotis
+ * 
+ * Define packet structure for telemetry packets
+ *
+ * @return
+ * @retval true if operation is successful (aka, all data was successfully read from memory).
+ * @retval false if operation is failed.
+ */
 
 typedef struct {
 	uint8_t startByte;
 	uint8_t length;
 	uint8_t functionCode;
-    uint32_t system_time;
+        uint32_t system_time;
 
 	uint16_t ae1;
 	uint16_t ae2;

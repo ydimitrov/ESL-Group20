@@ -96,8 +96,7 @@ bool dumpLog(void){
 
 		// Send 64 bytes with uart_put()
 		for(txCount = 0; txCount < 63; txCount++){
-			printf("%d\n", buffer[txCount]);
-			// uart_put(buffer[txCount]);
+			uart_put(buffer[txCount]);
 		}
 
 		// Read from next offset address

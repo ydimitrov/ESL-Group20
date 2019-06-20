@@ -9,9 +9,14 @@
 #define MODE 0x01     // Mode for the telemetry packet
 
 
-/*
- * Transmit function of the T20 protocol.
+
+/**
+ * @author Thomas Makryniotis
+ * 
+ * Transmit function for the T20 protocol
  *
+ * @return
+ * @retval None
  */
 
 void dr_t20_packet_tx(Packet* p) {
