@@ -415,8 +415,6 @@ void yaw_control_mode()
 /*Thies*/
 void full_control_mode()
 {
-	uint32_t time = 0;
-	time = get_time_us();
 	//initialize sensor readout at first time in full mode after mode change
 	if(!flag){
 		imu_init(true, 100);
@@ -466,13 +464,10 @@ void full_control_mode()
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 	
 	update_motors();
-	printf("time in full = %ld\n", get_time_us() - time);
 }
 
 /*Thies*/
 void raw_control_mode(){
-
-	uint32_t time = get_time_us();
 	//initialize sensor readout at first time in raw mode after mode change
 	if(!flag){
 		gradual_lift();
@@ -530,7 +525,6 @@ void raw_control_mode(){
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
 	update_motors();
-	printf("time in raw = %ld\n", get_time_us() - time);
 }
 
 /*Yordan*/
