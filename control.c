@@ -375,7 +375,7 @@ void calibration_mode()
 /*Thies*/
 void yaw_control_mode()
 {
-
+	//initialize sensor readout at first time in yaw mode after mode change
 	if(!flag){
 		imu_init(true, 100);
 		gradual_lift();
@@ -397,8 +397,6 @@ void yaw_control_mode()
 	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) - ((P * error)>>6) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
 	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) + ((P * error)>>6) - (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
 	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) - ((P * error)>>6) + (yaw * MOTOR_RELATION) + MIN_SPEED) * lift_status;
-
-	// printf("Error = %d Yaw = %d P = %d\n",error,yaw,P);
 	
 	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
@@ -410,8 +408,6 @@ void yaw_control_mode()
 	if(ae[1] < MIN_SPEED) ae[1] = (MIN_SPEED * lift_status);
 	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
-
-	// printf("Motor speeds: %3d %3d %3d %3d\n", ae[0], ae[1], ae[2], ae[3]);
 	
 	update_motors();
 }	
@@ -421,6 +417,7 @@ void full_control_mode()
 {
 	uint32_t time = 0;
 	time = get_time_us();
+	//initialize sensor readout at first time in full mode after mode change
 	if(!flag){
 		imu_init(true, 100);
 		gradual_lift();
@@ -445,13 +442,13 @@ void full_control_mode()
 	
 	//roll control
 	error_roll = roll - (phi >> 8); //calculate roll error
-	K_r = (4 * P1) * error_roll - (P2 * (sp - zp)>>2); //integrate terms based on roll and rollrate error added
+	K_r = (4 * P1) * error_roll - (P2 * (sp - zp)>>2); //terms based on roll angle and rollrate error added
 
 	//pitch control
 	error_pitch = -(pitch - (theta >> 8)); //calculate pitch error
-	K_p = (4 * P1) * error_pitch - (P2 * (sq - zq)>>2); //integrate terms based on pitch and pitchrate error added
+	K_p = (4 * P1) * error_pitch - (P2 * (sq - zq)>>2); //terms based on pitch angle and pitchrate error added
 
-	//update motors based on lift and control for pitch,roll,yaw rate
+	//update motors based on lift and control for pitch, roll and yaw rate
 	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p>>6) + ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
 	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_r>>6) - ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
 	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + (K_p>>6) + ((P * error_yawrate)>>6) + MIN_SPEED) * lift_status;
@@ -467,8 +464,6 @@ void full_control_mode()
 	if(ae[1] < MIN_SPEED) ae[1] = (MIN_SPEED * lift_status);
 	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
-
-	//printf("theta = %d P1 = %d P2 = %d motors: %3d %3d %3d %3d\n",(theta>>8),P1,P2,ae[0],ae[1],ae[2],ae[3]);
 	
 	update_motors();
 	printf("time in full = %ld\n", get_time_us() - time);
@@ -478,6 +473,7 @@ void full_control_mode()
 void raw_control_mode(){
 
 	uint32_t time = get_time_us();
+	//initialize sensor readout at first time in raw mode after mode change
 	if(!flag){
 		gradual_lift();
 		imu_init(false,50);
@@ -493,6 +489,8 @@ void raw_control_mode(){
 	int32_t K_p; //pitch action
 
 	initialize_flight_Parameters();
+	
+	//get data from sensors and filter them using Butterworth and Kalman filtering
 	get_raw_sensor_data();
 	butterworth(x_yaw, y_yaw, sr);
 	butterworth(x_pitch, y_pitch, sq);
@@ -501,30 +499,24 @@ void raw_control_mode(){
 	butterworth(x_roll_a, y_roll_a, say);
 	kalman();
 	
-
-
 	lift_status = (lift == 0 ? 0 : 1);	
 	
 	//yaw rate control
 	error_yawrate = intToFix(yaw) - y_yaw[2]; //calculate yaw rate error
-	// printf("error_yawrate = %ld\n", fixToInt(error_yawrate));
 
+	//roll control
 	error_roll = roll - (phi >> 2); //calculate roll error
-	//K_r = (4 * P1) * error_roll - (P2 * fixToInt(y_roll[2]) >>2); //integrate terms based on roll and rollrate error added
-	K_r = (4 * P1) * error_roll - ((16*P2) * fixToInt(p)); //integrate terms based on roll and rollrate error added
+	K_r = (4 * P1) * error_roll - ((16*P2) * fixToInt(p)); //terms based on roll angle and rollrate error added
 
+	//pitch control
 	error_pitch = -(pitch - (theta >> 2)); //calculate pitch error
-	// K_p = (4 * P1) * error_pitch - (P2 * fixToInt(y_pitch[2]) >>2); //integrate terms based on pitch and pitchrate error added
 	K_p = (4 * P1) * error_pitch - ((16*P2) * fixToInt(q)); //integrate terms based on pitch and pitchrate error added
-	// K_p = 0;
 
 	//update motors based on lift and control for pitch,roll,yaw rate
 	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p>>6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
 	ae[1] = ((lift * MOTOR_RELATION) - (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) - (K_r>>6) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
 	ae[2] = ((lift * MOTOR_RELATION) + (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) + (K_p>>6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
 	ae[3] = ((lift * MOTOR_RELATION) + (roll * MOTOR_RELATION) + (yaw * MOTOR_RELATION) + (K_r>>6) - fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
-
-	// printf("a lot of things = %ld", fixToInt(((intToFix(P) * error_yawrate)>>6)));
 
 	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED) ae[0] = MAX_SPEED;
@@ -537,14 +529,6 @@ void raw_control_mode(){
 	if(ae[2] < MIN_SPEED) ae[2] = (MIN_SPEED * lift_status);
 	if(ae[3] < MIN_SPEED) ae[3] = (MIN_SPEED * lift_status);
 
-	// printf("pitch = %d, error_p = %d, K_p = %d, roll = %d, error_r = %d, K_r = %d, P = %d, P1 = %d, P2 = %d, sp = %d, sq = %d\n",pitch,error_pitch,K_p,roll,error_roll,K_r,P, P1,P2,sp,sq);
-	// printf("pitch = %d, roll = %d,  P = %d, P1 = %d, P2 = %d\n", pitch, roll, P, P1, P2);
-	// printf("%3d %3d %3d %3d \n", ae[0], ae[1], ae[2], ae[3]);
-	// printf("ae[0] = %d, ae[1] = %d, ae[2] = %d, ae[3] = %d ", ae[0], ae[1], ae[2], ae[3]);
-	// printf("P = %d, P1 = %d, P2 = %d\n ", P, P1, P2);
-	// printf("yawerror = %ld P= %d P2= %d\n", fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))), P,P2);
-	//printf("K_p = %ld, P1 = %d, P2 = %d\n", K_p, P1, P2);
-	//printf("theta = %ld P1 = %d P2 = %d motors: %3d %3d %3d %3d\n",(theta_raw>>2),P1,P2,ae[0],ae[1],ae[2],ae[3]);
 	update_motors();
 	printf("time in raw = %ld\n", get_time_us() - time);
 }
@@ -591,7 +575,7 @@ void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 /*Thies*/
 void kalman()
 {
-	//pitch control with kalman
+	//Kalman filter for theta (ax) and rate of theta (q)
 	q = y_pitch[2] - q_b;
 	kalman_theta = kalman_theta + fixed_mul_14(q,Q2THETA);
 	kalman_theta = kalman_theta - fixed_div_14((kalman_theta - y_pitch_a[2]), (C1));
@@ -599,7 +583,7 @@ void kalman()
 
 	theta = fixToInt(kalman_theta);
 
-	//roll control with kalman
+	//Kalman filter for phi (ay) and rate of phi (p)
 	p = y_roll[2] - p_b;
 	kalman_phi = kalman_phi + fixed_mul_14(p,P2PHI);
 	kalman_phi = kalman_phi - fixed_div_14((kalman_phi - y_roll_a[2]), (C1));
