@@ -137,7 +137,12 @@ uint8_t checkByteOverflowLift(int8_t value, int8_t offset) {
 	return txValue;
 } 
 
-/*Nidhi*/
+/*
+ * Function: keyboardfunction
+ * Author: Srinidhi Srinivasan
+ * ----------------------------
+ *   Maps keyboard input to specific functionalities
+ */
 void keyboardfunction()
 {
 	int c; //keyboard input
