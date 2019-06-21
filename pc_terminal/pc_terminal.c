@@ -222,19 +222,17 @@ void keyboardfunction()
 }
 Packet txPacket;
 
-// void *thread_period_send()
-// {
-//  	uint64_t period = 20000; 
-//  	for(;;)
-//  	{
-//  		// pthread_mutex_lock(&send_mutex);
-//  		pc_t20_packet_tx(&txPacket);
-//  		// pthread_mutex_unlock(&send_mutex);
-//  		usleep(period);
-//  	}
-// }
-
-/*Yordan*/
+/*
+* Function: thread_receive
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Thread which is responsible for reading the print statements done on the drone side.
+*   As long as there is incomng input it will be printed on the pc terminal.  
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
 void *thread_receive(){
 	int c;
 	while (1){
