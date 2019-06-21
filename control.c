@@ -225,7 +225,12 @@ void initialize_flight_Parameters()
 	//consider removing these values if there is delay
 }
 
-/*Thies*/
+/*
+ * Function: intToFix
+ * Author: Thies de Boer (4513614)
+ * ----------------------------
+ *   Converts an integer values to a fixed point value
+ */
 int32_t intToFix(int32_t a){
 	return a * 16384;
 }
@@ -387,7 +392,12 @@ void calibration_mode()
 	printf("Calibration completed!\n");
 }
 
-/*Thies*/
+/*
+ * Function: yaw_control_mode
+ * Author: Thies de Boer (4513614)
+ * ----------------------------
+ *   Controls yaw rate
+ */
 void yaw_control_mode()
 {
 	//initialize sensor readout at first time in yaw mode after mode change
@@ -427,7 +437,12 @@ void yaw_control_mode()
 	update_motors();
 }	
 
-/*Thies*/
+/*
+ * Function: full_control_mode
+ * Author: Thies de Boer (4513614)
+ * ----------------------------
+ *   Controls pitch, roll, yaw rate using the get_dmp_data
+ */
 void full_control_mode()
 {
 	//initialize sensor readout at first time in full mode after mode change
@@ -481,7 +496,12 @@ void full_control_mode()
 	update_motors();
 }
 
-/*Thies*/
+/*
+ * Function: raw_control_mode
+ * Author: Thies de Boer (4513614)
+ * ----------------------------
+ *   Controls pitch, roll, yaw rate using the raw sensor data
+ */
 void raw_control_mode(){
 	//initialize sensor readout at first time in raw mode after mode change
 	if(!flag){
@@ -583,7 +603,12 @@ void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 
 }
 
-/*Thies*/
+/*
+ * Function: kalman
+ * Author: Thies de Boer (4513614)
+ * ----------------------------
+ *   uses gyrometer and accelerometer sensors to get more accurate values for angles and rates
+ */
 void kalman()
 {
 	//Kalman filter for theta (ax) and rate of theta (q)
