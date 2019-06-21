@@ -18,8 +18,13 @@
 #define SHIFTMASK2 0x3FFF
 #define SHIFT 14
 
+//Divides num by 128 and rounds off the resulting number appropriately
 #define round(num) num > 0 ? ((num % 128) > 64 ? (num >> 7) + 1 : (num >> 7)) : (((num % 128) > -64) ? (num >> 7) + 1  : (num >> 7))
+
+//Ensures num does not go below zero
 #define cap_base(num) num < 0 ? 0 : num
+
+//Ensures num does not go above the elevation value
 #define cap_lift(num,elevation) num > elevation ? elevation : num
 
 //butterworth definitions
@@ -174,12 +179,16 @@ void gradual_lift()
 	lift_status = (lift == 0 ? 0 : 1);
 
 	reset_motors();
+	
+	//Ensures the motors rise gradually up to the lift value 
 	while((ae[0] + ae[1] + ae[2] + ae[3]) < ((4 * ((lift * MOTOR_RELATION_VALUE) + MIN_SPEED)) * lift_status))
 	{
 		ae[0] += 5;
 		ae[1] += 5;
 		ae[2] += 5;
 		ae[3] += 5;
+		
+		//ensures motor values do not exceed lift value
 		ae[0] = cap_lift(ae[0], (((lift * MOTOR_RELATION_VALUE) + MIN_SPEED) * lift_status));
 		ae[1] = cap_lift(ae[1], (((lift * MOTOR_RELATION_VALUE) + MIN_SPEED) * lift_status));
 		ae[2] = cap_lift(ae[2], (((lift * MOTOR_RELATION_VALUE) + MIN_SPEED) * lift_status));
@@ -254,9 +263,11 @@ void run_filters_and_control(){
 void panic_mode()
 {
 	uint16_t average;
-	average = (ae[0] + ae[1] + ae[2] + ae[3]);
+	average = (ae[0] + ae[1] + ae[2] + ae[3]); //obtains average of all motors
 	// average = average >> 3;
 	average = average >> 2;
+	
+	//sets all motors to average speed
 	for (int i = 0; i < 100; ++i)
 	{
 		ae[0] = average;
@@ -278,6 +289,8 @@ void panic_mode()
 			}
 		}
 	}
+	
+	//Reduces all motor speeds by a constant of 5
 	while((ae[0]+ae[1]+ae[2]+ae[3]) != 0)
 	{
 		ae[0] -= 5;
@@ -304,7 +317,7 @@ void panic_mode()
 	}
 	printf("I'm done panicking bro!\n");
 	// mode = SAFE;
-	safe_mode();
+	safe_mode(); // enters safe mode
 }
 
 /*
@@ -321,7 +334,7 @@ void manual_mode()
 		flag = 1;
 	}
 
-	int8_t lift_status; 
+	int8_t lift_status;  // checks if lift is set to zero or higher
 
 	// uint8_t MOTOR_RELATION_M = MOTOR_RELATION >> 1;
 
@@ -329,8 +342,9 @@ void manual_mode()
 
 	//set lift to uint16_t
 
-	lift_status = (lift == 0 ? 0 : 1);
+	lift_status = (lift == 0 ? 0 : 1); // checks if lift is set to zero or higher
 
+	//update motors based on pitch,roll,lift and control for yaw
 	ae[0] = (((lift * MOTOR_RELATION_M) - (pitch * MOTOR_RELATION_M) - (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 	ae[1] = (((lift * MOTOR_RELATION_M) - (roll * MOTOR_RELATION_M) + (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 	ae[2] = (((lift * MOTOR_RELATION_M) + (pitch * MOTOR_RELATION_M) - (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
@@ -339,6 +353,7 @@ void manual_mode()
 	//printf("%d %d %d %d", ae[0],ae[1],ae[2],ae[3]);
 	//printf("Lift: %ld Roll: %ld Pitch: %ld Yaw: %ld\n", lift, roll, pitch, yaw);
 
+	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED_M) ae[0] = MAX_SPEED_M;
 	if(ae[1] > MAX_SPEED_M) ae[1] = MAX_SPEED_M;
 	if(ae[2] > MAX_SPEED_M) ae[2] = MAX_SPEED_M;
@@ -360,15 +375,23 @@ void safe_mode()
 	mode = SAFE;
 }
 
-/*Nidhi*/
+/*
+ * Function: calibration_mode
+ * Author: Srinidhi Srinivasan
+ * ----------------------------
+ *   Obtains average values of all the sensor values
+ */
 void calibration_mode()
 {
+	//initialize sensor readout at first time in calibration mode after mode change
 	if(!flag){
 		imu_init(true, 100);
 		flag = 1;
 	}
-
+	
 	zp = zq = zr = zax = zay = zaz = zpressure = 0;
+	
+	//Obtains the sensor values 128 times
 	for (int i = 0; i < 128; i++){
 		
 		get_dmp_data();
@@ -381,6 +404,7 @@ void calibration_mode()
 		zpressure += pressure;
 	}
 
+	// Obtain the average sensor reading 
 	zp = round(zp);
 	zq = round(zq);
 	zr = round(zr);
@@ -574,13 +598,20 @@ int32_t fixed_mul_14(int32_t x, int32_t y){
     return ((int64_t)x * (int64_t)y) / (1 << SHIFT);
 }
 
-/*Nidhi*/
+/*
+ * Function: butterworth
+ * Author: Srinidhi Srinivasan
+ * ----------------------------
+ *   Applies the butterworth filter on the sensor parameter
+ */
 void butterworth(int32_t *x, int32_t *y, int32_t sensor){
 
 	// sensor = sensor >> 6;
 	
 	
 		sensor >>= 6;
+	
+		//x and y values are shifted and assigned according to the butterworth filter
 		x[0] = x[1];
 		x[1] = x[2];
 		x[2] = fixed_div_14(intToFix(sensor), gain);
@@ -630,13 +661,13 @@ void kalman()
 }
 
 /*
- * Function: gradual_lift
+ * Function: height_control_mode
  * Author: Srinidhi Srinivasan
  * ----------------------------
  *   Ensures stability in height by controlling the pressure sensor through the butterworth filter
  */
 void height_control_mode(){
-	
+	//initialize sensor readout at first time in raw mode after mode change
 	if(!flag){
 		imu_init(false, 50);
 		gradual_lift();
@@ -648,18 +679,19 @@ void height_control_mode(){
 	int8_t lift_status; 
 	int32_t error_lift;
 	
-	error_lift = pressure - zpressure;
-	butterworth(x_lift,y_lift,(error_lift<<5));	
+	error_lift = pressure - zpressure; // error of the pressure is calculated 
+	butterworth(x_lift,y_lift,(error_lift<<5));	//the error is passed through the butterworth filter
 
 
 	lift_status = (lift == 0 ? 0 : 1);
 
+	//update motors based on lift and control for pitch,roll,yaw rate along with y_lift for height control
 	ae[0] = (((lift * MOTOR_RELATION_M) + P * fixToInt(y_lift[2]) - (pitch * MOTOR_RELATION_M) - (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 	ae[1] = (((lift * MOTOR_RELATION_M) + P * fixToInt(y_lift[2]) - (roll * MOTOR_RELATION_M) + (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 	ae[2] = (((lift * MOTOR_RELATION_M) + P * fixToInt(y_lift[2]) + (pitch * MOTOR_RELATION_M) - (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 	ae[3] = (((lift * MOTOR_RELATION_M) + P * fixToInt(y_lift[2]) + (roll * MOTOR_RELATION_M) + (yaw * MOTOR_RELATION_M) + MIN_SPEED) * lift_status);
 
-
+	//ensure motor speeds are within acceptable bounds
 	if(ae[0] > MAX_SPEED_M) ae[0] = MAX_SPEED_M;
 	if(ae[1] > MAX_SPEED_M) ae[1] = MAX_SPEED_M;
 	if(ae[2] > MAX_SPEED_M) ae[2] = MAX_SPEED_M;
