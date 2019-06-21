@@ -61,7 +61,19 @@ void printCurrentState(uint8_t state){
 }
 
 
-void initialState(){
+/*
+* Function: initialState
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Resets buffer container that will contain packet, resets crc value, and index values for state and buffer
+*   Used to restart state machine responsible for receiving and parsing packets
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
+
+void initialState(void){
 	// printCurrentState(0);
 	arrIndex = 0;
 	stateIndex = 1;
@@ -70,6 +82,18 @@ void initialState(){
 	buffer[0] = 0x00;
 	packetLen = 0x08;
 }
+
+/*
+* Function: readByte
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Reads next element from rx queue and sets function pointer to next corresponding state. 
+*   If queue is empty exits function
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
 
 void readByte(void){
 	// printCurrentState(1);
@@ -82,6 +106,20 @@ void readByte(void){
   		return;
   	}
 }
+
+/*
+* Function: preambleByte
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Checks if last read byte is corresponds to the header of the package. 
+*   If it does, it increases the array index and state index variable which control the buffer array and state machine states
+*	and redirects to readByte state
+*	If the byte is not correct it redirects back to the initial state
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
 
 void preambleByte(void){
 	// stateIndex = 1
@@ -96,6 +134,20 @@ void preambleByte(void){
 		statesFunc = fsmStatesArr[INITIALSTATE];
 	}	
 }
+
+/*
+* Function: lengthByte
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Checks if last read byte is corresponds to the cirrect length of the package. 
+*   If it does, it increases the array index and state index variable which control the buffer array and state machine states
+*	and redirects to readByte state
+*	If the byte is not correct it redirects back to the initial state
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
 
 void lengthByte(void){
 	// stateIndex = 2
@@ -112,6 +164,20 @@ void lengthByte(void){
 	}
 }
 
+/*
+* Function: packetTypeByte
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Checks if last read byte is corresponds to a correct drone mode or P value. 
+*   If it does, it increases the array index and state index variable which control 
+*	the buffer array and state machine states and redirects to readByte state
+*	If the byte is not correct it redirects back to the initial state
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
+
 void packetTypeByte(void){
 	// stateIndex = 3
 	// printCurrentState(4);
@@ -126,6 +192,20 @@ void packetTypeByte(void){
 	}
 }
 
+/*
+* Function: message
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Responsible for control over package payload. It essentially redirects back to the readByte state
+*   the number of times required to store all payload information in the buffer array.
+*	This action is repeated until the required number of bytes has been received.
+*	When the required number of bytes has been received it transitions to the crc check state.
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
+
 void message(void){
 	// stateIndex = 4
 	// printCurrentState(5);
@@ -138,6 +218,18 @@ void message(void){
  	}
 }
 
+/*
+* Function: crcCheck
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Computes the crc values for the entire package and compares it to the crc value provided by the PC.
+*   If the values are correct it transitions to storing the values to be used by the drone.
+*	If the values do not match it redirects back to the initial state.
+*	
+*   inputs: none
+*   returns: none 
+*   
+*/
 void crcCheck(void){
 	// printCurrentState(6);
 	
@@ -156,6 +248,19 @@ void crcCheck(void){
 	}
 }
 
+
+/*
+* Function: storeValues
+* Author: Yordan Dimitrov
+* ----------------------------
+*	Stores roll, pitch, yaw and lift values, which will be used by the drone.
+*	Redirects back to initial state
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
+
 void storeValues(void){
 	// printCurrentState(7);
 	//int8_t testpitch = buffer[4];
@@ -173,6 +278,18 @@ void storeValues(void){
 	statesFunc = fsmStatesArr[INITIALSTATE];
 }
 
+
+/*
+* Function: fsmReceive
+* Author: Yordan Dimitrov
+* ----------------------------
+*	
+*	Executes latest function pointed to by the pointer.
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
 void fsmReceive(){
 
 	// (statesFunc)();
@@ -181,6 +298,17 @@ void fsmReceive(){
 		(statesFunc)();
 	}
 }
+
+/*
+* Function: checkModeByte
+* Author: Yordan Dimitrov
+* ----------------------------
+*	Checks if mode byte corresponds to a correct mode.
+*	
+*   inputs: none
+*   returns: none 
+*   
+*/
 
 uint8_t checkModeByte(uint8_t byte){
 
@@ -206,6 +334,17 @@ uint8_t checkModeByte(uint8_t byte){
 	}		
 }
 
+
+/*
+* Function: modeStore
+* Author: Yordan Dimitrov
+* ----------------------------
+*	Stores candidate mode in buffer and checks P, P1, P2 values for corresponding mode.
+*
+*   inputs: none
+*   returns: none 
+*   
+*/
 
 void modeStore(uint8_t *p){
 	

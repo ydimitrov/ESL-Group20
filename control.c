@@ -76,7 +76,18 @@ int32_t q_b;
 //height
 uint32_t prev_lift;
 
-/*Yordan*/
+/*
+* Function: commStatus
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Triggers panic mode and forces the drone to exit main control loop 
+*   given that for 1500 consequent cycles no packets were received
+*
+*   inputs: none 
+*   returns: none
+*   
+*
+*/	
 void commStatus(){
     if(rx_queue.count > 0){
         commCounter = 0;
@@ -98,7 +109,7 @@ void commStatus(){
 
 /* array and enum flightmode(in4073.h) must be in sync! */
 
-/*Yordan*/
+	
 void (* state[])(void) = {safe_mode, panic_mode, manual_mode, calibration_mode, yaw_control_mode, full_control_mode, raw_control_mode, height_control_mode, wireless_control_mode};
 void (* state_fun)(void) = safe_mode; // global
 
@@ -116,7 +127,19 @@ enum ret_codes state_transitions[9][9] = {
 {ok,   ok,   fail, fail, fail, fail, fail, fail, ok}};
 
 
-/*Yordan*/
+/*
+* Function: lookup_transitions
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Checks if transition from current mode to new mode is allowed
+*   
+*
+*   inputs: enum flightmode - current mode of the drone, enum flightmode candidate - new mode to which we want to transition
+
+*   returns: enum ret_codes (1 or 0)
+*   
+*
+*/
 enum ret_codes lookup_transitions(enum flightmode mode, enum flightmode candidate) {
 
     // rows correspond to current state
@@ -196,7 +219,19 @@ void gradual_lift()
 	}
 
 }
-/*Yordan*/
+
+/*
+* Function: droneState
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Given that mode transition is allowed, current mode becomes equal to candidate mode
+*   and executes the new mode
+*
+*   inputs: enum flightmode candidate - new mode to which we want to transition
+*   returns: none
+*   
+*
+*/
 void droneState(enum flightmode candidate) {
 
     enum ret_codes rc;
@@ -210,7 +245,16 @@ void droneState(enum flightmode candidate) {
     }
 }
 
-/*Yordan*/
+/*
+* Function: initialize_flight_Parameters
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Initialises local variables for main drone movements from global ones
+*   
+*   inputs: none
+*   returns: none
+*   
+*/
 void initialize_flight_Parameters()
 {
 	roll 	= flightParameters.roll;
@@ -225,7 +269,18 @@ int32_t intToFix(int32_t a){
 	return a * 16384;
 }
 
-/*Yordan*/
+/*
+* Function: fixToInt
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Converts an integer to a fixed-point format (18 bits integer, 14 bits fraction)
+*   
+*
+*   inputs: int32_t number
+*   returns: int32_t fixed point format
+*   
+*
+*/
 int32_t fixToInt(int32_t a){
 	return a / 16384;
 }
@@ -332,7 +387,18 @@ void manual_mode()
 	update_motors();
 }
 
-/*Yordan*/
+/*
+* Function: safe_mode
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Resets flag used to initialise imu_init for different modes and gradual lift.
+*   Used as an intermediate transition between al modes
+*
+*   inputs: none
+*   returns: none
+*   
+*
+*/
 void safe_mode()
 {	
 	flag = 0;
@@ -529,12 +595,34 @@ void raw_control_mode(){
 	update_motors();
 }
 
-/*Yordan*/
+/*
+* Function: fixed_div_14
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Divides two fixed-point numbers 
+*   
+*
+*   inputs: int32_t fixed-point number, int32_t fixed-point number
+*   returns: int32_t number results
+*   
+*
+*/
 int32_t fixed_div_14(int32_t x, int32_t y){
     return ((int64_t)x * (1 << SHIFT)) / y;
 }
 
-/*Yordan*/
+/*
+* Function: fixed_mul_14
+* Author: Yordan Dimitrov
+* ----------------------------
+*   Multiplies two fixed-point numbers
+*   
+*
+*   inputs: int32_t fixed-point number, int32_t fixed-point number
+*   returns: int32_t number results
+*   
+*
+*/
 int32_t fixed_mul_14(int32_t x, int32_t y){
     return ((int64_t)x * (int64_t)y) / (1 << SHIFT);
 }
