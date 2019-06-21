@@ -148,7 +148,12 @@ void reset_motors()
 	update_motors();
 }
 
-/*Nidhi*/
+/*
+ * Function: gradual_lift
+ * Author: Srinidhi Srinivasan
+ * ----------------------------
+ *   Ensures motor values rise gradually until lift value
+ */
 void gradual_lift()
 {
 	int32_t lift_status; 
@@ -235,7 +240,12 @@ void run_filters_and_control(){
 	droneState(candidate_mode);
 }
 
-/*Nidhi*/
+/*
+ * Function: panic_mode
+ * Author: Srinidhi Srinivasan
+ * ----------------------------
+ *   Reduces motor values and goes to safe_mode
+ */
 void panic_mode()
 {
 	uint16_t average;
@@ -292,7 +302,12 @@ void panic_mode()
 	safe_mode();
 }
 
-/*Nidhi*/
+/*
+ * Function: manual_mode
+ * Author: Srinidhi Srinivasan
+ * ----------------------------
+ *   Enables control of motors with plain joystick values
+ */
 void manual_mode()
 {
 
@@ -589,7 +604,12 @@ void kalman()
 
 }
 
-/*Nidhi*/
+/*
+ * Function: gradual_lift
+ * Author: Srinidhi Srinivasan
+ * ----------------------------
+ *   Ensures stability in height by controlling the pressure sensor through the butterworth filter
+ */
 void height_control_mode(){
 	
 	if(!flag){
