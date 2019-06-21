@@ -488,8 +488,10 @@ void raw_control_mode(){
 	//get data from sensors and filter them using Butterworth and Kalman filtering
 	get_raw_sensor_data();
 	butterworth(x_yaw, y_yaw, sr);
-	butterworth(x_pitch, y_pitch, sq);
-	butterworth(x_roll, y_roll, sp);
+	//butterworth(x_pitch, y_pitch, sq);
+	y_roll[2] = intToFix(sp);
+	y_pitch[2] = intToFix(sq);
+	//butterworth(x_roll, y_roll, sp);
 	butterworth(x_pitch_a, y_pitch_a, sax);
 	butterworth(x_roll_a, y_roll_a, say);
 	kalman();
@@ -501,11 +503,11 @@ void raw_control_mode(){
 
 	//roll control
 	error_roll = roll - (phi >> 2); //calculate roll error
-	K_r = (4 * P1) * error_roll - ((16*P2) * fixToInt(p)); //terms based on roll angle and rollrate error added
+	K_r = (4 * P1) * error_roll - ((P2) * fixToInt(p)); //terms based on roll angle and rollrate error added
 
 	//pitch control
 	error_pitch = -(pitch - (theta >> 2)); //calculate pitch error
-	K_p = (4 * P1) * error_pitch - ((16*P2) * fixToInt(q)); //terms based on pitch angle and pitchrate error added
+	K_p = (4 * P1) * error_pitch - ((P2) * fixToInt(q)); //terms based on pitch angle and pitchrate error added
 
 	//update motors based on lift and control for pitch,roll,yaw rate
 	ae[0] = ((lift * MOTOR_RELATION) - (pitch * MOTOR_RELATION) - (yaw * MOTOR_RELATION) - (K_p>>6) + fixToInt(((fixed_mul_14(intToFix(P), error_yawrate)))) + MIN_SPEED) * lift_status;
