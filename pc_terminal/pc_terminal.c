@@ -101,7 +101,12 @@ unsigned int    mon_time_ms(void)
         ms = ms + tv.tv_usec / 1000;
         return ms;
 }
-/*Thies*/
+/*
+ * Function: checkByteOverflow
+ * Author: Thies de Boer (4513614)
+ * ----------------------------
+ *   Makes sure pitch, roll and yaw values do not go below 0 or exceed 255
+ */
 int8_t checkByteOverflow(int8_t value, int8_t offset) {
 	
 	// Make sure overflows won't happen.
@@ -307,7 +312,12 @@ int main(int argc, char **argv)
 	{
 		if (mon_time_ms() - time >= period){
 
-			/*Thies*/
+			/*
+ 			* Function: joystick readout
+ 			* Author: Thies de Boer (4513614)
+ 			* ----------------------------
+ 			*   reads out joystick movement and button presses and sets pitch, roll, lift, yaw and the mode accordingly
+ 			*/
 			while(read(fd, &js, sizeof(struct js_event)) == sizeof(struct js_event))   {
 				switch(js.type & ~JS_EVENT_INIT) {
 					case JS_EVENT_BUTTON:
